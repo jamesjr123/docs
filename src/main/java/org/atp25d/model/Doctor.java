@@ -27,7 +27,7 @@ public class Doctor implements Serializable {
 	private String user;
 
 	//bi-directional many-to-one association to Location
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="LocationNumber")
 	private Location location;
 
