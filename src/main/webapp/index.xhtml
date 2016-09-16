@@ -22,26 +22,30 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:pe="http://primefaces.org/ui/extensions"
     
-    template="/WEB-INF/templates/default.xhtml">    
+    template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
       <h1>Welcome to the Doctors list</h1>
 
 
         <h:form id="docs">
-<p:dataTable var="doc" value="#{doctors}">
+        
+ <p:dataTable var="_doc" value="#{doctors}" paginator="true" rows="10"
+                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15" id="docTable" lazy="true">
+
     <p:column headerText="FirstName">
-        <h:outputText value="#{doc.firstName}" />
+        <h:outputText value="#{_doc.firstName}" />
     </p:column>
  
     <p:column headerText="LastName">
-        <h:outputText value="#{doc.surname}" />
+        <h:outputText value="#{_doc.surname}" />
     </p:column>
  
     <p:column headerText="Location">
-        <h:outputText value="#{doc.location}" />
+        <h:outputText value="#{_doc.location}" />
     </p:column>
  
-</p:dataTable>        
+</p:dataTable>       
             <h2>Member Registration</h2>
             <p>Enforces annotation-based constraints defined on the
                 model class.</p>

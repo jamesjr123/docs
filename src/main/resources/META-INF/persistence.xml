@@ -28,9 +28,11 @@
       <jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
       <class>org.atp25d.model.Doctor</class>
       <class>org.atp25d.model.Location</class>
+      <class>org.jboss.as.quickstarts.kitchensink.model.Member</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.show_sql" value="false" />
+         <property name="hibernate.enable_lazy_load_no_trans" value="false" />
       </properties>
    </persistence-unit>
 </persistence>
