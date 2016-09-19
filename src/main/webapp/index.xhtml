@@ -24,7 +24,7 @@
     
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
-      <h1>Welcome to the Doctors list</h1>
+      <!-- h1>Welcome to the Doctors list</h1-->
 
 
         <h:form id="docs">
@@ -42,7 +42,7 @@
     </p:column>
  
     <p:column headerText="Location">
-        <h:outputText value="#{_doc.location}" />
+        <h:outputText value="#{_doc.location.location}" />
     </p:column>
  
 </p:dataTable>       

@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="doctors")
-@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d")
+@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d where d.doctorNumber < 21")
 public class Doctor implements Serializable {
 	private static final long serialVersionUID = 1L;
 

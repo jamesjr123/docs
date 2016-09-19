@@ -16,9 +16,27 @@ public class DocsController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2728333040258701261L;
-
+	private String userName;
+	private String userEmail;
+	
 	@Inject
-    private FacesSession facesSession;	
+    private FacesSession facesSession;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}	
 		
 		
 	
