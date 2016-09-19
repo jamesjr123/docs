@@ -103,6 +103,12 @@
             <scope>provided</scope>
         </dependency>
 
+		<dependency>  
+		    <groupId>org.primefaces</groupId>  
+		    <artifactId>primefaces</artifactId>  
+		    <version>6.0</version>  
+		</dependency>  
+
         <!-- JSR-303 (Bean Validation) Implementation -->
         <!-- Provides portable constraints such as @Email -->
         <!-- Hibernate Validator is shipped in JBoss EAP 6 -->

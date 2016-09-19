@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	</f:facet>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><ui:insert name="pagetitle">eCPC </ui:insert></title>
+
+	<h:outputStylesheet link="/stylesets/default/stylesheet/style.css" />
+	<h:outputStylesheet library='css' name="template.css" />
+
+<ui:insert name="stuff"></ui:insert>
+
+</h:head>
+<h:body>
+	<p:layout style="height: 1000px;">
+	<p:layoutUnit position="north">
+	
+	<p:panelGrid style="width: 100%">
+    <f:facet name="header">
+        <p:row >
+ 
+       <p:column  style="width: 10%">
+<a href="http://www.det.nsw.edu.au/index.htm" title="Go to NSW Department of Education and Training">
+        <img  src="/images/buddy.png"  alt="Buddy"/>
+      </a>  
+      </p:column>     
+      <p:column colspan="2">             
+				<h:outputText class="floatLeft" value="Casual claim input" />
+	</p:column>
+			
+      <p:column colspan="5">			
+			<span  class="floatRight">
+		    <h:outputLink value="/jecpc/Logon">
+					<f:param name="Command" value="GoToHome" />
+					<h:outputText value="Home" />
+		    </h:outputLink>
+		    &nbsp;&nbsp;
+		    <h:outputLink value="/shr/Logon" >
+					<f:param name="Command" value="Logoff" />
+					<h:outputText value="Logout" />
+		    </h:outputLink>
+			&nbsp;&nbsp;
+
+			</span>
+			
+			</p:column>
+        </p:row>
+        <p:row>
+            <p:column  colspan="7"><h:outputText  style="float:Left" 
+						value="Welcome  " /></p:column>
+            <p:column><h:outputText class="floatRight"
+						value="#{facesSession.timestamp}" >
+						<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" type="date"
+												timeZone="#{referenceData.timeZone}" />
+			</h:outputText></p:column>
+        </p:row>
+ 
+    </f:facet>
+    </p:panelGrid>
+	</p:layoutUnit>
+	<p:layoutUnit position="center">
+		<ui:insert name="content">Body</ui:insert>
+	</p:layoutUnit>
+	<p:layoutUnit position="south">
+
+		<h:outputText class="floatRight" value="#{facesSession.systemNodeText()}"  />
+	</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
