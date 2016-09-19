@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
+	        <h:form id="head">	
 <h:head>
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -47,7 +47,7 @@
           // [END googlecredential]
           // Sign in with credential from the Google user.
           // [START authwithcred]
-          firebase.auth().signInWithCredential(credential).catch(function(error) {
+          firebase.auth().signInWithCredential(credential).catch(function(error) {             
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -65,10 +65,11 @@
             }
             // [END_EXCLUDE]
           });
-          // [END authwithcred]
+          // [END authwithcred]            
         } else {
+             
           console.log('User already signed-in Firebase.');
-        }
+        }                
       });
     }
     // [END googlecallback]
@@ -115,6 +116,9 @@
           // User is signed in.
           var displayName = user.displayName;
           var email = user.email;
+          document.getElementById('head:hemail').value = email;
+          document.getElementById('head:hname').value = displayName;
+          setLoggedin();
           var emailVerified = user.emailVerified;
           var photoURL = user.photoURL;
           var isAnonymous = user.isAnonymous;
@@ -123,7 +127,7 @@
           // [START_EXCLUDE]
           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('signout').disabled = false;
-          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');                             
           // [END_EXCLUDE]
         } else {
           // User is signed out.
@@ -141,6 +145,7 @@
 
     window.onload = function() {
       initApp();
+      
     };
   </script>		
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -192,17 +197,19 @@
 <ui:insert name="stuff"></ui:insert>
 
 </h:head>
+<h:inputHidden id="hemail" value="#{docsController.userEmail}"/>
+<h:inputHidden id="hname" value="#{docsController.userName}"/>
+<p:remoteCommand name="setLoggedin" process="@this,hname,hemail"  /> 
 
 <h:body>
 	<p:layout style="height: 1000px;">
 	<p:layoutUnit position="north">
-	
 	<p:panelGrid style="width: 100%">
     <f:facet name="header">
 
         <p:row>
-            <p:column  colspan="7"><h:outputText  style="float:Left" 
-						value="Welcome  " /></p:column>
+            <p:column colspan="7"><h:outputText  id="welcome" style="float:Left" 
+						value="Welcome  #{docsController.userName}" /></p:column>
             <p:column><h:outputText class="floatRight"
 						value="#{facesSession.timestamp}" >
 						<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" type="date"
@@ -217,9 +224,11 @@
 		<ui:insert name="content">Body</ui:insert>
 	</p:layoutUnit>
 	<p:layoutUnit position="south">
-
+<ui:debug />
 		<h:outputText class="floatRight" value="#{facesSession.systemNodeText()}"  />
 	</p:layoutUnit>
 	</p:layout>
 </h:body>
+	        </h:form>	
+ 
 </html>
