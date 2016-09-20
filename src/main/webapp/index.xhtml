@@ -28,8 +28,10 @@
 
 
         <h:form id="docs">
+        <h:outputText value="#{docsController.loggedIn}" />
+                <h:outputText value="#{docsController.userName}" />
         
- <p:dataTable var="_doc" value="#{doctors}" paginator="true" rows="10"
+ <p:dataTable var="_doc" value="#{doctors}" paginator="true" rows="10" 
                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  rowsPerPageTemplate="5,10,15" id="docTable" lazy="true">
 

@@ -100,6 +100,10 @@
       var googleAuth = gapi.auth2.getAuthInstance();
       googleAuth.signOut().then(function() {
         firebase.auth().signOut();
+        document.getElementById('head:hemail').value = null;
+        document.getElementById('head:hname').value = null;
+        document.getElementById('head:hlogged').value = false;
+        setLoggedin();
       });
     }
 
@@ -119,6 +123,7 @@
           var email = user.email;
           document.getElementById('head:hemail').value = email;
           document.getElementById('head:hname').value = displayName;
+          document.getElementById('head:hlogged').value = true;
           setLoggedin();
           var emailVerified = user.emailVerified;
           var photoURL = user.photoURL;
@@ -200,7 +205,8 @@
 </h:head>
 <h:inputHidden id="hemail" value="#{docsController.userEmail}"/>
 <h:inputHidden id="hname" value="#{docsController.userName}"/>
-<p:remoteCommand name="setLoggedin" process="@this,hname,hemail"  /> 
+<h:inputHidden id="hlogged" value="#{docsController.loggedIn}"/>
+<p:remoteCommand name="setLoggedin" process="@this,hname,hemail,hlogged" update="@this welcome" /> 
 
 <h:body>
 	<p:layout style="height: 1000px;">

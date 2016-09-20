@@ -18,7 +18,7 @@ public class DocsController implements Serializable {
 	private static final long serialVersionUID = -2728333040258701261L;
 	private String userName;
 	private String userEmail;
-	
+	private boolean loggedIn;
 	@Inject
     private FacesSession facesSession;
 
@@ -36,6 +36,14 @@ public class DocsController implements Serializable {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
 	}	
 		
 		
