@@ -29,6 +29,7 @@
       <class>org.atp25d.model.Doctor</class>
       <class>org.atp25d.model.Location</class>
       <class>org.jboss.as.quickstarts.kitchensink.model.Member</class>
+      <class>org.atp25d.model.UserAccess</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.show_sql" value="false" />
