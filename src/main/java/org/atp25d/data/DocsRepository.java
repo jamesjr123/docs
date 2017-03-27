@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 
 import org.atp25d.model.Doctor;
 import org.atp25d.model.Location;
+import org.atp25d.model.UserAccess;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
 
@@ -34,5 +35,23 @@ public class DocsRepository {
 				Location.class);
 		return query.getResultList();
 	} 
+    public boolean hasReadAccess(String loginId) {
+    	 return hasTaskAccess(loginId,"Read");
+    }
     
+    	 public boolean hasTaskAccess(String loginId, String level) {
+    	 if (loginId==null || loginId.trim().equals("")) return false;
+	   	 TypedQuery<UserAccess> query =
+			      em.createNamedQuery("UserAccess.findUserAccess", UserAccess.class);		  
+		  query.setParameter("userId", loginId);
+		  query.setParameter("task", "Doctors");		  	    
+		 List<UserAccess> rows = query.getResultList();
+		 for (UserAccess row : rows)
+		 {
+			 if (row.getUserAccess().equalsIgnoreCase(level)){
+				return true; 
+			 }
+		 }       	    	
+    	return false; 
+    }
 }

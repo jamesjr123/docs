@@ -1,6 +1,7 @@
 package org.atp25d.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,7 +11,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="user_access")
-@NamedQuery(name="UserAccess.findAll", query="SELECT u FROM UserAccess u")
+@NamedQueries({
+@NamedQuery(name="UserAccess.findAll", query="SELECT u FROM UserAccess u"),
+@NamedQuery(name="UserAccess.findUserAccess", query="SELECT u FROM UserAccess u where  u.userId = :userId and u.userTask = :task")
+})
+
 public class UserAccess implements Serializable {
 	private static final long serialVersionUID = 1L;
 
