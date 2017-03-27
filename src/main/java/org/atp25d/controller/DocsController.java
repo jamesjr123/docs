@@ -96,13 +96,11 @@ public class DocsController implements Serializable {
 	}	
 	public String updateDoc (Doctor doc){
 		newDoc = docsUpdate.getDocForUpdate(doc);
-		initNewDoc();
 		return "doctorUpdate";
 		
 	}
 	public String displayDoc (Doctor doc){
-		newDoc = docsUpdate.getDocForUpdate(doc);
-		initNewDoc();
+		newDoc = docsUpdate.getDocForUpdate(doc);		
 		return "doctorDisplay";
 		
 	}	

@@ -12,24 +12,18 @@
         <h:form id="docs" prependId="false">
      <p:panelGrid columns="4" >
 			<p:column>
-                <p:outputLabel for="firstName" value="First Name:" />
+                <p:outputLabel for="Name" value="Name:" />
 			</p:column>
 			<p:column>			                
-                <p:inputText id="firstName" value="#{newDoc.FirstName}" maxlength="20"/> 					                       
-                <p:message for="firstName"/>                
+                <h:outputText id="Name" value="#{docsController.newDoc.firstName.concat(' ').concat(docsController.newDoc.surname)}"/> 					                       
+                                
 			</p:column>
             </p:panelGrid>
                 
-                <p:panelGrid columns="4">
-                    <h:commandButton id="save"
-                           action="#{docsController.saveDoc()}"
-                        value="Save" />
-                    <p:messages styleClass="messages"
-                       infoClass="valid"
-                        warnClass="warning" globalOnly="true" />
-                    <h:commandButton id="cancel"
-                        action="#{docsController.cancel()}"
-                        value="Cancel" immediate="true" />                      
+                <p:panelGrid columns="4">                    
+                    <h:commandButton id="back"
+                                action="index"
+                        value="Go back" />                     
                 </p:panelGrid>       
 
         </h:form>
