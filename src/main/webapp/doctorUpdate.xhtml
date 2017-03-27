@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    
+    template="/WEB-INF/templates/template-lay.xhtml">    
+    <ui:define name="content">
+
+        <h:form id="docs" prependId="false">
+     <p:panelGrid columns="4" >
+			<p:column>
+                <p:outputLabel for="firstName" value="First Name:" />
+			</p:column>
+			<p:column>			                
+                <p:inputText id="firstName" value="#{newDoc.FirstName}" maxlength="20"/> 					                       
+                <p:message for="firstName"/>                
+			</p:column>
+            </p:panelGrid>
+                
+                <p:panelGrid columns="4">
+                    <h:commandButton id="save"
+                           action="#{docsController.saveDoc()}"
+                        value="Save" />
+                    <p:messages styleClass="messages"
+                       infoClass="valid"
+                        warnClass="warning" globalOnly="true" />
+                    <h:commandButton id="cancel"
+                        action="#{docsController.cancel()}"
+                        value="Cancel" immediate="true" />                      
+                </p:panelGrid>       
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

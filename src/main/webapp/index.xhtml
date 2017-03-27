@@ -27,11 +27,11 @@
       <!-- h1>Welcome to the Doctors list</h1-->
 
 
-        <h:form id="docs">
+        <h:form id="docs" prependId="false">
                 
  <p:dataTable var="_doc" value="#{doctors}" paginator="true" rows="10" rendered="#{docsController.docsReadAccess}"
                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                 rowsPerPageTemplate="5,10,15" id="docTable" lazy="true">
+                 rowsPerPageTemplate="5,10,15" id="docTable">
 
     <p:column headerText="FirstName">
         <h:outputText value="#{_doc.firstName}" />
@@ -44,7 +44,15 @@
     <p:column headerText="Location">
         <h:outputText value="#{_doc.location.location}" />
     </p:column>
- 
+     <p:column  exportable="false">
+           <f:facet name="header">Action</f:facet>
+           <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}" update="@all"  rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
+           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}" update="@all"  rendered='#{docsController.docsUpdateAccess}'/><br/>
+     </p:column>  
+     <p:column  exportable="false">
+           <f:facet name="header">Action</f:facet>                       
+          <p:commandButton value="Update" action="#{docsController.updateDoc(_doc)}" update="@all" rendered='#{docsController.docsUpdateAccess}'/><br/>                 
+     </p:column>  
 </p:dataTable>       
 
         </h:form>

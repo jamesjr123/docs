@@ -1,6 +1,7 @@
 package org.atp25d.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,7 +11,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="doctors")
-@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d where d.doctorNumber < 21")
+@NamedQueries({
+@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d where d.doctorNumber < 21"),
+@NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber")
+})
 public class Doctor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
