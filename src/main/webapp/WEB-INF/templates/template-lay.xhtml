@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-	        <h:form id="head">	
+	        <h:form id="docs" >	
 <h:head>
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -101,9 +101,9 @@
       googleAuth.signOut().then(function() {
         firebase.auth().signOut();
       });
-      document.getElementById('head:hemail').value = null;
-      document.getElementById('head:hname').value = null;
-      document.getElementById('head:hlogged').value = false;
+      document.getElementById('docs:hemail').value = null;
+      document.getElementById('docs:hname').value = null;
+      document.getElementById('docs:hlogged').value = false;
       setLoggedin();
     }
 
@@ -121,9 +121,9 @@
           // User is signed in.
           var displayName = user.displayName;
           var email = user.email;
-          document.getElementById('head:hemail').value = email;
-          document.getElementById('head:hname').value = displayName;
-          document.getElementById('head:hlogged').value = true;
+          document.getElementById('docs:hemail').value = email;
+          document.getElementById('docs:hname').value = displayName;
+          document.getElementById('docs:hlogged').value = true;
           setLoggedin();
           var emailVerified = user.emailVerified;
           var photoURL = user.photoURL;

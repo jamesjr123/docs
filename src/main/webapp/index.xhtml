@@ -26,8 +26,6 @@
     <ui:define name="content">
       <!-- h1>Welcome to the Doctors list</h1-->
 
-
-        <h:form id="docs" prependId="false">
                 
  <p:dataTable var="_doc" value="#{doctors}" paginator="true" rows="10" rendered="#{docsController.docsReadAccess}"
                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -55,7 +53,6 @@
      </p:column>  
 </p:dataTable>       
 
-        </h:form>
 
     </ui:define>
 </ui:composition>
