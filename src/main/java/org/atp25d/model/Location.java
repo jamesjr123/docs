@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="locations")
-@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l where l.locationNumber < 21")
+@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l")
 public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -27,30 +27,50 @@
       <!-- h1>Welcome to the Doctors list</h1-->
 
                 
- <p:dataTable var="_doc" value="#{doctors}" paginator="true" rows="10" rendered="#{docsController.docsReadAccess}"
-                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                 rowsPerPageTemplate="5,10,15" id="docTable">
+ <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" 
+         paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
+         
+  	<f:facet name="{Exporters}">
+ 		<h:outputText value="Export data"/>
+    	<h:commandLink>
+              <p:graphicImage value="/images/excel.png" alt="Excel"/>
+              <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
+          </h:commandLink>
+	</f:facet>
 
-    <p:column headerText="FirstName">
-        <h:outputText value="#{_doc.firstName}" />
+    <p:column headerText="Doctor" sortBy="#{_doc.surname}"
+     	filterBy="#{_doc.surname}" filterMatchMode="contains" filterStyle="width: 200px;">
+        <h:outputText value="#{_doc.firstName.concat(' ').concat(_doc.middleName).concat(' ').concat(_doc.surname)}" />
     </p:column>
  
-    <p:column headerText="LastName">
-        <h:outputText value="#{_doc.surname}" />
-    </p:column>
- 
-    <p:column headerText="Location">
+    <p:column headerText="Location" sortBy="#{_doc.location.location}"
+         	filterBy="#{_doc.location.location}" filterMatchMode="contains" filterStyle="width: 150px;">
         <h:outputText value="#{_doc.location.location}" />
     </p:column>
-     <p:column  exportable="false">
+    <p:column headerText="Address"
+         	filterBy="#{_doc.location.mailAddress1}" filterMatchMode="contains">
+        <h:outputText value="#{_doc.location.mailAddress1}" />
+    </p:column>
+
+    <p:column headerText="Suburb" sortBy="#{_doc.location.mailSuburb} "
+         	filterBy="#{_doc.location.mailSuburb}" filterMatchMode="contains" filterStyle="width: 150px;">
+        <h:outputText value="#{_doc.location.mailSuburb}" />
+    </p:column>
+    <p:column  width="95" headerText="State" sortBy="#{_doc.location.mailState}"
+         	filterBy="#{_doc.location.mailState}" filterMatchMode="exact" filterStyle="width: 40px;">
+        <h:outputText value="#{_doc.location.mailState}" />
+    </p:column>  
+    <p:column width="105"  headerText="PostCode" sortBy="#{_doc.location.mailPostcode}"
+         	filterBy="#{_doc.location.mailPostcode}" filterMatchMode="contains" filterStyle="width: 40px;">
+        <h:outputText value="#{_doc.location.mailPostcode}" />
+    </p:column>                          
+     <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
-           <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}" update="@all"  rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}" update="@all"  rendered='#{docsController.docsUpdateAccess}'/><br/>
+           <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
+           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docsUpdateAccess}'/><br/>
      </p:column>  
-     <p:column  exportable="false">
-           <f:facet name="header">Action</f:facet>                       
-          <p:commandButton value="Update" action="#{docsController.updateDoc(_doc)}" update="@all" rendered='#{docsController.docsUpdateAccess}'/><br/>                 
-     </p:column>  
+
 </p:dataTable>       
 
 

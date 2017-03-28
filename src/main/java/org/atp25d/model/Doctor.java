@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="doctors")
 @NamedQueries({
-@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d where d.doctorNumber < 21"),
+@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d "),
 @NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber")
 })
 public class Doctor implements Serializable {
