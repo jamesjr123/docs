@@ -108,7 +108,11 @@
 		    <artifactId>primefaces</artifactId>  
 		    <version>6.0</version>  
 		</dependency>  
-
+		<dependency>
+		  <groupId>org.apache.poi</groupId>
+		  <artifactId>poi</artifactId>
+		  <version>3.15</version>
+		</dependency>
         <!-- JSR-303 (Bean Validation) Implementation -->
         <!-- Provides portable constraints such as @Email -->
         <!-- Hibernate Validator is shipped in JBoss EAP 6 -->
