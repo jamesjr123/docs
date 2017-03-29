@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.Reception;
 import javax.enterprise.inject.Produces;
@@ -15,11 +16,17 @@ import javax.inject.Named;
 
 import org.atp25d.model.Doctor;
 import org.atp25d.model.Location;
+import java.io.Serializable;
 
 
 
-@RequestScoped
-public class DocsListProducer {
+@SessionScoped
+public class DocsListProducer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -125349312297849472L;
+
 	@Inject
     private DocsRepository docsRepository;
 
@@ -44,18 +51,22 @@ public class DocsListProducer {
     	retrieveAllLocs();
     }
     public void retrieveAllDocs() {
-        doctors = docsRepository.findAllDocs();       
+    	if (doctors==null) {
+    		doctors = docsRepository.findAllDocs();
+    	}
     }
    
     public void retrieveAllLocs() {
-        locations = docsRepository.findAllLocations();       
+    	if (locations==null) {
+    		locations = docsRepository.findAllLocations();
+    	}
     }    
     
     public void onLocationListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Location location) {
-        retrieveAllLocs();
+    	locations = docsRepository.findAllLocations();
     }
     
     public void onDoctorListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Doctor doctor) {
-        retrieveAllDocs();
+    	doctors = docsRepository.findAllDocs();
     }
 }
