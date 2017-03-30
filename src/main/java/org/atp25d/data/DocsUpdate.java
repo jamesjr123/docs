@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import org.atp25d.model.Doctor;
+import org.atp25d.model.Location;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
 
@@ -17,6 +18,9 @@ public class DocsUpdate {
     private EntityManager em;
 
     @Inject
+    private Event<Location> locationEventSrc;    
+    
+    @Inject
     private Event<Doctor> doctorEventSrc;    
     
     public Doctor getDocForUpdate(Doctor doc){
@@ -26,4 +30,11 @@ public class DocsUpdate {
 		em.merge(doc);    	
 		doctorEventSrc.fire(doc);
     }
+    public Location getLocForUpdate(Location loc){
+		return em.find(Location.class, loc.getLocationNumber());    	
+    }
+    public void saveLoc(Location loc){
+		em.merge(loc);    	
+		locationEventSrc.fire(loc);
+    }    
 }

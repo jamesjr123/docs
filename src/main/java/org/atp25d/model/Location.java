@@ -1,7 +1,9 @@
 package org.atp25d.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -11,7 +13,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="locations")
-@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l")
+@NamedQueries({
+@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l"),
+@NamedQuery(name="Location.findById", query="SELECT l FROM Location l where l.locationNumber = :locationNumber")
+})
 public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -64,6 +64,7 @@ public class DocsListProducer implements Serializable {
     
     public void onLocationListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Location location) {
     	locations = docsRepository.findAllLocations();
+    	doctors = docsRepository.findAllDocs();
     }
     
     public void onDoctorListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Doctor doctor) {

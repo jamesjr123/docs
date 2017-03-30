@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.atp25d.data.DocsRepository;
 import org.atp25d.data.DocsUpdate;
 import org.atp25d.model.Doctor;
+import org.atp25d.model.Location;
 import org.atp25d.util.FacesSession;
 
 import java.io.Serializable;
@@ -41,7 +42,9 @@ public class DocsController implements Serializable {
 	private DocsUpdate docsUpdate;
 	
 
-	private Doctor newDoc;	
+	private Doctor newDoc;
+	
+	private Location newLoc;
 	
 	public Doctor getNewDoc() {
 		return newDoc;
@@ -110,14 +113,45 @@ public class DocsController implements Serializable {
 			          facesContext.addMessage(null, m);
 			  
 				return "index";
-			  }    			
+			  }
+		public String updateLoc (Location loc){
+			newLoc = docsUpdate.getLocForUpdate(loc);
+			return "locationUpdate";
+			
+		}
+		public String displayLoc (Location loc){
+			newLoc = loc; // docsUpdate.getDocForUpdate(doc);		
+			return "locationDisplay";
+			
+		}	
+		   public String saveLoc()  {
+			    docsUpdate.saveLoc(newLoc);  
+			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor record updated", "update");
+				          facesContext.addMessage(null, m);
+				  
+					return "locations";
+				  }	   
 	   public String cancel()  {
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor update cancelled", "update cancelled");
 			          facesContext.addMessage(null, m);
 			    initNewDoc();
 				return "index";
-			  } 
+			  }
+	   public String cancelL()  {
+		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Location update cancelled", "update cancelled");
+			          facesContext.addMessage(null, m);
+			    initNewDoc();
+				return "locations";
+			  } 	   
 	   public void initNewDoc(){
 		   newDoc = new Doctor();
 	   }
+
+	public Location getNewLoc() {
+		return newLoc;
+	}
+
+	public void setNewLoc(Location newLoc) {
+		this.newLoc = newLoc;
+	}
 }

@@ -9,13 +9,33 @@
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
 
-     <p:panelGrid columns="4" >
+     <p:panelGrid columns="6" >
 			<p:column>
                 <p:outputLabel for="firstName" value="First Name:" />
 			</p:column>
 			<p:column>			                
-                <p:inputText id="firstName" value="#{docsController.newDoc.firstName}" maxlength="20"/> 					                       
+                <p:inputText id="firstName" value="#{docsController.newDoc.firstName}" maxlength="60" required="yes"/> 					                       
                 <p:message for="firstName"/>                
+			</p:column>
+			<p:column>
+                <p:outputLabel for="middleName" value="Middle Name:" />
+			</p:column>			
+			<p:column>			                
+                <p:inputText id="middleName" value="#{docsController.newDoc.middleName}" maxlength="60" required="yes"/> 					                       
+                <p:message for="middleName"/>                
+			</p:column>
+			<p:column>
+                <p:outputLabel for="surname" value="Last Name:" />
+			</p:column>			
+			<p:column >			                
+                <p:inputText id="surname" value="#{docsController.newDoc.surname}" maxlength="60" required="yes"/> 					                       
+                <p:message for="surname"/>                
+			</p:column>
+			<p:column>		
+				<p:outputLabel for="Address" value="Address:" />			
+			</p:column>
+			<p:column>
+			<h:outputText id="Address" value="#{docsController.newDoc.location.location.concat(' ').concat(docsController.newDoc.location.mailAddress1).concat(' ').concat(docsController.newDoc.location.mailSuburb)}"/>
 			</p:column>
             </p:panelGrid>
                 

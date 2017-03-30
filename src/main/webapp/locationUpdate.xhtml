@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    
+    template="/WEB-INF/templates/template-lay.xhtml">    
+    <ui:define name="content">
+
+     <p:panelGrid columns="6" >
+			<p:column>
+                <p:outputLabel for="location" value="Location:" />
+			</p:column>
+			<p:column>			                
+                <p:inputText id="location" value="#{docsController.newLoc.location}" maxlength="60" required="yes"/> 					                       
+                <p:message for="location"/>                
+			</p:column>
+			<p:column>
+                <p:outputLabel for="mailAddress1" value="Address1:" />
+			</p:column>			
+			<p:column>			                
+                <p:inputText id="mailAddress1" value="#{docsController.newLoc.mailAddress1}" maxlength="60" required="yes"/> 					                       
+                <p:message for="mailAddress1"/>                
+			</p:column>
+
+            </p:panelGrid>
+                
+                <p:panelGrid columns="4">
+                    <h:commandButton id="save"
+                           action="#{docsController.saveLoc()}"
+                        value="Save" />
+                    <p:messages styleClass="messages"
+                       infoClass="valid"
+                        warnClass="warning" globalOnly="true" />
+                    <h:commandButton id="cancel"
+                        action="#{docsController.cancelL()}"
+                        value="Cancel" immediate="true" />                      
+                </p:panelGrid>       
+
+
+    </ui:define>
+</ui:composition>
