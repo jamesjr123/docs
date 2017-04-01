@@ -31,6 +31,13 @@
                 <p:inputText id="surname" value="#{docsController.newDoc.surname}" maxlength="60" required="yes"/> 					                       
                 <p:message for="surname"/>                
 			</p:column>
+			<p:column>
+                <p:outputLabel for="category" value="Category:" />
+			</p:column>			
+			<p:column >			                
+                <p:inputText id="category" value="#{docsController.newDoc.category}" /> 					                       
+                <p:message for="category"/>                
+			</p:column>			
 			<p:column>		
 				<p:outputLabel for="Address" value="Address:" />			
 			</p:column>

@@ -7,12 +7,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.atp25d.data.DocsRepository;
-import org.atp25d.data.DocsUpdate;
 import org.atp25d.model.Doctor;
 import org.atp25d.model.Location;
+import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @SessionScoped
 @Named
@@ -108,6 +109,8 @@ public class DocsController implements Serializable {
 		
 	}	
 	   public String saveDoc()  {
+		   	newDoc.setUser(userEmail);
+		   	newDoc.setTime_Stamp(new Date());
 		    docsUpdate.saveDoc(newDoc);  
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor record updated", "update");
 			          facesContext.addMessage(null, m);
@@ -125,6 +128,8 @@ public class DocsController implements Serializable {
 			
 		}	
 		   public String saveLoc()  {
+			   	newLoc.setUser(userEmail);	
+			   	newLoc.setTime_Stamp(new Date());			   	
 			    docsUpdate.saveLoc(newLoc);  
 			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor record updated", "update");
 				          facesContext.addMessage(null, m);

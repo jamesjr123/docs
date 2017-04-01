@@ -64,7 +64,11 @@
     <p:column width="105"  headerText="PostCode" sortBy="#{_doc.location.mailPostcode}"
          	filterBy="#{_doc.location.mailPostcode}" filterMatchMode="contains" filterStyle="width: 40px;">
         <h:outputText value="#{_doc.location.mailPostcode}" />
-    </p:column>                          
+    </p:column>                         
+	   <p:column  headerText="Category" sortBy="#{_doc.category}"
+	         	filterBy="#{_doc.category}" filterMatchMode="contains" filterStyle="width: 100px;">
+	        <h:outputText value="#{_doc.category}" />
+	    </p:column>        
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
@@ -72,7 +76,16 @@
      </p:column>  
 
 </p:dataTable>       
-
+                <p:panelGrid columns="4">         
+<p:column>                
+                                     <p:messages globalOnly="true" />
+</p:column>                                     
+<p:column>                                                                
+                    <h:commandButton id="locs"
+                                action="locations"
+                        value="Go to location list" />
+                        </p:column>                     
+                </p:panelGrid>  
 
     </ui:define>
 </ui:composition>

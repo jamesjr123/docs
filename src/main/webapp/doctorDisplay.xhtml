@@ -17,6 +17,12 @@
                 <h:outputText id="Name" value="#{docsController.newDoc.firstName.concat(' ').concat(docsController.newDoc.middleName).concat(' ').concat(docsController.newDoc.surname)}"/> 					                       				                               
 			</p:column>
 			<p:column>
+                <p:outputLabel for="Category" value="Category:" />
+			</p:column>
+			<p:column>			                
+                <h:outputText id="Category" value="#{docsController.newDoc.category}"/> 					                       				                               
+			</p:column>					
+			<p:column>
     		<p:outputLabel for="Address" value="Address:" />			
 			</p:column>
 			<p:column>

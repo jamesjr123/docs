@@ -1,4 +1,4 @@
-package org.atp25d.data;
+package org.atp25d.service;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;

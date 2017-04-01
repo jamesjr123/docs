@@ -1,6 +1,7 @@
 package org.atp25d.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -30,14 +31,37 @@ public class Doctor implements Serializable {
 
 	private String user;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date time_Stamp;	
+	
+	private String category;
+	
 	//bi-directional many-to-one association to Location
 	@ManyToOne
 	@JoinColumn(name="LocationNumber")
 	private Location location;
 
+	
+	
 	public Doctor() {
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}	
+	
+	public Date getTime_Stamp() {
+		return time_Stamp;
+	}
+
+	public void setTime_Stamp(Date time_Stamp) {
+		this.time_Stamp = time_Stamp;
+	}
+	
 	public int getDoctorNumber() {
 		return this.doctorNumber;
 	}

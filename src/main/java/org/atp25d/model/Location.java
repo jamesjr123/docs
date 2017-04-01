@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -36,6 +37,9 @@ public class Location implements Serializable {
 
 	private String user;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date time_Stamp;	
+		
 	//bi-directional many-to-one association to Doctor
 	@OneToMany(mappedBy="location")
 	private List<Doctor> doctors;
@@ -43,6 +47,14 @@ public class Location implements Serializable {
 	public Location() {
 	}
 
+	public Date getTime_Stamp() {
+		return time_Stamp;
+	}
+
+	public void setTime_Stamp(Date time_Stamp) {
+		this.time_Stamp = time_Stamp;
+	}	
+	
 	public int getLocationNumber() {
 		return this.locationNumber;
 	}
