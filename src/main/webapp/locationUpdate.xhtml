@@ -24,7 +24,27 @@
                 <p:inputText id="mailAddress1" value="#{docsController.newLoc.mailAddress1}" maxlength="60" required="yes"/> 					                       
                 <p:message for="mailAddress1"/>                
 			</p:column>
-
+			<p:column>
+                <p:outputLabel for="mailSuburb" value="Suburb:" />
+			</p:column>			
+			<p:column>			                
+                <p:inputText id="mailSuburb" value="#{docsController.newLoc.mailSuburb}" maxlength="60" required="yes"/> 					                       
+                <p:message for="mailSuburb"/>                
+			</p:column>
+			<p:column>
+                <p:outputLabel for="mailState" value="State:" />
+			</p:column>			
+			<p:column>			                
+                <p:inputText id="mailState" value="#{docsController.newLoc.mailState}" maxlength="3" required="yes"/> 					                       
+                <p:message for="mailState"/>                
+			</p:column>			
+			<p:column>
+                <p:outputLabel for="mailPostcode" value="Post Code:" />
+			</p:column>			
+			<p:column>			                
+                <p:inputText id="mailPostcode" value="#{docsController.newLoc.mailPostcode}" maxlength="4" required="yes"/> 					                       
+                <p:message for="mailPostcode"/>                
+			</p:column>												
             </p:panelGrid>
                 
                 <p:panelGrid columns="4">

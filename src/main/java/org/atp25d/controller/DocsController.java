@@ -119,9 +119,13 @@ public class DocsController implements Serializable {
 			  }
 		public String updateLoc (Location loc){
 			newLoc = docsUpdate.getLocForUpdate(loc);
-			return "locationUpdate";
-			
+			return "locationUpdate";			
 		}
+		public String createLoc (){
+			newLoc = new Location();;
+			return "locationUpdate";
+		}
+		
 		public String displayLoc (Location loc){
 			newLoc = loc; // docsUpdate.getDocForUpdate(doc);		
 			return "locationDisplay";
@@ -131,7 +135,7 @@ public class DocsController implements Serializable {
 			   	newLoc.setUser(userEmail);	
 			   	newLoc.setTime_Stamp(new Date());			   	
 			    docsUpdate.saveLoc(newLoc);  
-			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor record updated", "update");
+			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Location record updated", "update");
 				          facesContext.addMessage(null, m);
 				  
 					return "locations";

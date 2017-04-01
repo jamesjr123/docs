@@ -72,6 +72,9 @@
                     <h:commandButton id="doctors"
                                 action="index"
                         value="Go to Doctor list" />                     
+                    <h:commandButton id="newLoc"
+                                action="#{docsController.createLoc()}"   rendered='#{docsController.docsUpdateAccess}'
+                        value="Add New location" />                        
                 </p:panelGrid>  
     </ui:define>
 </ui:composition>
