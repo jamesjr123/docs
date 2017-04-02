@@ -128,9 +128,12 @@ public class DocsController implements Serializable {
 		
 		public String displayLoc (Location loc){
 			newLoc = loc; // docsUpdate.getDocForUpdate(doc);		
-			return "locationDisplay";
-			
+			return "locationDisplay";			
 		}	
+		public String selectLoc (Location loc){
+			newDoc.setLocation(loc);  		
+			return null;				
+		}			
 		   public String saveLoc()  {
 			   	newLoc.setUser(userEmail);	
 			   	newLoc.setTime_Stamp(new Date());			   	

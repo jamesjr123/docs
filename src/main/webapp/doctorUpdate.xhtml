@@ -46,17 +46,59 @@
 			</p:column>
             </p:panelGrid>
                 
-                <p:panelGrid columns="4">
+            <p:panelGrid columns="4">
+               <p:column>                
                     <h:commandButton id="save"
                            action="#{docsController.saveDoc()}"
                         value="Save" />
+               	</p:column>
+				<p:column>                        
+                    <h:commandButton id="cancel"
+                        action="#{docsController.cancel()}"
+                        value="Cancel" immediate="true" />
+                 </p:column>                      
+				<p:column>                        
+					<p:commandButton id="locationBtn" value="Enter Location" type="button" />
+                 </p:column>                                                      	
+				<p:column>                        
                     <p:messages styleClass="messages"
                        infoClass="valid"
                         warnClass="warning" globalOnly="true" />
-                    <h:commandButton id="cancel"
-                        action="#{docsController.cancel()}"
-                        value="Cancel" immediate="true" />                      
+                </p:column>
                 </p:panelGrid>       
+			<p:overlayPanel id="locationPanel" for="locationBtn" hideEffect="fade" dynamic="true" >
+			 <p:dataTable  var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" 
+			         paginator="true" paginatorPosition="bottom"  id="locTable">
+			     <p:column width="95" >
+			           <f:facet name="header">Select</f:facet>
+			           <h:commandLink  value="Select" action="#{docsController.selectLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          			           
+			     </p:column>  			                   
+			    <p:column headerText="Location" sortBy="#{_loc.location}"
+			         	filterBy="#{_loc.location}" filterMatchMode="contains" filterStyle="width: 150px;">
+			        <h:outputText value="#{_loc.location}" />
+			    </p:column>
+			    <p:column headerText="Address"
+			         	filterBy="#{_loc.mailAddress1}" filterMatchMode="contains">
+			        <h:outputText value="#{_loc.mailAddress1}" />
+			    </p:column>
+			
+			    <p:column headerText="Suburb" sortBy="#{_loc.mailSuburb} "
+			         	filterBy="#{_loc.mailSuburb}" filterMatchMode="contains" filterStyle="width: 150px;">
+			        <h:outputText value="#{_loc.mailSuburb}" />
+			    </p:column>
+			    <p:column  width="95" headerText="State" sortBy="#{_loc.mailState}"
+			         	filterBy="#{_loc.mailState}" filterMatchMode="exact" filterStyle="width: 40px;">
+			        <h:outputText value="#{_loc.mailState}" />
+			    </p:column>  
+			    <p:column width="105"  headerText="PostCode" sortBy="#{_loc.mailPostcode}"
+			         	filterBy="#{_loc.mailPostcode}" filterMatchMode="contains" filterStyle="width: 40px;">
+			        <h:outputText value="#{_loc.mailPostcode}" />
+			    </p:column>                          
+
+			
+			</p:dataTable>			
+			
+			</p:overlayPanel>
 
 
     </ui:define>
