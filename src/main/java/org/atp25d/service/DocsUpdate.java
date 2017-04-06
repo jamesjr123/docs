@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.atp25d.model.Doctor;
 import org.atp25d.model.Location;
@@ -27,6 +28,9 @@ public class DocsUpdate {
 		return em.find(Doctor.class, doc.getDoctorNumber());    	
     }
     public void saveDoc(Doctor doc){
+    	if (doc.getDoctorId() == 0) {
+    		doc.setDoctorId(getNextDoctorId());
+    	}
 		em.merge(doc);    	
 		doctorEventSrc.fire(doc);
     }
@@ -37,4 +41,9 @@ public class DocsUpdate {
 		em.merge(loc);    	
 		locationEventSrc.fire(loc);
     }    
+	private int getNextDoctorId(){
+		 Query q = em.createNamedQuery("Doctor.findLastDocId");				
+		 int id = (Integer) (q.getSingleResult());
+		 return ++id;
+	}	     
 }

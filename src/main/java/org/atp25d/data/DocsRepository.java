@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -39,8 +40,8 @@ public class DocsRepository {
     	 return hasTaskAccess(loginId,"Read");
     }
     
-    	 public boolean hasTaskAccess(String loginId, String level) {
-    	 if (loginId==null || loginId.trim().equals("")) return false;
+	 public boolean hasTaskAccess(String loginId, String level) {
+		 if (loginId==null || loginId.trim().equals("")) return false;
 	   	 TypedQuery<UserAccess> query =
 			      em.createNamedQuery("UserAccess.findUserAccess", UserAccess.class);		  
 		  query.setParameter("userId", loginId);
@@ -52,6 +53,6 @@ public class DocsRepository {
 				return true; 
 			 }
 		 }       	    	
-    	return false; 
-    }
+		return false; 
+	}	 
 }

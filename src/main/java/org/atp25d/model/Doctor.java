@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name="doctors")
 @NamedQueries({
 @NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d "),
+@NamedQuery(name="Doctor.findLastDocId", query="select max(d.doctorId) FROM Doctor d") ,
 @NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber")
 })
 public class Doctor implements Serializable {
@@ -22,6 +23,8 @@ public class Doctor implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int doctorNumber;
+
+	private int doctorId;
 
 	private String firstName;
 
@@ -60,6 +63,14 @@ public class Doctor implements Serializable {
 
 	public void setTime_Stamp(Date time_Stamp) {
 		this.time_Stamp = time_Stamp;
+	}
+	
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 	
 	public int getDoctorNumber() {
