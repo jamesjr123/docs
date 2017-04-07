@@ -57,7 +57,7 @@ public class DocsRepository {
 		return false; 
 	}	
 	public List<DoctorNote> findDocNotes(int doctorId) {
-		TypedQuery<DoctorNote> query = em.createNamedQuery("DooctorNote.findByDocId",
+		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByDocId",
 				DoctorNote.class);
 		  query.setParameter("doctorId", doctorId);		
 		return query.getResultList();

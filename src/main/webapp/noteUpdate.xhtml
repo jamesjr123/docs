@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    
+    template="/WEB-INF/templates/template-lay.xhtml">    
+    <ui:define name="content">
+
+     <p:panelGrid columns="6" >
+          	<f:facet name="header">
+            	Update note details
+     		</f:facet>  
+			<p:column>
+                <p:outputLabel for="note" value="notes:" />
+			</p:column>
+			<p:column>			                
+				 <p:inputTextarea id="note" value="#{docsController.newNote.notes}"  rows="20" cols="200" counter="display" maxlength="4000" counterTemplate="{0} characters remaining." autoResize="false" />
+				    <h:outputText id="display" />
+			</p:column>
+												
+            </p:panelGrid>
+                
+                <p:panelGrid columns="4">
+                    <h:commandButton id="save"
+                           action="#{docsController.saveNote()}"
+                        value="Save" />
+                    <p:messages styleClass="messages"
+                       infoClass="valid"
+                        warnClass="warning" globalOnly="true" />
+                    <h:commandButton id="cancel"
+                        action="#{docsController.cancelN()}"
+                        value="Cancel" immediate="true" />                      
+                </p:panelGrid>       
+
+
+    </ui:define>
+</ui:composition>

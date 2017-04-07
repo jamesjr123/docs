@@ -34,7 +34,6 @@ public class DocsListProducer implements Serializable {
 
     private List<Doctor> doctors;
     private List<Location> locations;
-    private List<DoctorNote> docNotes;
 		
     @Produces
     @Named
@@ -46,8 +45,7 @@ public class DocsListProducer implements Serializable {
     @Named
     public List<Location> getLocations() {
         return locations;
-    }	
-        
+    }	        
     @PostConstruct
     public void init() {
     	retrieveAllDocs(); 
@@ -63,11 +61,7 @@ public class DocsListProducer implements Serializable {
     	if (locations==null) {
     		locations = docsRepository.findAllLocations();
     	}
-    }    
-    public void retrieveDocNotes(int doctorId) {
-    	docNotes = docsRepository.findDocNotes(doctorId);
-    	
-    }     
+    }      
     public void onLocationListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Location location) {
     	locations = docsRepository.findAllLocations();
     	doctors = docsRepository.findAllDocs();

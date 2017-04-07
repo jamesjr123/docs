@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.atp25d.model.Doctor;
+import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
@@ -41,6 +42,9 @@ public class DocsUpdate {
 		em.merge(loc);    	
 		locationEventSrc.fire(loc);
     }    
+    public void saveNote(DoctorNote docNote){
+		em.merge(docNote);    			
+    }        
 	private int getNextDoctorId(){
 		 Query q = em.createNamedQuery("Doctor.findLastDocId");				
 		 int id = (Integer) (q.getSingleResult());
