@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import org.atp25d.data.DocsRepository;
 import org.atp25d.model.Doctor;
+import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
 import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
@@ -46,6 +47,8 @@ public class DocsController implements Serializable {
 	private Doctor newDoc;
 	
 	private Location newLoc;
+	
+	private DoctorNote newNote;
 	
 	public Doctor getNewDoc() {
 		return newDoc;
@@ -122,15 +125,35 @@ public class DocsController implements Serializable {
 			return "locationUpdate";			
 		}
 		public String createLoc (){
-			newLoc = new Location();;
+			initNewLoc();
 			return "locationUpdate";
 		}
-		
+		public String createDoc (){
+			initNewDoc();
+			return "doctorUpdate";
+		}		
 		public String displayLoc (Location loc){
 			newLoc = loc; // docsUpdate.getDocForUpdate(doc);		
 			return "locationDisplay";			
-		}	
+		}
+		public String listDocNotes (Doctor doc){
+			newDoc = doc; // docsUpdate.getDocForUpdate(doc);	
+			docsRepository.findDocNotes(doc.getDoctorId());
+			return "doctorNotes";			
+		}			
 		public String selectLoc (Location loc){
+			newDoc.setLocation(loc);  		
+			return null;				
+		}
+		public String addLoc (Location loc){
+			Doctor docCopy=newDoc;
+			initNewDoc();
+			newDoc.setCategory(docCopy.getCategory());
+			newDoc.setDoctorId(docCopy.getDoctorId());
+			newDoc.setFirstName(docCopy.getFirstName());						
+			newDoc.setFirstName(docCopy.getFirstName());
+			newDoc.setMiddleName(docCopy.getMiddleName());
+			newDoc.setSurname(docCopy.getSurname());			
 			newDoc.setLocation(loc);  		
 			return null;				
 		}			
@@ -155,10 +178,12 @@ public class DocsController implements Serializable {
 			    initNewDoc();
 				return "locations";
 			  } 	   
-	   public void initNewDoc(){
-		   newDoc = new Doctor();
-	   }
-
+   private void initNewDoc(){
+	   newDoc = new Doctor();
+   }
+   private void initNewLoc(){
+	   newLoc = new Location();
+   }
 	public Location getNewLoc() {
 		return newLoc;
 	}

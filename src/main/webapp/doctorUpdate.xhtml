@@ -10,6 +10,9 @@
     <ui:define name="content">
 
      <p:panelGrid columns="6" >
+      		<f:facet name="header">
+            	Update Doctor details
+     		</f:facet>     
 			<p:column>
                 <p:outputLabel for="firstName" value="First Name:" />
 			</p:column>
@@ -46,7 +49,7 @@
 			</p:column>
             </p:panelGrid>
                 
-            <p:panelGrid columns="4">
+            <p:panelGrid columns="5">
                <p:column>                
                     <h:commandButton id="save"
                            action="#{docsController.saveDoc()}"
@@ -69,9 +72,12 @@
 			<p:overlayPanel id="locationPanel" for="locationBtn" hideEffect="fade" dynamic="true" >
 			 <p:dataTable  var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" 
 			         paginator="true" paginatorPosition="bottom"  id="locTable">
-			     <p:column width="95" >
+			     <p:column width="100" >
 			           <f:facet name="header">Select</f:facet>
-			           <h:commandLink  value="Select" action="#{docsController.selectLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          			           
+			           <h:commandLink  value="Select" action="#{docsController.selectLoc(_loc)}" rendered="#{docsController.newDoc.doctorNumber==0}"/>
+			           <h:commandLink  value="Replace" action="#{docsController.selectLoc(_loc)}" rendered="#{docsController.newDoc.doctorNumber>0}"/><br/>
+			           <h:commandLink  value="Add new" action="#{docsController.addLoc(_loc)}" rendered="#{docsController.newDoc.doctorNumber>0}"/>                                                                          			           
+			           
 			     </p:column>  			                   
 			    <p:column headerText="Location" sortBy="#{_loc.location}"
 			         	filterBy="#{_loc.location}" filterMatchMode="contains" filterStyle="width: 150px;">

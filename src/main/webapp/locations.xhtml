@@ -30,7 +30,9 @@
  <p:dataTable var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" 
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="locTable">
-         
+ 	<f:facet name="header">
+            Locations Listing
+     </f:facet>           
   	<f:facet name="{Exporters}">
  		<h:outputText value="Export data"/>
     	<h:commandLink>

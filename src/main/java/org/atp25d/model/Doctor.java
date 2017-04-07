@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="doctors")
 @NamedQueries({
-@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d "),
+@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d order by d.doctorId"),
 @NamedQuery(name="Doctor.findLastDocId", query="select max(d.doctorId) FROM Doctor d") ,
 @NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber")
 })

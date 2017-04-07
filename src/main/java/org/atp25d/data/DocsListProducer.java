@@ -15,7 +15,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.atp25d.model.Doctor;
+import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
+
 import java.io.Serializable;
 
 
@@ -32,6 +34,7 @@ public class DocsListProducer implements Serializable {
 
     private List<Doctor> doctors;
     private List<Location> locations;
+    private List<DoctorNote> docNotes;
 		
     @Produces
     @Named
@@ -61,7 +64,10 @@ public class DocsListProducer implements Serializable {
     		locations = docsRepository.findAllLocations();
     	}
     }    
-    
+    public void retrieveDocNotes(int doctorId) {
+    	docNotes = docsRepository.findDocNotes(doctorId);
+    	
+    }     
     public void onLocationListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Location location) {
     	locations = docsRepository.findAllLocations();
     	doctors = docsRepository.findAllDocs();
