@@ -54,6 +54,9 @@
 
 </p:dataTable>       
 <p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
+	<p:column>                
+        <p:messages globalOnly="true" />
+	</p:column>   
     <p:column> 
          <h:commandButton id="newNote"
                      action="#{docsController.createNote()}"   rendered='#{docsController.docsUpdateAccess}'

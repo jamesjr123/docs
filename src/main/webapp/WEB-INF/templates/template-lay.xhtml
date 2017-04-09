@@ -124,7 +124,7 @@
           document.getElementById('docs:hemail').value = email;
           document.getElementById('docs:hname').value = displayName;
           document.getElementById('docs:hlogged').value = true;
-          setLoggedin();
+        //  setLoggedin();
           var emailVerified = user.emailVerified;
           var photoURL = user.photoURL;
           var isAnonymous = user.isAnonymous;
@@ -196,7 +196,7 @@
 <h:inputHidden id="hemail" value="#{docsController.userEmail}"/>
 <h:inputHidden id="hname" value="#{docsController.userName}"/>
 <h:inputHidden id="hlogged" value="#{docsController.loggedIn}"/>
-<p:remoteCommand name="setLoggedin" process="@this,hname,hemail,hlogged" update="@this welcome detail" /> 
+<p:remoteCommand name="setLoggedin" process="hname,hemail,hlogged" update="welcome detail" /> 
 
 <h:body>
 	<p:layout style="height: 1000px;">
