@@ -42,8 +42,8 @@
 	</f:facet>
 
     <p:column headerText="Doctor" sortBy="#{_doc.surname}"
-     	filterBy="#{_doc.surname}" filterMatchMode="contains" filterStyle="width: 200px;">
-        <h:outputText value="#{_doc.firstName.concat(' ').concat(_doc.middleName).concat(' ').concat(_doc.surname)}" />
+     	filterBy="#{_doc.displayName}" filterMatchMode="contains" filterStyle="width: 200px;">
+        <h:outputText value="#{_doc.fullName}" />
     </p:column>
  
     <p:column headerText="Location" sortBy="#{_doc.location.location}"
@@ -73,25 +73,26 @@
 	    </p:column>        
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
-           <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docsUpdateAccess}'/><br/>
+           <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"/><br/>                                                                          
+           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docsUpdateAccess}'/>           
+     </p:column>  
+     <p:column width="95" exportable="false">           
            <h:commandLink value="Notes" action="#{docsController.listDocNotes(_doc)}"   rendered='#{docsController.docsReadAccess}'/>
      </p:column>  
-
 </p:dataTable>       
-<p:panelGrid columns="4">         
+<p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>         
 	<p:column>                
         <p:messages globalOnly="true" />
-	</p:column>                                     
+	</p:column>                               	            
 	<p:column>                                                                
         <h:commandButton id="locs" action="locations" value="Go to location list" />
-    </p:column>
+    </p:column>                         
     <p:column> 
          <h:commandButton id="newDoc"
                      action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'
              value="Add New Doctor"/>                          
-    </p:column>                                        
-                </p:panelGrid>  
+    </p:column>             
+</p:panelGrid>  
 
     </ui:define>
 </ui:composition>

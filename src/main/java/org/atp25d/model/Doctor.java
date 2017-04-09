@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="doctors")
 @NamedQueries({
-@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d order by d.doctorId"),
+@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d order by d.surname"),
 @NamedQuery(name="Doctor.findLastDocId", query="select max(d.doctorId) FROM Doctor d") ,
 @NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber")
 })
@@ -34,6 +34,12 @@ public class Doctor implements Serializable {
 
 	private String user;
 
+	@Transient
+	private String fullName;	
+	
+	@Transient
+	private String displayName;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time_Stamp;	
 	
@@ -48,7 +54,20 @@ public class Doctor implements Serializable {
 	
 	public Doctor() {
 	}
+	public String getDisplayName() {
+		return firstName+" "+surname;
+	}
 
+	public String getFullName() {
+		return firstName+ " "+middleName+" "+surname;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}	
+	
 	public String getCategory() {
 		return category;
 	}

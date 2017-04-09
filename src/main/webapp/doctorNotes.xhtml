@@ -53,7 +53,7 @@
      </p:column>  
 
 </p:dataTable>       
-<p:panelGrid columns="4">
+<p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
     <p:column> 
          <h:commandButton id="newNote"
                      action="#{docsController.createNote()}"   rendered='#{docsController.docsUpdateAccess}'
