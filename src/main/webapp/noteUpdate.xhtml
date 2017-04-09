@@ -8,11 +8,11 @@
     
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
-
-     <p:panelGrid columns="6" >
           	<f:facet name="header">
-            	Update note details
+            	Update note details -  <h:outputText id="DocName" value="#{docsController.newDoc.fullName}"/>
      		</f:facet>  
+     <p:panelGrid columns="6" >
+
 			<p:column>
                 <p:outputLabel for="note" value="notes:" />
 			</p:column>
@@ -20,7 +20,9 @@
 				 <p:inputTextarea id="note" value="#{docsController.newNote.notes}"  rows="20" cols="200" counter="display" maxlength="4000" counterTemplate="{0} characters remaining." autoResize="false" />
 				    <h:outputText id="display" />
 			</p:column>
-												
+			<p:column>
+                <p:outputLabel for="note" value="notes:" />
+			</p:column>
             </p:panelGrid>
                 
                 <p:panelGrid columns="4">

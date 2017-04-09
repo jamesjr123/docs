@@ -31,7 +31,7 @@
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
  	<f:facet name="header">
-            Notes listing for <h:outputText id="DocName" value="#{docsController.newDoc.surname}"/>
+            Notes listing for <h:outputText id="DocName" value="#{docsController.newDoc.fullName}"/>
      </f:facet>         
   	<f:facet name="{Exporters}">
  		<h:outputText value="Export data"/>
@@ -49,7 +49,7 @@
     </p:column>
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
-           <h:commandLink value="Display" action="#{docsController.displayDoc(_docNote)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
+           <h:commandLink value="Display" action="#{docsController.displayNote(_docNote)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
      </p:column>  
 
 </p:dataTable>       

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    
+    template="/WEB-INF/templates/template-lay.xhtml">    
+    <ui:define name="content">
+          	<f:facet name="header">
+            	Display note details -  <h:outputText id="DocName" value="#{docsController.newDoc.fullName}"/>
+     		</f:facet>  
+     <p:panelGrid columns="6" >
+
+			<p:column>
+                <p:outputLabel for="note" value="notes:" />
+			</p:column>
+			<p:column>			                
+				 <h:outputText id="note" value="#{docsController.newNote.notes}" />				    
+			</p:column>												
+            </p:panelGrid>
+     <p:panelGrid columns="4" >
+			<p:column>
+                <p:outputLabel for="date" value="date/time:" />
+			</p:column>
+			<p:column>			                
+				 <h:outputText id="date" value="#{docsController.newNote.time_Stamp}" />				    
+			</p:column>
+			<p:column>
+                <p:outputLabel for="user" value="created by:" />
+			</p:column>
+			<p:column>			                
+				 <h:outputText id="user" value="#{docsController.newNote.user}" />				    
+			</p:column>												
+            </p:panelGrid>                
+                <p:panelGrid columns="4">                    
+                    <h:commandButton id="back"
+                                action="doctorNotes"
+                        value="Go back" />                     
+                </p:panelGrid>        
+
+
+    </ui:define>
+</ui:composition>

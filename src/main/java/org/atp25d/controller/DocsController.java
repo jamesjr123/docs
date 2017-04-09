@@ -124,8 +124,11 @@ public class DocsController implements Serializable {
 	}
 	public String displayDoc (Doctor doc){
 		newDoc = doc; // docsUpdate.getDocForUpdate(doc);		
-		return "doctorDisplay";
-		
+		return "doctorDisplay";		
+	}	
+	public String displayNote (DoctorNote docNote){
+		newNote = docNote; // docsUpdate.getDocForUpdate(doc);		
+		return "noteDisplay";		
 	}	
 	   public String saveDoc()  {
 		   	newDoc.setUser(userEmail);
