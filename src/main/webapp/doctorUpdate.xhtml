@@ -12,14 +12,21 @@
      <p:panelGrid columns="6" >
       		<f:facet name="header">
             	Update Doctor details
-     		</f:facet>     
+     		</f:facet> 
+			<p:column>
+                <p:outputLabel for="title" value="Title" />
+			</p:column>
+			<p:column>			                
+                <p:inputText id="title" value="title" maxlength="20"/> 					                       
+                <p:message for="title"/>                
+			</p:column>     		    
 			<p:column>
                 <p:outputLabel for="firstName" value="First Name:" />
 			</p:column>
 			<p:column>			                
                 <p:inputText id="firstName" value="#{docsController.newDoc.firstName}" maxlength="60" required="yes"/> 					                       
                 <p:message for="firstName"/>                
-			</p:column>
+			</p:column>			
 			<p:column>
                 <p:outputLabel for="middleName" value="Middle Name:" />
 			</p:column>			
@@ -40,7 +47,14 @@
 			<p:column >			                
                 <p:inputText id="category" value="#{docsController.newDoc.category}" /> 					                       
                 <p:message for="category"/>                
+			</p:column>
+			<p:column>
+                <p:outputLabel for="quals" value="Qualifications" />
 			</p:column>			
+			<p:column >			                
+                <p:inputText id="quals" value="#{docsController.newDoc.quals}" maxlength="200" /> 					                       
+                <p:message for="quals"/>                
+			</p:column>									
 			<p:column>		
 				<p:outputLabel for="Address" value="Address:" />			
 			</p:column>

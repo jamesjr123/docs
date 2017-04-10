@@ -34,6 +34,10 @@ public class Doctor implements Serializable {
 
 	private String user;
 
+	private String title;
+
+	private String quals;
+	
 	@Transient
 	private String fullName;	
 	
@@ -58,6 +62,18 @@ public class Doctor implements Serializable {
 		return firstName+" "+surname;
 	}
 
+	public String getQuals() {
+		return quals;
+	}
+	public void setQuals(String quals) {
+		this.quals = quals;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getFullName() {
 		return firstName+ " "+middleName+" "+surname;
 	}
