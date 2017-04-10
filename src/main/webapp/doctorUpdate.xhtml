@@ -49,12 +49,19 @@
                 <p:message for="category"/>                
 			</p:column>
 			<p:column>
-                <p:outputLabel for="quals" value="Qualifications" />
+                <p:outputLabel for="quals" value="Qualifications:" />
 			</p:column>			
 			<p:column >			                
                 <p:inputText id="quals" value="#{docsController.newDoc.quals}" maxlength="200" /> 					                       
                 <p:message for="quals"/>                
-			</p:column>									
+			</p:column>
+			<p:column>
+                <p:outputLabel for="email" value="Email:" />
+			</p:column>			
+			<p:column >			                
+                <p:inputText id="email" value="#{docsController.newDoc.emailAddress}" maxlength="200" /> 					                       
+                <p:message for="email"/>                
+			</p:column>
 			<p:column>		
 				<p:outputLabel for="Address" value="Address:" />			
 			</p:column>

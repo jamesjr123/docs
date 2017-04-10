@@ -47,7 +47,14 @@
 			<p:column>			                
                 <p:inputText id="mailPostcode" value="#{docsController.newLoc.mailPostcode}" maxlength="4" required="yes"/> 					                       
                 <p:message for="mailPostcode"/>                
-			</p:column>												
+			</p:column>	
+			<p:column>
+                <p:outputLabel for="email" value="Email:" />
+			</p:column>			
+			<p:column >			                
+                <p:inputText id="email" value="#{docsController.newLoc.emailAddress}" maxlength="200" /> 					                       
+                <p:message for="email"/>                
+			</p:column>														
             </p:panelGrid>
                 
                 <p:panelGrid columns="4">

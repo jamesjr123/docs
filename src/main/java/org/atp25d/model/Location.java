@@ -35,6 +35,8 @@ public class Location implements Serializable {
 
 	private String mailSuburb;
 
+	private String emailAddress;
+	
 	private String user;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -93,6 +95,14 @@ public class Location implements Serializable {
 
 	public void setMailState(String mailState) {
 		this.mailState = mailState;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	public String getMailSuburb() {
