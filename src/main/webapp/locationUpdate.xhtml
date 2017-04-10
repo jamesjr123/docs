@@ -54,7 +54,22 @@
 			<p:column >			                
                 <p:inputText id="email" value="#{docsController.newLoc.emailAddress}" maxlength="200" /> 					                       
                 <p:message for="email"/>                
-			</p:column>														
+			</p:column>						
+			<p:column>
+                <p:outputLabel for="phone" value="Phone Number:" />
+			</p:column>			
+			<p:column >			                
+                <p:inputText id="phone" value="#{docsController.newLoc.phoneNumber}" maxlength="20" /> 					                       
+                <p:message for="phone"/>                
+			</p:column>
+			<p:column>
+                <p:outputLabel for="fax" value="Fax Number:" />
+			</p:column>			
+			<p:column >			                
+                <p:inputText id="fax" value="#{docsController.newLoc.faxNumber}" maxlength="20" /> 					                       
+                <p:message for="fax"/>                
+			</p:column>			
+			
             </p:panelGrid>
                 
                 <p:panelGrid columns="4">

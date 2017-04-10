@@ -17,11 +17,8 @@
                 <p:outputLabel for="note" value="notes:" />
 			</p:column>
 			<p:column>			                
-				 <p:inputTextarea id="note" value="#{docsController.newNote.notes}"  rows="20" cols="200" counter="display" maxlength="4000" counterTemplate="{0} characters remaining." autoResize="false" />
+				 <p:inputTextarea id="note" value="#{docsController.newNote.notes}"  rows="20" cols="100" counter="display" maxlength="4000" counterTemplate="{0} characters remaining." autoResize="false" />
 				    <h:outputText id="display" />
-			</p:column>
-			<p:column>
-                <p:outputLabel for="note" value="notes:" />
 			</p:column>
             </p:panelGrid>
                 

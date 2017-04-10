@@ -40,6 +40,8 @@ public class Doctor implements Serializable {
 	
 	private String emailAddress;
 	
+	private String phoneNumber;
+	
 	@Transient
 	private String fullName;	
 	
@@ -72,6 +74,12 @@ public class Doctor implements Serializable {
 	}
 	public String getTitle() {
 		return title;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	public String getEmailAddress() {
 		return emailAddress;

@@ -37,6 +37,10 @@ public class Location implements Serializable {
 
 	private String emailAddress;
 	
+	private String phoneNumber;
+
+	private String faxNumber;
+	
 	private String user;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -67,6 +71,22 @@ public class Location implements Serializable {
 
 	public String getLocation() {
 		return this.location;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public String getFaxNumber() {
+		return faxNumber;
+	}
+
+	public void setFaxNumber(String faxNumber) {
+		this.faxNumber = faxNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public void setLocation(String location) {

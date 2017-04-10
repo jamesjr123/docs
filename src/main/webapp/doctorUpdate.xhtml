@@ -62,6 +62,13 @@
                 <p:inputText id="email" value="#{docsController.newDoc.emailAddress}" maxlength="200" /> 					                       
                 <p:message for="email"/>                
 			</p:column>
+			<p:column>
+                <p:outputLabel for="phone" value="Contact Number:" />
+			</p:column>			
+			<p:column >			                
+                <p:inputText id="phone" value="#{docsController.newDoc.phoneNumber}" maxlength="20" /> 					                       
+                <p:message for="phone"/>                
+			</p:column>			
 			<p:column>		
 				<p:outputLabel for="Address" value="Address:" />			
 			</p:column>
