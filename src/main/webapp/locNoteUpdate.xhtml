@@ -9,7 +9,7 @@
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
           	<f:facet name="header">
-            	Update note details -  <h:outputText id="DocName" value="#{docsController.newDoc.fullName}"/>
+            	Update note details -  <h:outputText id="DocName" value="#{docsController.newLoc.location}"/>
      		</f:facet>  
      <p:panelGrid columns="6" >
 
@@ -17,20 +17,20 @@
                 <p:outputLabel for="note" value="notes:" />
 			</p:column>
 			<p:column>			                
-				 <p:inputTextarea id="note" value="#{docsController.newDocNote.notes}"  rows="20" cols="100" counter="display" maxlength="4000" counterTemplate="{0} characters remaining." autoResize="false" />
+				 <p:inputTextarea id="note" value="#{docsController.newLocNote.notes}"  rows="20" cols="100" counter="display" maxlength="4000" counterTemplate="{0} characters remaining." autoResize="false" />
 				    <h:outputText id="display" />
 			</p:column>
             </p:panelGrid>
                 
                 <p:panelGrid columns="4">
                     <h:commandButton id="save"
-                           action="#{docsController.saveDocNote()}"
+                           action="#{docsController.saveLocNote()}"
                         value="Save" />
                     <p:messages styleClass="messages"
                        infoClass="valid"
                         warnClass="warning" globalOnly="true" />
                     <h:commandButton id="cancel"
-                        action="#{docsController.cancelN()}"
+                        action="#{docsController.cancelLN()}"
                         value="Cancel" immediate="true" />                      
                 </p:panelGrid>       
 

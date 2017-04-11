@@ -11,6 +11,7 @@ import org.atp25d.data.DocsRepository;
 import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
+import org.atp25d.model.LocationNote;
 import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
 
@@ -31,7 +32,9 @@ public class DocsController implements Serializable {
 	private boolean loggedIn;
 	private boolean docsReadAccess;
 	private boolean docsUpdateAccess;
+	private boolean fromDoc;
     private List<DoctorNote> doctorNotes;
+    private List<LocationNote> locationNotes;
 	
 	
 	@Inject
@@ -51,15 +54,30 @@ public class DocsController implements Serializable {
     public List<DoctorNote> getDoctorNotes() {
         return doctorNotes;
     }	
-	
+    @Produces
+    @Named	
+	public List<LocationNote> getLocationNotes() {
+		return locationNotes;
+	}
+
 	private Doctor newDoc;
 	
 	private Location newLoc;
 	
 	private DoctorNote newDocNote;
 	
+	private LocationNote newLocNote;
+	
 	public DoctorNote getNewDocNote() {
 		return newDocNote;
+	}
+
+	public LocationNote getNewLocNote() {
+		return newLocNote;
+	}
+
+	public void setNewLocNote(LocationNote newLocNote) {
+		this.newLocNote = newLocNote;
 	}
 
 	public void setNewNote(DoctorNote newDocNote) {
@@ -121,18 +139,26 @@ public class DocsController implements Serializable {
 		newDoc = docsUpdate.getDocForUpdate(doc);
 		return "doctorUpdate";		
 	}
-	public String updateNote (DoctorNote docNote){
+	public String updateDocNote (DoctorNote docNote){
 		newDocNote = docsUpdate.getDocNoteForUpdate(docNote);
 		return "noteUpdate";		
-	}	
+	}
+	public String updateLocNote (LocationNote locNote){
+		newLocNote = docsUpdate.getLocNoteForUpdate(locNote);
+		return "locNoteUpdate";		
+	}		
 	public String displayDoc (Doctor doc){
 		newDoc = doc; // docsUpdate.getDocForUpdate(doc);		
 		return "doctorDisplay";		
 	}	
-	public String displayNote (DoctorNote docNote){
+	public String displayDocNote (DoctorNote docNote){
 		newDocNote = docNote; // docsUpdate.getDocForUpdate(doc);		
 		return "noteDisplay";		
-	}	
+	}
+	public String displayLocNote (LocationNote locNote){
+		newLocNote = locNote;  		
+		return "locNoteDisplay";		
+	}		
 	   public String saveDoc()  {
 		   	newDoc.setUser(userEmail);
 		   	newDoc.setTime_Stamp(new Date());
@@ -148,16 +174,26 @@ public class DocsController implements Serializable {
 		}
 		public String createLoc (){
 			initNewLoc();
+			fromDoc=false;
 			return "locationUpdate";
 		}
+		public String createLocFromDoc (){
+			initNewLoc();
+			fromDoc=true;
+			return "locationUpdate";
+		}		
 		public String createDoc (){
 			initNewDoc();
 			return "doctorUpdate";
 		}
 		public String createNote (){
-			initNewNote();
+			initNewDocNote();
 			return "noteUpdate";
-		}				
+		}
+		public String createLocNote (){
+			initNewLocNote();
+			return "locNoteUpdate";
+		}						
 		public String displayLoc (Location loc){
 			newLoc = loc; // docsUpdate.getDocForUpdate(doc);		
 			return "locationDisplay";			
@@ -166,7 +202,12 @@ public class DocsController implements Serializable {
 			newDoc = doc; // docsUpdate.getDocForUpdate(doc);		    
 		    doctorNotes = docsRepository.findDocNotes(doc.getDoctorId());		    			    			
 			return "doctorNotes";			
-		}			
+		}
+		public String listLocNotes (Location loc){
+			newLoc = loc; 		    
+		    locationNotes = docsRepository.findLocNotes(loc.getLocationNumber());		    			    			
+			return "locationNotes";			
+		}					
 		public String selectLoc (Location loc){
 			newDoc.setLocation(loc);  		
 			return null;				
@@ -191,22 +232,39 @@ public class DocsController implements Serializable {
 			   	newLoc.setUser(userEmail);	
 			   	newLoc.setTime_Stamp(new Date());			   	
 			    docsUpdate.saveLoc(newLoc);  
+			    if (fromDoc)
+			    {
+				 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "New Location added", "update");
+			          facesContext.addMessage(null, m);			    	
+			    	return "doctorUpdate";
+			    }
 			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Location record updated", "update");
-				          facesContext.addMessage(null, m);
-				  
+				          facesContext.addMessage(null, m);				  
 					return "locations";
 				  }
-		   public String saveNote()  {
+	   
+		   public String saveDocNote()  {
 			   	newDocNote.setUser(userEmail);	
 			   	newDocNote.setTime_Stamp(new Date());	
 			   	newDocNote.setDoctorId(newDoc.getDoctorId());
 			   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());			   	
-			    docsUpdate.saveNote(newDocNote);  
+			    docsUpdate.saveDocNote(newDocNote);  
 			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor note updated", "update");
 				          facesContext.addMessage(null, m);
 				 return listDocNotes(newDoc);
 					//return "locations";
-				  }	  		   
+				  }
+		   public String saveLocNote()  {
+			   	newLocNote.setUser(userEmail);	
+			   	newLocNote.setTime_Stamp(new Date());	
+			   	newLocNote.setNoteId(newLocNote.getNoteId());
+			   	newLocNote.setLocationNumber(newLoc.getLocationNumber());
+			    docsUpdate.saveLocNote(newLocNote);  
+			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor note updated", "update");
+				          facesContext.addMessage(null, m);
+				 return listLocNotes(newLoc);
+					//return "locations";
+				  }	  			   
 	   public String cancel()  {
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor update cancelled", "update cancelled");
 			          facesContext.addMessage(null, m);
@@ -214,6 +272,10 @@ public class DocsController implements Serializable {
 				return "index";
 			  }
 	   public String cancelL()  {
+		    if (fromDoc)
+		    {
+		    	return "doctorUpdate";
+		    }		   
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Location update cancelled", "update cancelled");
 			          facesContext.addMessage(null, m);
 			    initNewLoc();
@@ -222,16 +284,25 @@ public class DocsController implements Serializable {
 	   public String cancelN()  {
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Note update cancelled", "update cancelled");
 			          facesContext.addMessage(null, m);
-			    initNewNote();
+			    initNewDocNote();
 				return "doctorNotes";
-			  } 	   	   
-   private void initNewDoc(){
+			  }
+	   public String cancelLN()  {
+		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Note update cancelled", "update cancelled");
+			          facesContext.addMessage(null, m);
+			    initNewDocNote();
+				return "locationNotes";
+			  } 	   	  	   
+	   public void initNewDoc(){
 	   newDoc = new Doctor();
    }
-   private void initNewNote(){
+   public void initNewDocNote(){
 	   newDocNote = new DoctorNote();
-   }      
-   private void initNewLoc(){
+   }
+   public void initNewLocNote(){
+	   newLocNote = new LocationNote();
+   }         
+   public void initNewLoc(){
 	   newLoc = new Location();
    }
 	public Location getNewLoc() {

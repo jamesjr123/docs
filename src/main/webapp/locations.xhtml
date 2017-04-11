@@ -68,7 +68,9 @@
            <h:commandLink value="Display" action="#{docsController.displayLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
            <h:commandLink value="Update" action="#{docsController.updateLoc(_loc)}"   rendered='#{docsController.docsUpdateAccess}'/><br/>
      </p:column>  
-
+     <p:column width="95" exportable="false">           
+           <h:commandLink value="Notes" action="#{docsController.listLocNotes(_loc)}"   rendered='#{docsController.docsReadAccess}'/>
+     </p:column>
 </p:dataTable>       
                 <p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
 	<p:column>                

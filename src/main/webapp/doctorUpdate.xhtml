@@ -31,7 +31,7 @@
                 <p:outputLabel for="middleName" value="Middle Name:" />
 			</p:column>			
 			<p:column>			                
-                <p:inputText id="middleName" value="#{docsController.newDoc.middleName}" maxlength="60" required="true"/> 					                       
+                <p:inputText id="middleName" value="#{docsController.newDoc.middleName}" maxlength="60"/> 					                       
                 <p:message for="middleName"/>                
 			</p:column>
 			<p:column>
@@ -90,14 +90,18 @@
                  </p:column>                      
 				<p:column>                        
 					<p:commandButton id="locationBtn" value="Enter Location" type="button" />
-                 </p:column>                                                      	
-				<p:column>                        
+                 </p:column>                                                                    	
+				<p:column>          			             
                     <p:messages styleClass="messages"
                        infoClass="valid"
                         warnClass="warning" globalOnly="true" />
                 </p:column>
                 </p:panelGrid>       
+                
 			<p:overlayPanel id="locationPanel" for="locationBtn" hideEffect="fade" dynamic="true" >
+				                        
+					<h:commandButton id="createLocationn" value="Create New Location" action="#{docsController.createLocFromDoc}"/>
+                 			
 			 <p:dataTable  var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" 
 			         paginator="true" paginatorPosition="bottom"  id="locTable">
 			     <p:column width="100" >
@@ -131,7 +135,6 @@
 
 			
 			</p:dataTable>			
-			
 			</p:overlayPanel>
 
 

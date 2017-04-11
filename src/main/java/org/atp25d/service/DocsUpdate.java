@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
+import org.atp25d.model.LocationNote;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
 
@@ -30,7 +31,10 @@ public class DocsUpdate {
     }
     public DoctorNote getDocNoteForUpdate(DoctorNote docNote){
 		return em.find(DoctorNote.class, docNote.getNoteId());    	
-    }    
+    }
+    public LocationNote getLocNoteForUpdate(LocationNote locNote){
+		return em.find(LocationNote.class, locNote.getNoteId());    	
+    }        
     public void saveDoc(Doctor doc){
     	if (doc.getDoctorId() == 0) {
     		doc.setDoctorId(getNextDoctorId());
@@ -45,9 +49,12 @@ public class DocsUpdate {
 		em.merge(loc);    	
 		locationEventSrc.fire(loc);
     }    
-    public void saveNote(DoctorNote docNote){
+    public void saveDocNote(DoctorNote docNote){
 		em.merge(docNote);    			
-    }        
+    }
+    public void saveLocNote(LocationNote locNote){
+		em.merge(locNote);    			
+    }            
 	private int getNextDoctorId(){
 		 Query q = em.createNamedQuery("Doctor.findLastDocId");				
 		 int id = (Integer) (q.getSingleResult());

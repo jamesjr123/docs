@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
+import org.atp25d.model.LocationNote;
 import org.atp25d.model.UserAccess;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
@@ -61,5 +62,11 @@ public class DocsRepository {
 				DoctorNote.class);
 		  query.setParameter("doctorId", doctorId);		
 		return query.getResultList();
-	}	 
+	}
+	public List<LocationNote> findLocNotes(int locationNumber) {
+		TypedQuery<LocationNote> query = em.createNamedQuery("LocationNote.findByLocId",
+				LocationNote.class);
+		  query.setParameter("locationNumber", locationNumber);		
+		return query.getResultList();
+	}	 	
 }
