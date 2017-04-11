@@ -50,6 +50,7 @@
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayNote(_docNote)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
+           <h:commandLink value="Update" action="#{docsController.updateNote(_docNote)}"   rendered='#{docsController.docsUpdateAccess}'/>
      </p:column>  
 
 </p:dataTable>       

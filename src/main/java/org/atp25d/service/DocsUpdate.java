@@ -28,6 +28,9 @@ public class DocsUpdate {
     public Doctor getDocForUpdate(Doctor doc){
 		return em.find(Doctor.class, doc.getDoctorNumber());    	
     }
+    public DoctorNote getDocNoteForUpdate(DoctorNote docNote){
+		return em.find(DoctorNote.class, docNote.getNoteId());    	
+    }    
     public void saveDoc(Doctor doc){
     	if (doc.getDoctorId() == 0) {
     		doc.setDoctorId(getNextDoctorId());

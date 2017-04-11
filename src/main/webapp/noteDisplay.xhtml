@@ -17,7 +17,7 @@
                 <p:outputLabel for="note" value="notes:" />
 			</p:column>
 			<p:column>			                
-				 <h:outputText id="note" value="#{docsController.newNote.notes}" />				    
+				 <h:outputText id="note" value="#{docsController.newDocNote.notes}" />				    
 			</p:column>												
             </p:panelGrid>
      <p:panelGrid columns="4" >
@@ -25,13 +25,13 @@
                 <p:outputLabel for="date" value="date/time:" />
 			</p:column>
 			<p:column>			                
-				 <h:outputText id="date" value="#{docsController.newNote.time_Stamp}" />				    
+				 <h:outputText id="date" value="#{docsController.newDocNote.time_Stamp}" />				    
 			</p:column>
 			<p:column>
                 <p:outputLabel for="user" value="created by:" />
 			</p:column>
 			<p:column>			                
-				 <h:outputText id="user" value="#{docsController.newNote.user}" />				    
+				 <h:outputText id="user" value="#{docsController.newDocNote.user}" />				    
 			</p:column>												
             </p:panelGrid>                
                 <p:panelGrid columns="4">                    

@@ -56,14 +56,14 @@ public class DocsController implements Serializable {
 	
 	private Location newLoc;
 	
-	private DoctorNote newNote;
+	private DoctorNote newDocNote;
 	
-	public DoctorNote getNewNote() {
-		return newNote;
+	public DoctorNote getNewDocNote() {
+		return newDocNote;
 	}
 
-	public void setNewNote(DoctorNote newNote) {
-		this.newNote = newNote;
+	public void setNewNote(DoctorNote newDocNote) {
+		this.newDocNote = newDocNote;
 	}
 
 	public Doctor getNewDoc() {
@@ -119,15 +119,18 @@ public class DocsController implements Serializable {
 	}	
 	public String updateDoc (Doctor doc){
 		newDoc = docsUpdate.getDocForUpdate(doc);
-		return "doctorUpdate";
-		
+		return "doctorUpdate";		
 	}
+	public String updateNote (DoctorNote docNote){
+		newDocNote = docsUpdate.getDocNoteForUpdate(docNote);
+		return "noteUpdate";		
+	}	
 	public String displayDoc (Doctor doc){
 		newDoc = doc; // docsUpdate.getDocForUpdate(doc);		
 		return "doctorDisplay";		
 	}	
 	public String displayNote (DoctorNote docNote){
-		newNote = docNote; // docsUpdate.getDocForUpdate(doc);		
+		newDocNote = docNote; // docsUpdate.getDocForUpdate(doc);		
 		return "noteDisplay";		
 	}	
 	   public String saveDoc()  {
@@ -177,6 +180,10 @@ public class DocsController implements Serializable {
 			newDoc.setFirstName(docCopy.getFirstName());
 			newDoc.setMiddleName(docCopy.getMiddleName());
 			newDoc.setSurname(docCopy.getSurname());			
+			newDoc.setTitle(docCopy.getTitle());			
+			newDoc.setQuals(docCopy.getQuals());
+			newDoc.setEmailAddress(docCopy.getEmailAddress());
+			newDoc.setPhoneNumber(docCopy.getPhoneNumber());
 			newDoc.setLocation(loc);  		
 			return null;				
 		}			
@@ -190,11 +197,11 @@ public class DocsController implements Serializable {
 					return "locations";
 				  }
 		   public String saveNote()  {
-			   	newNote.setUser(userEmail);	
-			   	newNote.setTime_Stamp(new Date());	
-			   	newNote.setDoctorId(newDoc.getDoctorId());
-			   	newNote.setDoctorNumber(newDoc.getDoctorNumber());			   	
-			    docsUpdate.saveNote(newNote);  
+			   	newDocNote.setUser(userEmail);	
+			   	newDocNote.setTime_Stamp(new Date());	
+			   	newDocNote.setDoctorId(newDoc.getDoctorId());
+			   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());			   	
+			    docsUpdate.saveNote(newDocNote);  
 			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor note updated", "update");
 				          facesContext.addMessage(null, m);
 				 return listDocNotes(newDoc);
@@ -222,7 +229,7 @@ public class DocsController implements Serializable {
 	   newDoc = new Doctor();
    }
    private void initNewNote(){
-	   newNote = new DoctorNote();
+	   newDocNote = new DoctorNote();
    }      
    private void initNewLoc(){
 	   newLoc = new Location();
