@@ -137,7 +137,6 @@
           var uid = user.uid;
           var providerData = user.providerData;
           // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('signout').disabled = false;   
           document.getElementById('signout').style.visibility = 'visible';
           document.getElementById('googleLog').style.visibility = 'hidden';
@@ -146,7 +145,6 @@
         } else {
           // User is signed out.
           // [START_EXCLUDE]
-          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
           document.getElementById('signout').disabled = true;
           document.getElementById('signout').style.visibility = 'hidden';
           document.getElementById('googleLog').style.visibility = 'visible';          
@@ -180,9 +178,6 @@
           <!-- [END google_button] -->         
           
 
-          <div class="quickstart-user-details-container">
-            Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>            
-          </div>
         
       </div>
 
