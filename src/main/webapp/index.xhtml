@@ -25,11 +25,11 @@
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
       <!-- h1>Welcome to the Doctors list</h1-->
-
-                
- <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true"
+                 
+ <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" 
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
+<p:ajax event="filter" listener="#{docsController.filterListenerDocs}"/>                  
  	<f:facet name="header">
             Doctors Listing
      </f:facet>         
@@ -41,33 +41,33 @@
           </h:commandLink>
 	</f:facet>
 
-    <p:column headerText="Doctor" sortBy="#{_doc.surname}"
+    <p:column id="displayName" headerText="Doctor" sortBy="#{_doc.surname}"
      	filterBy="#{_doc.displayName}" filterMatchMode="contains" filterStyle="width: 200px;">
         <h:outputText value="#{_doc.fullName}" />
     </p:column>
  
-    <p:column headerText="Location" sortBy="#{_doc.location.location}"
+    <p:column id="location_location" headerText="Location" sortBy="#{_doc.location.location}"
          	filterBy="#{_doc.location.location}" filterMatchMode="contains" filterStyle="width: 150px;">
         <h:outputText value="#{_doc.location.location}" />
     </p:column>
-    <p:column headerText="Address"
+    <p:column headerText="Address" id="location_mailAddress1"
          	filterBy="#{_doc.location.mailAddress1}" filterMatchMode="contains">
         <h:outputText value="#{_doc.location.mailAddress1}" />
     </p:column>
 
-    <p:column headerText="Suburb" sortBy="#{_doc.location.mailSuburb} "
+    <p:column id="location_mailSuburb" headerText="Suburb" sortBy="#{_doc.location.mailSuburb} "
          	filterBy="#{_doc.location.mailSuburb}" filterMatchMode="contains" filterStyle="width: 150px;">
         <h:outputText value="#{_doc.location.mailSuburb}" />
     </p:column>
-    <p:column  width="95" headerText="State" sortBy="#{_doc.location.mailState}"
+    <p:column  id="location_mailState" width="95" headerText="State" sortBy="#{_doc.location.mailState}"
          	filterBy="#{_doc.location.mailState}" filterMatchMode="exact" filterStyle="width: 40px;">
         <h:outputText value="#{_doc.location.mailState}" />
     </p:column>  
-    <p:column width="105"  headerText="PostCode" sortBy="#{_doc.location.mailPostcode}"
+    <p:column id="location_mailPostcode" width="105"  headerText="PostCode" sortBy="#{_doc.location.mailPostcode}"
          	filterBy="#{_doc.location.mailPostcode}" filterMatchMode="contains" filterStyle="width: 40px;">
         <h:outputText value="#{_doc.location.mailPostcode}" />
     </p:column>                         
-	   <p:column  headerText="Category" sortBy="#{_doc.category}"
+	   <p:column  id="category" headerText="Category" sortBy="#{_doc.category}"
 	         	filterBy="#{_doc.category}" filterMatchMode="contains" filterStyle="width: 100px;">
 	        <h:outputText value="#{_doc.category}" />
 	    </p:column>        

@@ -43,6 +43,9 @@ public class Location implements Serializable {
 	
 	private String user;
 
+	@Transient
+	private String displayName;	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time_Stamp;	
 		
@@ -61,6 +64,15 @@ public class Location implements Serializable {
 		this.time_Stamp = time_Stamp;
 	}	
 	
+	public String getDisplayName() {
+		return location+ " "+mailAddress1+" "+mailSuburb+" "+mailPostcode+" "+mailState;
+		
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
 	public int getLocationNumber() {
 		return this.locationNumber;
 	}

@@ -32,7 +32,13 @@ public class DocsRepository {
 				Doctor.class);
 		return query.getResultList();
 	}
+	public List<Doctor> findAllDocsLoc(Location loc) {
 
+		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findByLoc",
+				Doctor.class);
+		  query.setParameter("locationNumber", loc.getLocationNumber());		
+		return query.getResultList();
+	}
 	public List<Location> findAllLocations() {
 		TypedQuery<Location> query = em.createNamedQuery("Location.findAll",
 				Location.class);

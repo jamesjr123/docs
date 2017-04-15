@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NamedQueries({
 @NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d order by d.surname"),
 @NamedQuery(name="Doctor.findLastDocId", query="select max(d.doctorId) FROM Doctor d") ,
+@NamedQuery(name="Doctor.findByLoc", query="SELECT d FROM Doctor d where d.location.locationNumber = :locationNumber order by d.surname"),
 @NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber")
 })
 public class Doctor implements Serializable {
@@ -73,6 +74,9 @@ public class Doctor implements Serializable {
 		this.quals = quals;
 	}
 	public String getTitle() {
+		if (title==null) {
+			setTitle("");
+		}
 		return title;
 	}
 	public String getPhoneNumber() {
@@ -91,7 +95,7 @@ public class Doctor implements Serializable {
 		this.title = title;
 	}
 	public String getFullName() {
-		return firstName+ " "+middleName+" "+surname;
+		return getTitle()+" "+firstName+ " "+middleName+" "+surname;
 	}
 	public void setFullName(String fullName) {
 		this.fullName = fullName;

@@ -40,36 +40,38 @@
               <p:dataExporter type="xls" target="locTable" fileName="loclisting" />
           </h:commandLink>
 	</f:facet>
+<p:ajax event="filter" listener="#{docsController.filterListenerLocs}"/>                  
 
  
-    <p:column headerText="Location" sortBy="#{_loc.location}"
+    <p:column id="location" headerText="Location" sortBy="#{_loc.location}"
          	filterBy="#{_loc.location}" filterMatchMode="contains" filterStyle="width: 150px;">
         <h:outputText value="#{_loc.location}" />
     </p:column>
-    <p:column headerText="Address"
+    <p:column id="mailAddress1" headerText="Address"
          	filterBy="#{_loc.mailAddress1}" filterMatchMode="contains">
         <h:outputText value="#{_loc.mailAddress1}" />
     </p:column>
 
-    <p:column headerText="Suburb" sortBy="#{_loc.mailSuburb} "
+    <p:column id="mailSuburb" headerText="Suburb" sortBy="#{_loc.mailSuburb} "
          	filterBy="#{_loc.mailSuburb}" filterMatchMode="contains" filterStyle="width: 150px;">
         <h:outputText value="#{_loc.mailSuburb}" />
     </p:column>
-    <p:column  width="95" headerText="State" sortBy="#{_loc.mailState}"
+    <p:column  id="mailState"  width="95" headerText="State" sortBy="#{_loc.mailState}"
          	filterBy="#{_loc.mailState}" filterMatchMode="exact" filterStyle="width: 40px;">
         <h:outputText value="#{_loc.mailState}" />
     </p:column>  
-    <p:column width="105"  headerText="PostCode" sortBy="#{_loc.mailPostcode}"
+    <p:column id="mailPostcode"  width="105"  headerText="PostCode" sortBy="#{_loc.mailPostcode}"
          	filterBy="#{_loc.mailPostcode}" filterMatchMode="contains" filterStyle="width: 40px;">
         <h:outputText value="#{_loc.mailPostcode}" />
     </p:column>                          
-     <p:column width="95" exportable="false">
+     <p:column  width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
            <h:commandLink value="Update" action="#{docsController.updateLoc(_loc)}"   rendered='#{docsController.docsUpdateAccess}'/><br/>
      </p:column>  
      <p:column width="95" exportable="false">           
-           <h:commandLink value="Notes" action="#{docsController.listLocNotes(_loc)}"   rendered='#{docsController.docsReadAccess}'/>
+           <h:commandLink value="Notes" action="#{docsController.listLocNotes(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>
+           <h:commandLink value="Doctors" action="#{docsController.listDocsByLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/>
      </p:column>
 </p:dataTable>       
                 <p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
@@ -77,7 +79,7 @@
         <p:messages globalOnly="true" />
 	</p:column>                                       
                     <h:commandButton id="doctors"
-                                action="index"
+                                action="#{docsController.listDoctors()}"
                         value="Go to Doctor list" />                     
                     <h:commandButton id="newLoc"
                                 action="#{docsController.createLoc()}"   rendered='#{docsController.docsUpdateAccess}'

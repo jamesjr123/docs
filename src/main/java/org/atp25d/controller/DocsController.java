@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.atp25d.data.DocsListProducer;
 import org.atp25d.data.DocsRepository;
 import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
@@ -14,10 +15,17 @@ import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
 import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.data.FilterEvent;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 @SessionScoped
 @Named
@@ -34,9 +42,11 @@ public class DocsController implements Serializable {
 	private boolean docsUpdateAccess;
 	private boolean fromDoc;
     private List<DoctorNote> doctorNotes;
-    private List<LocationNote> locationNotes;
-	
-	
+    private List<LocationNote> locationNotes;    
+	private String docNameFilter;
+	private String docsList;
+
+    
 	@Inject
     private FacesSession facesSession;
 	
@@ -48,6 +58,9 @@ public class DocsController implements Serializable {
 	
 	@Inject
 	private DocsUpdate docsUpdate;
+	
+	@Inject
+	private DocsListProducer  docsListProducer;
 	
     @Produces
     @Named
@@ -100,6 +113,15 @@ public class DocsController implements Serializable {
 		this.userName = userName;
 	}
 
+	public String getDocsList() {
+		if (docsList==null) {
+			setDocsList("index");
+		}
+		return docsList;
+	}
+	public void setDocsList(String docsList) {
+		this.docsList = docsList;
+	}
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -166,12 +188,22 @@ public class DocsController implements Serializable {
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor record updated", "update");
 			          facesContext.addMessage(null, m);
 			  
-				return "index";
+				return getDocsList();
 			  }
 		public String updateLoc (Location loc){
 			newLoc = docsUpdate.getLocForUpdate(loc);
 			return "locationUpdate";			
 		}
+		public String listDocsByLoc(Location loc){
+			docsListProducer.setSelectedLoc(loc);
+			docsListProducer.setDoctorsLoc(docsRepository.findAllDocsLoc(loc));
+			setDocsList("doctorsLoc");
+			return "doctorsLoc";			
+		}				
+		public String listDoctors(){
+			setDocsList("index");
+			return "index";			
+		}						
 		public String createLoc (){
 			initNewLoc();
 			fromDoc=false;
@@ -269,8 +301,11 @@ public class DocsController implements Serializable {
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor update cancelled", "update cancelled");
 			          facesContext.addMessage(null, m);
 			    initNewDoc();
-				return "index";
+			    return getDocsList();
 			  }
+	   public String backDoc()  {		 	  
+			    return getDocsList();
+			  }	   
 	   public String cancelL()  {
 		    if (fromDoc)
 		    {
@@ -305,6 +340,30 @@ public class DocsController implements Serializable {
    public void initNewLoc(){
 	   newLoc = new Location();
    }
+   public void filterListenerDocs(FilterEvent filterEvent) {
+	   filterListener(filterEvent,"docs:docTable");
+   }
+   public void filterListenerLocs(FilterEvent filterEvent) {
+	   filterListener(filterEvent,"docs:locTable");
+   }   
+   public void filterListener(FilterEvent filterEvent, String table) {
+	   Map<String, Object> ff = filterEvent.getFilters();
+	   DataTable s = (DataTable) filterEvent.getSource();	   
+		Map<String, Object> session = facesContext.getExternalContext().getSessionMap();
+		for (Entry<String, Object>  row : ff.entrySet()){
+			String columnId = row.getKey();
+			columnId =columnId.replace('.', '_'); // naming convention for filter column id sub fields
+			session.put(s.getClientId()+":"+columnId, row.getValue());	  									
+		}
+		if (ff.isEmpty()) {						
+			for (Entry<String, Object>  row : session.entrySet()){
+				if (row.getKey().startsWith(table)){
+					session.put(row.getKey(),"");	  														
+				}
+			}
+		}
+	
+	 }   
 	public Location getNewLoc() {
 		return newLoc;
 	}
@@ -312,4 +371,10 @@ public class DocsController implements Serializable {
 	public void setNewLoc(Location newLoc) {
 		this.newLoc = newLoc;
 	}
+	public String getDocNameFilter() {
+		return docNameFilter;
+	}
+	public void setDocNameFilter(String docNameFilter) {
+		this.docNameFilter = docNameFilter;
+	}	
 }

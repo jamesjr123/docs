@@ -33,7 +33,10 @@ public class DocsListProducer implements Serializable {
     private DocsRepository docsRepository;
 
     private List<Doctor> doctors;
-    private List<Location> locations;
+    private List<Doctor> doctorsLoc;    
+
+	private List<Location> locations;
+    private Location selectedLoc;
 		
     @Produces
     @Named
@@ -45,7 +48,12 @@ public class DocsListProducer implements Serializable {
     @Named
     public List<Location> getLocations() {
         return locations;
-    }	        
+    }
+    @Produces
+    @Named
+    public List<Doctor> getDoctorsLoc() {
+        return doctorsLoc;
+    }	    
     @PostConstruct
     public void init() {
     	retrieveAllDocs(); 
@@ -56,7 +64,11 @@ public class DocsListProducer implements Serializable {
     		doctors = docsRepository.findAllDocs();
     	}
     }
-   
+    public void retrieveAllDocsLoc(Location loc) {
+    	if (doctorsLoc==null) {
+    		doctors = docsRepository.findAllDocsLoc(loc);
+    	}
+    }   
     public void retrieveAllLocs() {
     	if (locations==null) {
     		locations = docsRepository.findAllLocations();
@@ -69,5 +81,20 @@ public class DocsListProducer implements Serializable {
     
     public void onDoctorListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Doctor doctor) {
     	doctors = docsRepository.findAllDocs();
+    	if (selectedLoc!=null && doctor.getLocation().getLocationNumber()==selectedLoc.getLocationNumber()) {
+    		doctorsLoc = docsRepository.findAllDocsLoc(doctor.getLocation());
+    	}
     }
+    @Produces
+    @Named
+	public Location getSelectedLoc() {
+		return selectedLoc;
+	}
+
+	public void setSelectedLoc(Location selectedLoc) {
+		this.selectedLoc = selectedLoc;
+	}
+    public void setDoctorsLoc(List<Doctor> doctorsLoc) {
+		this.doctorsLoc = doctorsLoc;
+	}	
 }
