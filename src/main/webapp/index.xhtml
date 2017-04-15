@@ -25,13 +25,19 @@
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
       <!-- h1>Welcome to the Doctors list</h1-->
-                 
+<script type="text/javascript">
+window.onload = function() {
+    PF('docsTable').filter();                  
+  };
+</script>                  
  <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple"  filteredValue="#{docsController.filteredDoctors}"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
-<p:ajax event="filter" listener="#{docsController.filterListenerDocs}"/>                  
+         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable" widgetVar="docsTable">
+<p:ajax event="filter" listener="#{docsController.filterListenerDocs}"/>
+        
+              
  	<f:facet name="header">
-            Doctors Listing
+            Doctors Listing                    
      </f:facet>         
   	<f:facet name="{Exporters}">
  		<h:outputText value="Export data"/>
@@ -78,7 +84,7 @@
      </p:column>  
      <p:column width="95" exportable="false">           
            <h:commandLink value="Notes" action="#{docsController.listDocNotes(_doc)}"   rendered='#{docsController.docsReadAccess}'/>
-     </p:column>  
+     </p:column>                                          
 </p:dataTable>       
 <p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>         
 	<p:column>                
@@ -90,7 +96,7 @@
     <p:column> 
          <h:commandButton id="newDoc"
                      action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'
-             value="Add New Doctor"/>                          
+             value="Add New Doctor"/>                                                    
     </p:column>             
 </p:panelGrid>  
 

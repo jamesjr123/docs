@@ -26,10 +26,14 @@
     <ui:define name="content">
       <!-- h1>Welcome to the locations list</h1-->
 
-                
+<script type="text/javascript">
+window.onload = function() {
+    PF('locsTable').filter();                  
+  };
+</script>                
  <p:dataTable var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" filteredValue="#{docsController.filteredLocations}" 
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="locTable">
+         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="locTable" widgetVar="locsTable">
  	<f:facet name="header">
             Locations Listing
      </f:facet>           
