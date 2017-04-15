@@ -45,6 +45,8 @@ public class DocsController implements Serializable {
     private List<LocationNote> locationNotes;    
 	private String docNameFilter;
 	private String docsList;
+    private List<Doctor> filteredDoctors;
+	private List<Location> filteredLocations;
 
     
 	@Inject
@@ -105,6 +107,12 @@ public class DocsController implements Serializable {
 		this.newDoc = newDoc;
 	}
 
+	public List<Location> getFilteredLocations() {
+		return filteredLocations;
+	}
+	public void setFilteredLocations(List<Location> filteredLocations) {
+		this.filteredLocations = filteredLocations;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -130,6 +138,12 @@ public class DocsController implements Serializable {
 		this.userEmail = userEmail;
 	}
 
+	public List<Doctor> getFilteredDoctors() {
+		return filteredDoctors;
+	}
+	public void setFilteredDoctors(List<Doctor> filteredDoctors) {
+		this.filteredDoctors = filteredDoctors;
+	}
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}

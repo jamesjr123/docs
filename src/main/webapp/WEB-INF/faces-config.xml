@@ -26,5 +26,15 @@
 
     <!-- Write your navigation rules here. You are encouraged to use CDI 
         for creating @Named managed beans. -->
-
+ <render-kit>
+       <renderer>
+           <component-family>org.primefaces.component</component-family>
+           <renderer-type>org.primefaces.component.DataTableRenderer</renderer-type>
+           <renderer-class>org.atp25d.controller.MyDataTableRenderer</renderer-class>
+       </renderer>
+    </render-kit>
+ <component>
+        <component-type>org.primefaces.component.DataTable</component-type>
+        <component-class>org.atp25d.controller.MyDataTable</component-class>
+    </component>    
 </faces-config>
