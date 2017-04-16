@@ -27,7 +27,7 @@
       <!-- h1>Welcome to the locations list</h1-->
 
 <script type="text/javascript">
-window.onload = function() {
+function filterLocs() {
     PF('locsTable').filter();                  
   };
 </script>                
@@ -87,7 +87,8 @@ window.onload = function() {
                         value="Go to Doctor list" />                     
                     <h:commandButton id="newLoc"
                                 action="#{docsController.createLoc()}"   rendered='#{docsController.docsUpdateAccess}'
-                        value="Add New location" />                        
+                        value="Add New location" />
+                        <p:remoteCommand  oncomplete="filterLocs()" autoRun="true"/>                        
                 </p:panelGrid>  
     </ui:define>
 </ui:composition>

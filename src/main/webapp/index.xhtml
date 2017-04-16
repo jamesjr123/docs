@@ -26,7 +26,7 @@
     <ui:define name="content">
       <!-- h1>Welcome to the Doctors list</h1-->
 <script type="text/javascript">
-window.onload = function() {
+ function filterDocs() {
     PF('docsTable').filter();                  
   };
 </script>                  
@@ -96,7 +96,8 @@ window.onload = function() {
     <p:column> 
          <h:commandButton id="newDoc"
                      action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'
-             value="Add New Doctor"/>                                                    
+             value="Add New Doctor"/>       
+	<p:remoteCommand  oncomplete="filterDocs()" autoRun="true"/>                                                          
     </p:column>             
 </p:panelGrid>  
 

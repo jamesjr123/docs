@@ -33,8 +33,5 @@
            <renderer-class>org.atp25d.controller.MyDataTableRenderer</renderer-class>
        </renderer>
     </render-kit>
- <component>
-        <component-type>org.primefaces.component.DataTable</component-type>
-        <component-class>org.atp25d.controller.MyDataTable</component-class>
-    </component>    
+    
 </faces-config>
