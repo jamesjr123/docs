@@ -32,9 +32,9 @@
 </script>                  
  <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple"  filteredValue="#{docsController.filteredDoctors}"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable" widgetVar="docsTable">
+         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable" widgetVar="docsTable" >
 <p:ajax event="filter" listener="#{docsController.filterListenerDocs}"/>
-        
+<p:ajax event="page" listener="#{docsController.pageListenerDocs}" />        
               
  	<f:facet name="header">
             Doctors Listing                    

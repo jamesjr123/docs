@@ -3,6 +3,7 @@ package org.atp25d.controller;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,7 +17,9 @@ import org.atp25d.model.LocationNote;
 import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
 import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.FilterEvent;
+import org.primefaces.event.data.PageEvent;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -47,7 +50,8 @@ public class DocsController implements Serializable {
 	private String docsList;
     private List<Doctor> filteredDoctors;
 	private List<Location> filteredLocations;
-
+	private int locsPageNo;
+	private int docsPageNo;
     
 	@Inject
     private FacesSession facesSession;
@@ -103,6 +107,12 @@ public class DocsController implements Serializable {
 		return newDoc;
 	}
 
+	public int getLocsPageNo() {
+		return locsPageNo;
+	}
+	public void setLocsPageNo(int locsPageNo) {
+		this.locsPageNo = locsPageNo;
+	}
 	public void setNewDoc(Doctor newDoc) {
 		this.newDoc = newDoc;
 	}
@@ -354,11 +364,19 @@ public class DocsController implements Serializable {
    public void initNewLoc(){
 	   newLoc = new Location();
    }
-   public void filterListenerDocs(FilterEvent filterEvent) {
+   public void pageListenerDocs(PageEvent event) {
+	   setDocsPageNo(event.getPage());	   
+	 }
+   public void pageListenerLocs(PageEvent event) {
+	   setLocsPageNo(event.getPage());	   
+	 }         
+   public void filterListenerDocs(FilterEvent filterEvent) {	   
 	   filterListener(filterEvent,"docs:docTable");
+	   setDocPageNo();
    }
    public void filterListenerLocs(FilterEvent filterEvent) {
 	   filterListener(filterEvent,"docs:locTable");
+	   setLocPageNo();
    }   
    public void filterListener(FilterEvent filterEvent, String table) {
 	   Map<String, Object> ff = filterEvent.getFilters();
@@ -375,9 +393,14 @@ public class DocsController implements Serializable {
 					session.put(row.getKey(),"");	  														
 				}
 			}
-		}
-	
+		}		
 	 }   
+   public void setDocPageNo() {
+	   RequestContext.getCurrentInstance().execute("PF('docsTable').getPaginator().setPage("+getDocsPageNo()+")");
+   }
+   public void setLocPageNo() {
+	   RequestContext.getCurrentInstance().execute("PF('locsTable').getPaginator().setPage("+getLocsPageNo()+")");
+   }   
 	public Location getNewLoc() {
 		return newLoc;
 	}
@@ -390,5 +413,11 @@ public class DocsController implements Serializable {
 	}
 	public void setDocNameFilter(String docNameFilter) {
 		this.docNameFilter = docNameFilter;
+	}
+	public int getDocsPageNo() {
+		return docsPageNo;
+	}
+	public void setDocsPageNo(int docsPageNo) {
+		this.docsPageNo = docsPageNo;
 	}	
 }

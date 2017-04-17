@@ -8,7 +8,7 @@
 
  <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/index.xhtml</location>
+        <location>/index.html</location>
     </error-page>         
 </web-app>
 
