@@ -63,16 +63,33 @@ public class DocsRepository {
 		 }       	    	
 		return false; 
 	}	
+	public List<DoctorNote> findMyDocNotes(String user) {
+		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByUserId",
+				DoctorNote.class);
+		  query.setParameter("userId", user);		
+		return query.getResultList();
+	}
 	public List<DoctorNote> findDocNotes(int doctorId) {
 		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByDocId",
 				DoctorNote.class);
 		  query.setParameter("doctorId", doctorId);		
 		return query.getResultList();
-	}
+	}	
 	public List<LocationNote> findLocNotes(int locationNumber) {
 		TypedQuery<LocationNote> query = em.createNamedQuery("LocationNote.findByLocId",
 				LocationNote.class);
 		  query.setParameter("locationNumber", locationNumber);		
 		return query.getResultList();
-	}	 	
+	}
+	public Doctor getDoctorDetails(int doctorNumber) {
+		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findById", Doctor.class);
+		query.setParameter("doctorNumber", doctorNumber);
+		List<Doctor> docs = query.getResultList();
+		if (!docs.isEmpty()) {
+			return (docs.listIterator().next());			
+		}
+		Doctor doc = new Doctor();
+		doc.setDisplayName("Not found");
+		return doc;			
+	}
 }

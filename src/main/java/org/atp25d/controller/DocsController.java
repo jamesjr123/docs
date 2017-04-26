@@ -45,6 +45,8 @@ public class DocsController implements Serializable {
 	private boolean docsUpdateAccess;
 	private boolean fromDoc;
     private List<DoctorNote> doctorNotes;
+    private List<DoctorNote> myDocNotes;
+    
     private List<LocationNote> locationNotes;    
 	private String docNameFilter;
 	private String docsList;
@@ -263,7 +265,11 @@ public class DocsController implements Serializable {
 			newLoc = loc; 		    
 		    locationNotes = docsRepository.findLocNotes(loc.getLocationNumber());		    			    			
 			return "locationNotes";			
-		}					
+		}
+		public String listMyDocNotes (String user){
+		    myDocNotes = docsRepository.findMyDocNotes(user);		    			    			
+			return "myDocNotes";			
+		}		
 		public String selectLoc (Location loc){
 			newDoc.setLocation(loc);  		
 			return null;				
@@ -303,7 +309,8 @@ public class DocsController implements Serializable {
 			   	newDocNote.setUser(userEmail);	
 			   	newDocNote.setTime_Stamp(new Date());	
 			   	newDocNote.setDoctorId(newDoc.getDoctorId());
-			   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());			   	
+			//   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());
+			   	newDocNote.setDoctor(newDoc);
 			    docsUpdate.saveDocNote(newDocNote);  
 			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor note updated", "update");
 				          facesContext.addMessage(null, m);
@@ -419,5 +426,13 @@ public class DocsController implements Serializable {
 	}
 	public void setDocsPageNo(int docsPageNo) {
 		this.docsPageNo = docsPageNo;
+	}
+    @Produces
+    @Named	
+	public List<DoctorNote> getMyDocNotes() {
+		return myDocNotes;
+	}
+	public void setMyDocNotes(List<DoctorNote> myDocNotes) {
+		this.myDocNotes = myDocNotes;
 	}	
 }

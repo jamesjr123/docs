@@ -15,6 +15,7 @@ import java.util.Date;
 @Table(name="doctor_notes")
 @NamedQueries({
 @NamedQuery(name="DoctorNote.findAll", query="SELECT d FROM DoctorNote d"),
+@NamedQuery(name="DoctorNote.findByUserId", query="SELECT d FROM DoctorNote d where d.user = :userId"),
 @NamedQuery(name="DoctorNote.findByDocId", query="SELECT d FROM DoctorNote d where d.doctorId = :doctorId")
 })
 public class DoctorNote implements Serializable {
@@ -26,8 +27,6 @@ public class DoctorNote implements Serializable {
 
 	private int doctorId;
 
-	private int doctorNumber;
-
 	private String notes;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -35,6 +34,12 @@ public class DoctorNote implements Serializable {
 
 	private String user;
 
+	//bi-directional many-to-one association to Location
+	@ManyToOne
+	@JoinColumn(name="doctorNumber")
+	private Doctor doctor;	
+	
+	
 	public DoctorNote() {
 	}
 
@@ -52,14 +57,6 @@ public class DoctorNote implements Serializable {
 
 	public void setDoctorId(int doctorId) {
 		this.doctorId = doctorId;
-	}
-
-	public int getDoctorNumber() {
-		return this.doctorNumber;
-	}
-
-	public void setDoctorNumber(int doctorNumber) {
-		this.doctorNumber = doctorNumber;
 	}
 
 	public String getNotes() {
@@ -84,6 +81,14 @@ public class DoctorNote implements Serializable {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
 	}
 
 }

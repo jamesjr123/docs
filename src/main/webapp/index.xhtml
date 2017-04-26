@@ -92,7 +92,10 @@
 	</p:column>                               	            
 	<p:column>                                                                
         <h:commandButton id="locs" action="locations" value="Go to location list" />
-    </p:column>                         
+    </p:column>
+	<p:column>                                                                
+        <h:commandButton id="myNotes" action="#{docsController.listMyDocNotes(docsController.userEmail)}" value="My Doctor Notes" />
+    </p:column>
     <p:column> 
          <h:commandButton id="newDoc"
                      action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'
