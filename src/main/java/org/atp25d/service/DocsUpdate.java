@@ -1,15 +1,20 @@
 package org.atp25d.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import org.atp25d.data.DocsRepository;
 import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
+import org.atp25d.model.UserAccess;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
 
@@ -19,7 +24,10 @@ public class DocsUpdate {
 	
     @Inject
     private EntityManager em;
-
+    
+	@Inject
+	private DocsRepository docsRepository;
+	
     @Inject
     private Event<Location> locationEventSrc;    
     
@@ -39,8 +47,25 @@ public class DocsUpdate {
     	if (doc.getDoctorId() == 0) {
     		doc.setDoctorId(getNextDoctorId());
     	}
-		em.merge(doc);    	
-		doctorEventSrc.fire(doc);
+		em.merge(doc);		
+		TypedQuery<Doctor> q = em.createNamedQuery("updateOtherDocs", Doctor.class);
+		q.setParameter(1, doc.getTitle());
+		q.setParameter(2, doc.getFirstName());
+		q.setParameter(3, doc.getMiddleName());
+		q.setParameter(4,doc.getSurname());
+		q.setParameter(5,doc.getQuals());
+		q.setParameter(6,doc.getEmailAddress());
+		q.setParameter(7,doc.getPhoneNumber());
+		q.setParameter(8,doc.getCategory());
+		q.setParameter(9, doc.getDoctorNumber());
+		q.setParameter(10, doc.getDoctorId());
+		q.executeUpdate();	    
+		List<Doctor> docs = docsRepository.getDoctorsById(doc.getDoctorId());
+		for (Doctor doc1 : docs) 
+		{
+			doctorEventSrc.fire(doc1);
+		}
+   		
     }
     public Location getLocForUpdate(Location loc){
 		return em.find(Location.class, loc.getLocationNumber());    	

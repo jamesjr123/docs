@@ -82,7 +82,7 @@ public class DocsRepository {
 		return query.getResultList();
 	}
 	public Doctor getDoctorDetails(int doctorNumber) {
-		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findById", Doctor.class);
+		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findByNumber", Doctor.class);
 		query.setParameter("doctorNumber", doctorNumber);
 		List<Doctor> docs = query.getResultList();
 		if (!docs.isEmpty()) {
@@ -92,4 +92,9 @@ public class DocsRepository {
 		doc.setDisplayName("Not found");
 		return doc;			
 	}
+	public List<Doctor> getDoctorsById(int doctorId) {
+		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findById", Doctor.class);
+		query.setParameter("doctorId", doctorId);
+		return query.getResultList();
+	}	
 }

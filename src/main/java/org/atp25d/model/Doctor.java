@@ -16,8 +16,12 @@ import javax.persistence.*;
 @NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d order by d.surname"),
 @NamedQuery(name="Doctor.findLastDocId", query="select max(d.doctorId) FROM Doctor d") ,
 @NamedQuery(name="Doctor.findByLoc", query="SELECT d FROM Doctor d where d.location.locationNumber = :locationNumber order by d.surname"),
-@NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber")
+@NamedQuery(name="Doctor.findByNumber", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber"),
+@NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorId = :doctorId")
 })
+@SqlResultSetMapping(name="updateResult", columns = { @ColumnResult(name = "count")})
+@NamedNativeQuery(name = "updateOtherDocs", query = "UPDATE docs.doctors SET title=?, firstName = ?,middleName=?,surname=?,quals=?, emailAddress=?,phoneNumber=?,category=?   WHERE doctorNumber <> ? and doctorId=?", 
+resultSetMapping = "updateResult")
 public class Doctor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
