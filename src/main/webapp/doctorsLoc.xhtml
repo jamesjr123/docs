@@ -57,7 +57,7 @@
     </p:column>                         
     <p:column> 
          <h:commandButton id="newDoc"
-                     action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'
+                     action="#{docsController.createDoc(selectedLoc)}"   rendered='#{docsController.docsUpdateAccess}'
              value="Add New Doctor"/>                          
     </p:column>             
 </p:panelGrid>  

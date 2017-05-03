@@ -244,6 +244,11 @@ public class DocsController implements Serializable {
 			initNewDoc();
 			return "doctorUpdate";
 		}
+		public String createDoc (Location loc){
+			initNewDoc();
+			newDoc.setLocation(loc);
+			return "doctorUpdate";
+		}		
 		public String createNote (){
 			initNewDocNote();
 			return "noteUpdate";
