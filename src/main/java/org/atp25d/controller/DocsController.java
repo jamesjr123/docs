@@ -208,8 +208,14 @@ public class DocsController implements Serializable {
 		return "locNoteDisplay";		
 	}		
 	   public String saveDoc()  {
+		   if (newDoc.getLocation()==null){
+			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Enter an address", "error");
+		          facesContext.addMessage(null, m);			   		   
+			   return "doctorUpdate";
+		   }
 		   	newDoc.setUser(userEmail);
 		   	newDoc.setTime_Stamp(new Date());
+		   	newDoc.setFirstName(newDoc.getFirstName().trim());
 		    docsUpdate.saveDoc(newDoc);  
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor record updated", "update");
 			          facesContext.addMessage(null, m);

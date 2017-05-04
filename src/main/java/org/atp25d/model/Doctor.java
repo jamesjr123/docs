@@ -20,7 +20,7 @@ import javax.persistence.*;
 @NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorId = :doctorId")
 })
 @SqlResultSetMapping(name="updateResult", columns = { @ColumnResult(name = "count")})
-@NamedNativeQuery(name = "updateOtherDocs", query = "UPDATE docs.doctors SET title=?, firstName = ?,middleName=?,surname=?,quals=?, emailAddress=?,phoneNumber=?,category=?   WHERE doctorNumber <> ? and doctorId=?", 
+@NamedNativeQuery(name = "updateOtherDocs", query = "UPDATE docs.doctors SET title=?, firstName = ?,middleName=?,surname=?,quals=?, emailAddress=?,phoneNumber=?,mobileNumber=?,category=?   WHERE doctorNumber <> ? and doctorId=?", 
 resultSetMapping = "updateResult")
 public class Doctor implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +46,8 @@ public class Doctor implements Serializable {
 	private String emailAddress;
 	
 	private String phoneNumber;
+
+	private String mobileNumber;
 	
 	@Transient
 	private String fullName;	
@@ -85,6 +87,12 @@ public class Doctor implements Serializable {
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
+	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;

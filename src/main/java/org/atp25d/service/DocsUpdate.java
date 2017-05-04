@@ -56,9 +56,10 @@ public class DocsUpdate {
 		q.setParameter(5,doc.getQuals());
 		q.setParameter(6,doc.getEmailAddress());
 		q.setParameter(7,doc.getPhoneNumber());
-		q.setParameter(8,doc.getCategory());
-		q.setParameter(9, doc.getDoctorNumber());
-		q.setParameter(10, doc.getDoctorId());
+		q.setParameter(8,doc.getMobileNumber());
+		q.setParameter(9,doc.getCategory());
+		q.setParameter(10, doc.getDoctorNumber());
+		q.setParameter(11, doc.getDoctorId());
 		q.executeUpdate();	    
 		List<Doctor> docs = docsRepository.getDoctorsById(doc.getDoctorId());
 		for (Doctor doc1 : docs) 
