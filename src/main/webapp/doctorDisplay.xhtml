@@ -26,6 +26,30 @@
                 <h:outputText id="Category" value="#{docsController.newDoc.category}"/> 					                       				                               
 			</p:column>					
 			<p:column>
+                <p:outputLabel for="quals" value="Special interests:" />
+			</p:column>
+			<p:column>			                
+                <h:outputText id="quals" value="#{docsController.newDoc.quals}"/> 					                       				                               
+			</p:column>
+			<p:column>
+                <p:outputLabel for="email" value="Email:" />
+			</p:column>			
+			<p:column >			                
+                <h:outputText id="email" value="#{docsController.newDoc.emailAddress}"  /> 					                       
+			</p:column>
+			<p:column>
+                <p:outputLabel for="phone" value="Contact Number:" />
+			</p:column>			
+			<p:column >			                
+                <h:outputText id="phone" value="#{docsController.newDoc.phoneNumber}" maxlength="20" /> 					                       
+			</p:column>
+			<p:column>
+                <p:outputLabel for="mobilephone" value="Mobile Number:" />
+			</p:column>			
+			<p:column >			                
+                <h:outputText id="mobilephone" value="#{docsController.newDoc.mobileNumber}" maxlength="20" /> 					                       
+			</p:column>	
+			<p:column>			
     		<p:outputLabel for="Address" value="Address:" />			
 			</p:column>
 			<p:column>

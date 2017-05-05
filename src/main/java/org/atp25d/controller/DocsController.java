@@ -54,7 +54,9 @@ public class DocsController implements Serializable {
 	private List<Location> filteredLocations;
 	private int locsPageNo;
 	private int docsPageNo;
-    
+    private Date notesDateTo;
+    private Date notesDateFrom;
+	
 	@Inject
     private FacesSession facesSession;
 	
@@ -369,7 +371,10 @@ public class DocsController implements Serializable {
 			          facesContext.addMessage(null, m);
 			    initNewDocNote();
 				return "locationNotes";
-			  } 	   	  	   
+			  }
+	   public String filterMyDocNotes()  {
+				return "myDocNotes";
+			  }	   
 	   public void initNewDoc(){
 	   newDoc = new Doctor();
    }
@@ -445,5 +450,17 @@ public class DocsController implements Serializable {
 	}
 	public void setMyDocNotes(List<DoctorNote> myDocNotes) {
 		this.myDocNotes = myDocNotes;
+	}
+	public Date getNotesDateTo() {
+		return notesDateTo;
+	}
+	public void setNotesDateTo(Date notesDateTo) {
+		this.notesDateTo = notesDateTo;
+	}
+	public Date getNotesDateFrom() {
+		return notesDateFrom;
+	}
+	public void setNotesDateFrom(Date notesDateFrom) {
+		this.notesDateFrom = notesDateFrom;
 	}	
 }

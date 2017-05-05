@@ -19,6 +19,24 @@
 			<p:column>
 			<h:outputText id="Address" value="#{docsController.newLoc.location.concat(' ').concat(docsController.newLoc.mailAddress1).concat(' ').concat(docsController.newLoc.mailSuburb)}"/>
 			</p:column>
+			<p:column>
+                <p:outputLabel for="email" value="Email:" />
+			</p:column>			
+			<p:column >			                
+                <h:outputText id="email" value="#{docsController.newLoc.emailAddress}" maxlength="200" /> 					                                                      
+			</p:column>						
+			<p:column>
+                <p:outputLabel for="phone" value="Phone Number:" />
+			</p:column>			
+			<p:column >			                
+                <h:outputText id="phone" value="#{docsController.newLoc.phoneNumber}" maxlength="20" /> 					                                       
+			</p:column>
+			<p:column>
+                <p:outputLabel for="fax" value="Fax Number:" />
+			</p:column>			
+			<p:column >			                
+                <h:outputText id="fax" value="#{docsController.newLoc.faxNumber}" maxlength="20" /> 					                                       
+			</p:column>					
       </p:panelGrid>
                 
                 <p:panelGrid columns="4">                    

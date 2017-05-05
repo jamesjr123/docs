@@ -25,7 +25,31 @@
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
       <!-- h1>Welcome to the Doctors list</h1-->
-
+    <p:panel id="search" header="Filter my notes" toggleable="true" >
+     <p:panelGrid columns="6" >
+		 <p:column>		             
+         	<p:outputLabel for="dateFrom" value="From Date:"/>
+		</p:column>  		
+		<p:column>         	
+        		<p:calendar id="dateFrom" value="#{docsController.notesDateFrom}" navigator="true" pattern="dd/MM/yyyy" mindate="01/01/2016" 
+        			 showOn="button" />                 					
+                <p:message for="dateFrom"/>                                       
+  		</p:column> 
+		 <p:column>		             
+         	<p:outputLabel for="dateFrom" value="To Date:"/>
+		</p:column>  		
+		<p:column>         	
+        		<p:calendar id="dateTo" value="#{docsController.notesDateTo}" navigator="true" pattern="dd/MM/yyyy" mindate="01/01/2016" 
+        			 showOn="button" />                 					
+                <p:message for="dateTo"/>                                       
+  		</p:column>             
+               <p:column>                
+                    <h:commandButton id="Filter"
+                           action="#{docsController.filterMyDocNotes()}"
+                        value="Filter" />
+               	</p:column>            
+        </p:panelGrid>
+    </p:panel>
                 
  <p:dataTable var="_docNote" value="#{myDocNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -43,11 +67,13 @@
     <p:column headerText="Doctor" >
         <h:outputText value="#{_docNote.doctor.fullName}" />
     </p:column>
-    <p:column headerText="Email" width="120">
-        
+    <p:column headerText="Email" width="120">        
 		<h:outputLink value="mailto:#{_docNote.doctor.emailAddress}">
 		    <h:outputText value="#{_docNote.doctor.emailAddress}" />
 		</h:outputLink>        
+    </p:column>    
+    <p:column headerText="Category" sortBy="#{_docNote.doctor.category}">
+        <h:outputText value="#{_docNote.doctor.category}" />
     </p:column>    
     <p:column headerText="Location" >
         <h:outputText value="#{_docNote.doctor.location.displayName}" />
