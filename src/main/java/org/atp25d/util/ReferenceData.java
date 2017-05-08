@@ -11,7 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 	public class ReferenceData {
 		
 		public TimeZone getTimeZone() {
-		    return TimeZone.getTimeZone("UTC+10:00");
+		    return TimeZone.getTimeZone("GMT+10:00");
 		}	
 		
 	

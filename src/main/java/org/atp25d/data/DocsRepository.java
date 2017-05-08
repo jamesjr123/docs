@@ -1,11 +1,13 @@
 package org.atp25d.data;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -69,6 +71,14 @@ public class DocsRepository {
 		  query.setParameter("userId", user);		
 		return query.getResultList();
 	}
+	public List<DoctorNote> findMyDocNotesByDate(String user, Date from, Date to) {
+		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByByUserDate",
+				DoctorNote.class);
+		  query.setParameter("userId", user);		
+		  query.setParameter("fromDate", from);
+		  query.setParameter("toDate", to);
+		return query.getResultList();
+	}	
 	public List<DoctorNote> findDocNotes(int doctorId) {
 		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByDocId",
 				DoctorNote.class);

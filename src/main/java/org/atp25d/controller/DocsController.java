@@ -1,5 +1,6 @@
 package org.atp25d.controller;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
@@ -373,6 +374,7 @@ public class DocsController implements Serializable {
 				return "locationNotes";
 			  }
 	   public String filterMyDocNotes()  {
+		   myDocNotes = docsRepository.findMyDocNotesByDate(userEmail, notesDateFrom, notesDateTo);
 				return "myDocNotes";
 			  }	   
 	   public void initNewDoc(){
@@ -427,7 +429,11 @@ public class DocsController implements Serializable {
 	public Location getNewLoc() {
 		return newLoc;
 	}
-
+	@PostConstruct
+	public void init() {
+		notesDateFrom = new Date();
+		notesDateTo = new Date();
+	}	
 	public void setNewLoc(Location newLoc) {
 		this.newLoc = newLoc;
 	}

@@ -225,8 +225,11 @@
 	</p:layoutUnit>
 	    
 	<p:layoutUnit position="south">
-<ui:debug />
-		<h:outputText class="floatRight" value="#{facesSession.systemNodeText()}"  />
+		<p:themeSwitcher value="#{facesSession.theme}">
+	        <f:selectItems value="#{facesSession.themes}"/>
+	        <p:ajax/>
+	    </p:themeSwitcher>		
+	    <h:outputText class="floatRight" value="#{facesSession.systemNodeText()}"  />
 	</p:layoutUnit>
 	</p:layout>
 </h:body>
