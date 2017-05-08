@@ -219,6 +219,11 @@ public class DocsController implements Serializable {
 		   	newDoc.setUser(userEmail);
 		   	newDoc.setTime_Stamp(new Date());
 		   	newDoc.setFirstName(newDoc.getFirstName().trim());
+	    	if (newDoc.getDoctorNumber() == 0 && docsUpdate.docExists(newDoc)) {
+			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Record already exists", "error");
+		          facesContext.addMessage(null, m);
+				   return "doctorUpdate";
+	    	}
 		    docsUpdate.saveDoc(newDoc);  
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor record updated", "update");
 			          facesContext.addMessage(null, m);

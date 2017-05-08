@@ -42,7 +42,18 @@ public class DocsUpdate {
     }
     public LocationNote getLocNoteForUpdate(LocationNote locNote){
 		return em.find(LocationNote.class, locNote.getNoteId());    	
-    }        
+    }
+    public boolean docExists(Doctor doc){
+		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findMatchDoc", Doctor.class);
+		query.setParameter("surname", doc.getSurname());
+		query.setParameter("firstName", doc.getFirstName());
+		query.setParameter("middleName", doc.getMiddleName());
+		query.setParameter("title", doc.getTitle());
+		query.setParameter("emailAddress", doc.getEmailAddress());
+		query.setParameter("location", doc.getLocation());
+		List<Doctor> docs = query.getResultList();
+		return !docs.isEmpty();
+    }
     public void saveDoc(Doctor doc){
     	if (doc.getDoctorId() == 0) {
     		doc.setDoctorId(getNextDoctorId());

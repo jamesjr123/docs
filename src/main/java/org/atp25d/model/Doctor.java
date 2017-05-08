@@ -17,7 +17,8 @@ import javax.persistence.*;
 @NamedQuery(name="Doctor.findLastDocId", query="select max(d.doctorId) FROM Doctor d") ,
 @NamedQuery(name="Doctor.findByLoc", query="SELECT d FROM Doctor d where d.location.locationNumber = :locationNumber order by d.surname"),
 @NamedQuery(name="Doctor.findByNumber", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber"),
-@NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorId = :doctorId")
+@NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorId = :doctorId"),
+@NamedQuery(name="Doctor.findMatchDoc", query="SELECT d FROM Doctor d where d.surname = :surname and d.firstName = :firstName and d.middleName = :middleName and d.title = :title and d.emailAddress = :emailAddress and d.location = :location")
 })
 @SqlResultSetMapping(name="updateResult", columns = { @ColumnResult(name = "count")})
 @NamedNativeQuery(name = "updateOtherDocs", query = "UPDATE docs.doctors SET title=?, firstName = ?,middleName=?,surname=?,quals=?, emailAddress=?,phoneNumber=?,mobileNumber=?,category=?   WHERE doctorNumber <> ? and doctorId=?", 
