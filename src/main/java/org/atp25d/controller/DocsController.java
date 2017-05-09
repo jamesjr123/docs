@@ -57,6 +57,8 @@ public class DocsController implements Serializable {
 	private int docsPageNo;
     private Date notesDateTo;
     private Date notesDateFrom;
+    private String noteSubject;
+    private String noteBody;
 	
 	@Inject
     private FacesSession facesSession;
@@ -473,5 +475,20 @@ public class DocsController implements Serializable {
 	}
 	public void setNotesDateFrom(Date notesDateFrom) {
 		this.notesDateFrom = notesDateFrom;
-	}	
+	}
+	public String getNoteSubject() {
+		return noteSubject;
+	}
+	public void setNoteSubject(String noteSubject) {
+		this.noteSubject = noteSubject;
+	}
+	public String getNoteBody() {
+		return noteBody;
+	}
+	public void setNoteBody(String noteBody) {
+		this.noteBody = noteBody;
+	}
+	public String formatNoteSubject(String subject, Doctor doc){  
+	    return "Dear "+ doc.getTitle()+" "+doc.getDisplayName()+" "+subject;
+	}		
 }
