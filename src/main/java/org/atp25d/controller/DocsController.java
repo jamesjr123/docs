@@ -15,6 +15,7 @@ import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
+import org.atp25d.model.UserProfile;
 import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
 import org.primefaces.component.datatable.DataTable;
@@ -41,6 +42,7 @@ public class DocsController implements Serializable {
 	private static final long serialVersionUID = -2728333040258701261L;
 	private String userName;
 	private String userEmail;
+	private UserProfile userProfile;
 	private boolean loggedIn;
 	private boolean docsReadAccess;
 	private boolean docsUpdateAccess;
@@ -440,9 +442,19 @@ public class DocsController implements Serializable {
 	public void init() {
 		notesDateFrom = new Date();
 		notesDateTo = new Date();
+		
 	}	
 	public void setNewLoc(Location newLoc) {
 		this.newLoc = newLoc;
+	}
+	public UserProfile getUserProfile() {
+		if (userProfile==null ) {
+			setUserProfile(docsRepository.findUserProfile(getUserEmail()));
+		}
+		return userProfile;
+	}
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
 	}
 	public String getDocNameFilter() {
 		return docNameFilter;

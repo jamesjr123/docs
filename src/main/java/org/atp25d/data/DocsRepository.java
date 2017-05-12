@@ -18,6 +18,7 @@ import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
 import org.atp25d.model.UserAccess;
+import org.atp25d.model.UserProfile;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
 
@@ -71,6 +72,13 @@ public class DocsRepository {
 		  query.setParameter("userId", user);		
 		return query.getResultList();
 	}
+	public UserProfile findUserProfile(String user) {
+		TypedQuery<UserProfile> query = em.createNamedQuery("UserProfile.findById",
+				UserProfile.class);
+		  query.setParameter("userId", user);	
+		if (query.getResultList().isEmpty()) return new UserProfile();
+		return query.getResultList().iterator().next();
+	}	
 	public List<DoctorNote> findMyDocNotesByDate(String user, Date from, Date to) {
 		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByByUserDate",
 				DoctorNote.class);

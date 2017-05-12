@@ -33,6 +33,7 @@
       <class>org.atp25d.model.DoctorNote</class>
       <class>org.atp25d.model.LocationNote</class>
       <class>org.atp25d.model.Reference_Data</class>
+      <class>org.atp25d.model.UserProfile</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.show_sql" value="false" />
