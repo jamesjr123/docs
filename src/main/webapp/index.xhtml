@@ -99,7 +99,7 @@
     <p:column> 
          <h:commandButton id="newDoc"
                      action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'
-             value="Add New Doctor"/>       
+             value="Add New Doctor"/>      <h:outputText value="#{param['code']}" /> 
 	<p:remoteCommand  oncomplete="filterDocs()" autoRun="true"/>                                                          
     </p:column>             
 </p:panelGrid>  
