@@ -33,6 +33,9 @@ public class DoctorNote implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time_Stamp;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date followUp;
+	
 	private String user;
 
 	//bi-directional many-to-one association to Location
@@ -90,6 +93,14 @@ public class DoctorNote implements Serializable {
 
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
+	}
+
+	public Date getFollowUp() {
+		return followUp;
+	}
+
+	public void setFollowUp(Date followUp) {
+		this.followUp = followUp;
 	}
 
 }
