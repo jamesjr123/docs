@@ -343,7 +343,7 @@ public class DocsController implements Serializable {
 			//   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());
 			   	newDocNote.setDoctor(newDoc);
 			    docsUpdate.saveDocNote(newDocNote);  
-			   	if (getUserProfile().getTodoistToken().equals("aa"))
+			   	if (!getUserProfile().getTodoistToken().equals(""))
 			   	{
 			   		writeTodoTask(getUserProfile().getTodoistToken());
 			   	}			    
@@ -529,13 +529,22 @@ public class DocsController implements Serializable {
 		 UUID uuid = UUID.randomUUID();
 	     String uuid1 = uuid.toString();		
 		 uuid = UUID.randomUUID();
-	     String uuid2 = uuid.toString();		     
+	     String uuid2 = uuid.toString();
+	     String projectId="2148607161";
 	     String task = newDocNote.getDoctor().getFullName()+" "+newDocNote.getDoctor().getLocation().getDisplayName()+ " "+newDocNote.getNotes();
-		String query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\",\"due_date_utc\":\"2017-05-14T10:59\",\"date_string\":\""+new Date()+"\"}}]";
+		String query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+projectId+"\",\"due_date_utc\":\"2017-05-15T10:59\",\"date_string\":\""+new Date()+"\"}}]";
 		output.writeBytes(query);		
-		output.close();		
+		output.close();	
+		DataInputStream input = new DataInputStream( connection.getInputStream() ); 
+
+
+
+		for( int c = input.read(); c != -1; c = input.read() ) 
+		System.out.print( (char)c ); 
+		input.close(); 
 		System.out.println("Resp Code:"+connection .getResponseCode()); 
-		System.out.println("Resp Message:"+ connection.getResponseMessage()); 		
+		System.out.println("Resp Message:"+ connection.getResponseMessage());
+		
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
