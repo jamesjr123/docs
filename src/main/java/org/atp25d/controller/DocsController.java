@@ -534,14 +534,13 @@ public class DocsController implements Serializable {
 	     SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 	     dateFmt.setTimeZone(TimeZone.getTimeZone("UTC"));
 	     String ddat;
+	     String cdat;
 	      synchronized (dateFmt){
 	        ddat= dateFmt.format(newDocNote.getFollowUp());
-	      }	     
-	      SimpleDateFormat f = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss"); 
-	       
-	      System.out.println(f.format(new Date())); 	     
+	        cdat= dateFmt.format(newDocNote.getTime_Stamp());
+	      }	      	     
 	     String task = newDocNote.getDoctor().getFullName()+" - "+newDocNote.getDoctor().getPhoneNumber()+"  "+newDocNote.getDoctor().getMobileNumber()+" - "+newDocNote.getDoctor().getLocation().getDisplayName()+ " - "+newDocNote.getNotes();
-		String query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+newDocNote.getProjectId()+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+new Date()+"\"}}]";
+		String query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+newDocNote.getProjectId()+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+cdat+"\"}}]";
 		output.writeBytes(query);		
 		output.close();	
 		DataInputStream input = new DataInputStream( connection.getInputStream() ); 
@@ -553,7 +552,8 @@ public class DocsController implements Serializable {
 		}
 		System.out.println("Message:"+returnCode.toString()); 
 
-		input.close(); 
+		input.close();
+		System.out.println(query);
 		System.out.println("Resp Code:"+connection .getResponseCode()); 
 		System.out.println("Resp Message:"+ connection.getResponseMessage());
 		
