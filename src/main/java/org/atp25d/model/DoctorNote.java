@@ -37,6 +37,8 @@ public class DoctorNote implements Serializable {
 	private Date followUp;
 	
 	private String user;
+	
+	private String projectId;
 
 	//bi-directional many-to-one association to Location
 	@ManyToOne
@@ -101,6 +103,14 @@ public class DoctorNote implements Serializable {
 
 	public void setFollowUp(Date followUp) {
 		this.followUp = followUp;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 
 }

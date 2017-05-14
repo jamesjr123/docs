@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.UUID;
 
 @SessionScoped
@@ -343,7 +345,7 @@ public class DocsController implements Serializable {
 			//   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());
 			   	newDocNote.setDoctor(newDoc);
 			    docsUpdate.saveDocNote(newDocNote);  
-			   	if (!getUserProfile().getTodoistToken().equals(""))
+			   	if (!getUserProfile().getTodoistToken().equals("") && newDocNote.getFollowUp() !=null)
 			   	{
 			   		writeTodoTask(getUserProfile().getTodoistToken());
 			   	}			    
@@ -517,7 +519,6 @@ public class DocsController implements Serializable {
 	}
 	private void writeTodoTask(String token){
     	String urlString = "https://todoist.com/API/v7/sync";
-    	Date x = new Date();
 		URL url;
 		try {
 			url = new URL(urlString);
@@ -530,17 +531,28 @@ public class DocsController implements Serializable {
 	     String uuid1 = uuid.toString();		
 		 uuid = UUID.randomUUID();
 	     String uuid2 = uuid.toString();
-	     String projectId="2148607161";
-	     String task = newDocNote.getDoctor().getFullName()+" "+newDocNote.getDoctor().getLocation().getDisplayName()+ " "+newDocNote.getNotes();
-		String query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+projectId+"\",\"due_date_utc\":\"2017-05-15T10:59\",\"date_string\":\""+new Date()+"\"}}]";
+	     SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+	     dateFmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+	     String ddat;
+	      synchronized (dateFmt){
+	        ddat= dateFmt.format(newDocNote.getFollowUp());
+	      }	     
+	      SimpleDateFormat f = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss"); 
+	       
+	      System.out.println(f.format(new Date())); 	     
+	     String task = newDocNote.getDoctor().getFullName()+" - "+newDocNote.getDoctor().getPhoneNumber()+"  "+newDocNote.getDoctor().getMobileNumber()+" - "+newDocNote.getDoctor().getLocation().getDisplayName()+ " - "+newDocNote.getNotes();
+		String query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+newDocNote.getProjectId()+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+new Date()+"\"}}]";
 		output.writeBytes(query);		
 		output.close();	
 		DataInputStream input = new DataInputStream( connection.getInputStream() ); 
 
 
+		StringBuffer returnCode = new StringBuffer();
+		for( int c = input.read(); c != -1; c = input.read() ) {
+			returnCode.append((char)c); 
+		}
+		System.out.println("Message:"+returnCode.toString()); 
 
-		for( int c = input.read(); c != -1; c = input.read() ) 
-		System.out.print( (char)c ); 
 		input.close(); 
 		System.out.println("Resp Code:"+connection .getResponseCode()); 
 		System.out.println("Resp Message:"+ connection.getResponseMessage());

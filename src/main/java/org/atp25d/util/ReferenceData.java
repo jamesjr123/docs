@@ -36,5 +36,16 @@ import org.atp25d.model.Reference_Data;
 			}			
 			return list;			
 		}
+		public Map<String,String>  getUserRefList(String refType, String userId) {
+			Map<String,String> list = new LinkedHashMap<String, String>();
+			TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findByListByUserRefType", Reference_Data.class);
+			query.setParameter("refType", refType);
+			query.setParameter("userId", userId);
+			List<Reference_Data> refs = query.getResultList();			
+			for (Reference_Data ref: refs ) {
+				list.put(ref.getCode(),ref.getValue() );
+			}			
+			return list;			
+		}		
 
 }
