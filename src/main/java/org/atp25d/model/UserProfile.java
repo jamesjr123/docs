@@ -62,6 +62,9 @@ public class UserProfile implements Serializable {
 	}
 
 	public String getTodoistToken() {
+		if (this.todoistToken== null) {
+			return "";
+		}
 		return this.todoistToken;
 	}
 

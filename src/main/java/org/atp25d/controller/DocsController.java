@@ -19,6 +19,7 @@ import org.atp25d.model.LocationNote;
 import org.atp25d.model.UserProfile;
 import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
+import org.atp25d.util.ReferenceData;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.FilterEvent;
@@ -86,6 +87,9 @@ public class DocsController implements Serializable {
 	
 	@Inject
 	private DocsListProducer  docsListProducer;
+
+	@Inject
+	ReferenceData referenceData;
 	
     @Produces
     @Named
@@ -532,7 +536,7 @@ public class DocsController implements Serializable {
 		 uuid = UUID.randomUUID();
 	     String uuid2 = uuid.toString();
 	     SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-	     dateFmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+	     dateFmt.setTimeZone(TimeZone.getTimeZone(referenceData.getRefTZ()));
 	     String ddat;
 	     String cdat;
 	      synchronized (dateFmt){
