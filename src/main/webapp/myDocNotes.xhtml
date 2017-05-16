@@ -100,7 +100,10 @@
         <h:outputText value="#{_docNote.notes}" />
     </p:column>
     <p:column headerText="Date created" sortBy="#{_docNote.time_Stamp}" width="200">
-        <h:outputText value="#{_docNote.time_Stamp}" />
+        <h:outputText value="#{_docNote.time_Stamp}">
+        						<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" type="date"
+												timeZone="#{referenceData.timeZone}" /> 
+        </h:outputText>
     </p:column>
 
 </p:dataTable>       

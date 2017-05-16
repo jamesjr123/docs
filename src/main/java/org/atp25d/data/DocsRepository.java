@@ -1,5 +1,6 @@
 package org.atp25d.data;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -84,7 +85,10 @@ public class DocsRepository {
 				DoctorNote.class);
 		  query.setParameter("userId", user);		
 		  query.setParameter("fromDate", from);
-		  query.setParameter("toDate", to);
+	      Calendar cal = Calendar.getInstance();
+	      cal.setTime(to);
+	      cal.add(Calendar.DATE, 1); //add 1 day for query 	        
+		  query.setParameter("toDate", cal.getTime());
 		return query.getResultList();
 	}	
 	public List<DoctorNote> findDocNotes(int doctorId) {
