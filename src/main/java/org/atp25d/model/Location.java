@@ -86,6 +86,9 @@ public class Location implements Serializable {
 	}
 
 	public String getPhoneNumber() {
+		if (phoneNumber==null) {
+			setPhoneNumber("");
+		}
 		return phoneNumber;
 	}
 

@@ -21,7 +21,7 @@ import javax.persistence.*;
 @NamedQuery(name="Doctor.findMatchDoc", query="SELECT d FROM Doctor d where d.surname = :surname and d.firstName = :firstName and d.middleName = :middleName and d.title = :title and d.emailAddress = :emailAddress and d.location = :location")
 })
 @SqlResultSetMapping(name="updateResult", columns = { @ColumnResult(name = "count")})
-@NamedNativeQuery(name = "updateOtherDocs", query = "UPDATE docs.doctors SET title=?, firstName = ?,middleName=?,surname=?,quals=?, emailAddress=?,phoneNumber=?,mobileNumber=?,category=?   WHERE doctorNumber <> ? and doctorId=?", 
+@NamedNativeQuery(name = "updateOtherDocs", query = "UPDATE doctors SET title=?, firstName = ?,middleName=?,surname=?,quals=?, emailAddress=?,phoneNumber=?,mobileNumber=?,category=?   WHERE doctorNumber <> ? and doctorId=?", 
 resultSetMapping = "updateResult")
 public class Doctor implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -87,9 +87,15 @@ public class Doctor implements Serializable {
 		return title;
 	}
 	public String getPhoneNumber() {
+		if (phoneNumber==null) {
+			setPhoneNumber("");
+		}		
 		return phoneNumber;
 	}
 	public String getMobileNumber() {
+		if (mobileNumber==null) {
+			setMobileNumber("");
+		}		
 		return mobileNumber;
 	}
 	public void setMobileNumber(String mobileNumber) {

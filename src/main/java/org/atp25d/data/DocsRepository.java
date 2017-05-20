@@ -16,8 +16,10 @@ import javax.persistence.criteria.Root;
 
 import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
+import org.atp25d.model.DoctorTarget;
 import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
+import org.atp25d.model.Reference_Data;
 import org.atp25d.model.UserAccess;
 import org.atp25d.model.UserProfile;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
@@ -118,5 +120,19 @@ public class DocsRepository {
 		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findById", Doctor.class);
 		query.setParameter("doctorId", doctorId);
 		return query.getResultList();
-	}	
+	}
+	public List<Reference_Data> getRefData() {
+		TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findAll", Reference_Data.class);
+		return query.getResultList();
+	}		
+	public List<DoctorTarget> getAllTargetDocs() {
+		TypedQuery<DoctorTarget> query = em.createNamedQuery("DoctorTarget.findAll", DoctorTarget.class);
+		return query.getResultList();
+	}
+	public List<DoctorTarget> getTargetDocs(List<String> targets) {
+		TypedQuery<DoctorTarget> query = em.createNamedQuery("DoctorTarget.findByTargets", DoctorTarget.class);
+		query.setParameter("type", "DoctorCampaign");
+		query.setParameter("targets", targets);
+		return query.getResultList();
+	}				
 }

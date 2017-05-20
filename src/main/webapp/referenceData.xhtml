@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2014, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    
+    template="/WEB-INF/templates/template-lay.xhtml">    
+    <ui:define name="content">
+      <!-- h1>Welcome to the Doctors list</h1-->
+                
+ <p:dataTable var="_refData" value="#{reference_Data}" rows="10" rendered="#{docsController.docsUpdateAccess}"   editable="true"
+         paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
+ 	<f:facet name="header">
+           Reference Data listing
+     </f:facet>         
+     <p:ajax event="rowEdit" listener="#{docsController.onRefRowEdit}" update="docTable" />
+       <p:ajax event="rowEditCancel" listener="#{docsController.onRefRowCancel}" update="docTable" />
+    <p:column headerText="Doctor" visible="false">
+        <h:outputText value="#{_refData.codeNumber}" />
+     </p:column>        
+    <p:column headerText="Company" width="70">        
+         <p:cellEditor>
+             <f:facet name="output"><h:outputText value="#{_refData.compId}" /></f:facet>
+             <f:facet name="input"><p:inputText id="company" value="#{_refData.compId}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+    </p:column>         
+    <p:column headerText="User Id" >        
+         <p:cellEditor>
+             <f:facet name="output"><h:outputText value="#{_refData.userId}" /></f:facet>
+             <f:facet name="input"><p:inputText id="userId" value="#{_refData.userId}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+    </p:column>         
+    <p:column headerText="Ref Type" >        
+         <p:cellEditor>
+             <f:facet name="output"><h:outputText value="#{_refData.refType}" /></f:facet>
+             <f:facet name="input"><p:inputText id="refType" value="#{_refData.refType}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+    </p:column>
+    <p:column headerText="Code" >        
+         <p:cellEditor>
+             <f:facet name="output"><h:outputText value="#{_refData.code}" /></f:facet>
+             <f:facet name="input"><p:inputText id="code" value="#{_refData.code}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+    </p:column>              
+    <p:column headerText="Value" >        
+         <p:cellEditor>
+             <f:facet name="output"><h:outputText value="#{_refData.value}" /></f:facet>
+             <f:facet name="input"><p:inputText id="value" value="#{_refData.value}" style="width:100%"/></f:facet>
+         </p:cellEditor>
+    </p:column>                                    
+   <p:column style="width:32px">
+           <p:rowEditor />
+    </p:column>    
+     <p:column width="40" exportable="false">           
+           <h:commandLink value="Copy" action="#{docsController.copyRefRow(_refData)}"/>
+     </p:column>    
+     <p:column width="90" exportable="false">           
+              <p:commandButton value="Delete row" actionListener="#{docsController.deleteRefRow(_refData)}" update="@this">
+        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+    </p:commandButton>
+     </p:column>    
+</p:dataTable>      
+   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    </p:confirmDialog> 
+<p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
+	<p:column>                
+        <p:messages globalOnly="true" />
+	</p:column>                                    
+	<p:column>                                                                
+        <h:commandButton id="docs" action="index" value="Go to Doctors list" />
+    </p:column>	                                     
+	<p:column>                                                                
+        <h:commandButton id="locs" action="locations" value="Go to location list" />
+    </p:column>
+ </p:panelGrid>  
+
+    </ui:define>
+</ui:composition>

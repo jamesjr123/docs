@@ -14,6 +14,7 @@ import org.atp25d.model.Doctor;
 import org.atp25d.model.DoctorNote;
 import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
+import org.atp25d.model.Reference_Data;
 import org.atp25d.model.UserAccess;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
@@ -91,7 +92,13 @@ public class DocsUpdate {
     }
     public void saveLocNote(LocationNote locNote){
 		em.merge(locNote);    			
-    }            
+    }
+    public void saveRefData(Reference_Data ref){
+		em.merge(ref);    			
+    }
+    public void deleteRefData(Reference_Data ref){
+    	em.remove(em.contains(ref) ? ref : em.merge(ref));
+    }        
 	private int getNextDoctorId(){
 		 Query q = em.createNamedQuery("Doctor.findLastDocId");				
 		 int id = (Integer) (q.getSingleResult());

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="reference_data")
 @NamedQueries({
-@NamedQuery(name="Reference_Data.findAll", query="SELECT r FROM Reference_Data r"),
+@NamedQuery(name="Reference_Data.findAll", query="SELECT r FROM Reference_Data r order by  r.code, r.value"),
 @NamedQuery(name="Reference_Data.findByListByRefType", query="SELECT r FROM Reference_Data r where r.refType = :refType"),
 @NamedQuery(name="Reference_Data.findByListByUserRefType", query="SELECT r FROM Reference_Data r where r.refType = :refType and r.userId = :userId")
 })

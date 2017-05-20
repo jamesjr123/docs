@@ -36,6 +36,16 @@ import org.atp25d.model.Reference_Data;
 			}			
 			return list;			
 		}
+		public Map<String,String>  getRefListR(String refType) {
+			Map<String,String> list = new LinkedHashMap<String, String>();
+			TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findByListByRefType", Reference_Data.class);
+			query.setParameter("refType", refType);
+			List<Reference_Data> refs = query.getResultList();			
+			for (Reference_Data ref: refs ) {
+				list.put(ref.getValue(),ref.getCode() );
+			}			
+			return list;			
+		}		
 		public String  getRefTZ() {
 			TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findByListByRefType", Reference_Data.class);
 			query.setParameter("refType", "TimeZone");
