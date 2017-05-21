@@ -44,15 +44,21 @@
 			<p:column>
                 <p:outputLabel for="category" value="Category:" />
 			</p:column>			
-			<p:column >			                
-                <p:inputText id="category" value="#{docsController.newDoc.category}" /> 					                       
+			<p:column >
+		        <p:selectOneMenu id="category" value="#{docsController.newDoc.category}"  effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
+		             <f:selectItem itemValue="#{null}" itemLabel="Select" />
+		            <f:selectItems value="#{referenceData.getRefCodeList('DocCategories')}"/>
+		        </p:selectOneMenu>							                 					                       
                 <p:message for="category"/>                
 			</p:column>
 			<p:column>
                 <p:outputLabel for="quals" value="Special interests" />
 			</p:column>			
-			<p:column >			                
-                <p:inputText id="quals" value="#{docsController.newDoc.quals}" maxlength="200" /> 					                       
+			<p:column >			                                
+		        <p:selectOneMenu id="quals" value="#{docsController.newDoc.quals}"  effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
+		             <f:selectItem itemValue="#{null}" itemLabel="Select" />
+		            <f:selectItems value="#{referenceData.getRefCodeList('DocInterests')}"/>
+		        </p:selectOneMenu>                 			                		                      
                 <p:message for="quals"/>                
 			</p:column>
 			<p:column>

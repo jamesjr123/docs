@@ -1,5 +1,6 @@
 package org.atp25d.util;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,17 @@ import org.atp25d.model.Reference_Data;
 				list.put(ref.getValue(),ref.getCode() );
 			}			
 			return list;			
-		}		
+		}	
+		public List<String>  getRefCodeList(String refType) {
+			List<String> list = new ArrayList<String>();
+			TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findByListByRefType", Reference_Data.class);
+			query.setParameter("refType", refType);
+			List<Reference_Data> refs = query.getResultList();			
+			for (Reference_Data ref: refs ) {
+				list.add(ref.getCode() );
+			}			
+			return list;			
+		}			
 		public String  getRefTZ() {
 			TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findByListByRefType", Reference_Data.class);
 			query.setParameter("refType", "TimeZone");

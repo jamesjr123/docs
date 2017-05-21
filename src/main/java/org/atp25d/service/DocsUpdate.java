@@ -16,6 +16,7 @@ import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
 import org.atp25d.model.Reference_Data;
 import org.atp25d.model.UserAccess;
+import org.atp25d.util.ReferenceData;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
 
@@ -33,7 +34,10 @@ public class DocsUpdate {
     private Event<Location> locationEventSrc;    
     
     @Inject
-    private Event<Doctor> doctorEventSrc;    
+    private Event<Doctor> doctorEventSrc;
+    
+    @Inject
+    private ReferenceData referencedata; 
     
     public Doctor getDocForUpdate(Doctor doc){
 		return em.find(Doctor.class, doc.getDoctorNumber());    	
@@ -78,7 +82,18 @@ public class DocsUpdate {
 		{
 			doctorEventSrc.fire(doc1);
 		}
-   		
+   		if (!referencedata.getRefCodeList("DocCategories").contains(doc.getCategory())) {
+   			Reference_Data ref = new Reference_Data();
+   			ref.setRefType("DocCategories");
+   			ref.setCode(doc.getCategory());
+   			saveRefData(ref);
+   		}
+   		if (!referencedata.getRefCodeList("DocInterests").contains(doc.getQuals())) {
+   			Reference_Data ref = new Reference_Data();
+   			ref.setRefType("DocInterests");
+   			ref.setCode(doc.getQuals());
+   			saveRefData(ref);
+   		}   		
     }
     public Location getLocForUpdate(Location loc){
 		return em.find(Location.class, loc.getLocationNumber());    	
