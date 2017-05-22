@@ -28,12 +28,12 @@
                 
  <p:dataTable var="_refData" value="#{reference_Data}" rows="10" rendered="#{docsController.docsUpdateAccess}"   editable="true"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
+         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="refTable">
  	<f:facet name="header">
            Reference Data listing
      </f:facet>         
-     <p:ajax event="rowEdit" listener="#{docsController.onRefRowEdit}" update="docTable" />
-       <p:ajax event="rowEditCancel" listener="#{docsController.onRefRowCancel}" update="docTable" />
+     <p:ajax event="rowEdit" listener="#{docsController.onRefRowEdit}" update="refTable" />
+       <p:ajax event="rowEditCancel" listener="#{docsController.onRefRowCancel}" update="refTable" />
     <p:column headerText="Doctor" visible="false">
         <h:outputText value="#{_refData.codeNumber}" />
      </p:column>        
@@ -74,7 +74,7 @@
            <h:commandLink value="Copy" action="#{docsController.copyRefRow(_refData)}"/>
      </p:column>    
      <p:column width="90" exportable="false">           
-              <p:commandButton value="Delete row" actionListener="#{docsController.deleteRefRow(_refData)}" update="@this">
+              <p:commandButton value="Delete" actionListener="#{docsController.deleteRefRow(_refData)}" update="refTable">
         <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
     </p:commandButton>
      </p:column>    

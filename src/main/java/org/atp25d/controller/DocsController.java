@@ -395,7 +395,7 @@ public class DocsController implements Serializable {
 			    docsUpdate.saveDocNote(newDocNote);  
 			   	if (!getUserProfile().getTodoistToken().equals("") && newDocNote.getFollowUp() !=null)
 			   	{
-			   		writeTodoTask(getUserProfile().getTodoistToken());
+			   		writeTodoTask(getUserProfile().getTodoistToken(), "DocNote");
 			   	}			    
 			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor note updated", "update");
 				          facesContext.addMessage(null, m);
@@ -406,8 +406,12 @@ public class DocsController implements Serializable {
 			   	newLocNote.setUser(userEmail);	
 			   	newLocNote.setTime_Stamp(new Date());	
 			   	newLocNote.setNoteId(newLocNote.getNoteId());
-			   	newLocNote.setLocationNumber(newLoc.getLocationNumber());
-			    docsUpdate.saveLocNote(newLocNote);  
+			   	newLocNote.setLocation(newLoc);
+			    docsUpdate.saveLocNote(newLocNote);
+			   	if (!getUserProfile().getTodoistToken().equals("") && newLocNote.getFollowUp() !=null)
+			   	{
+			   		writeTodoTask(getUserProfile().getTodoistToken(), "LocNote");
+			   	}				    
 			 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Doctor note updated", "update");
 				          facesContext.addMessage(null, m);
 				 return listLocNotes(newLoc);
@@ -589,7 +593,7 @@ public class DocsController implements Serializable {
 	private void loadRefData(){  
 	    reference_Data=docsRepository.getRefData();
 	}	
-	private void writeTodoTask(String token){
+	private void writeTodoTask(String token, String fupType){
     	String urlString = "https://todoist.com/API/v7/sync";
 		URL url;
 		try {
@@ -607,12 +611,27 @@ public class DocsController implements Serializable {
 	     dateFmt.setTimeZone(TimeZone.getTimeZone(referenceData.getRefTZ()));
 	     String ddat;
 	     String cdat;
-	      synchronized (dateFmt){
-	        ddat= dateFmt.format(newDocNote.getFollowUp());
-	        cdat= dateFmt.format(newDocNote.getTime_Stamp());
-	      }	      	     
-	     String task = newDocNote.getDoctor().getFullName()+" - "+newDocNote.getDoctor().getPhoneNumber()+"  "+newDocNote.getDoctor().getMobileNumber()+" - "+newDocNote.getDoctor().getLocation().getDisplayName()+ " - "+newDocNote.getNotes();
-		String query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+newDocNote.getProjectId()+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+cdat+"\"}}]";
+	     String projectId;
+	     String task;
+	     String query;
+	    if (fupType.equals("DocNote")) {
+		  synchronized (dateFmt){
+		        ddat= dateFmt.format(newDocNote.getFollowUp());
+		        cdat= dateFmt.format(newDocNote.getTime_Stamp());
+		      }	    	
+		    task = newDocNote.getDoctor().getFullName()+" - "+newDocNote.getDoctor().getPhoneNumber()+"  "+newDocNote.getDoctor().getMobileNumber()+" - "+newDocNote.getDoctor().getLocation().getDisplayName()+ " - "+newDocNote.getNotes();
+		    projectId = newDocNote.getProjectId();		    
+	    }
+	    else
+	    {
+		  synchronized (dateFmt){
+		        ddat= dateFmt.format(newLocNote.getFollowUp());
+		        cdat= dateFmt.format(newLocNote.getTime_Stamp());
+		      }	    	
+		    task = newLocNote.getLocation().getDisplayName()+" - "+newLocNote.getLocation().getPhoneNumber()+"  "+" - "+newLocNote.getNotes();
+		    projectId = newLocNote.getProjectId();				    	
+	    }
+	    query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+projectId+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+cdat+"\"}}]";
 		output.writeBytes(query);		
 		output.close();	
 		DataInputStream input = new DataInputStream( connection.getInputStream() ); 

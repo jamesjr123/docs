@@ -15,7 +15,7 @@ import java.util.Date;
 @Table(name="location_notes")
 @NamedQueries({
 @NamedQuery(name="LocationNote.findAll", query="SELECT l FROM LocationNote l"),
-@NamedQuery(name="LocationNote.findByLocId", query="SELECT l FROM LocationNote l where l.locationNumber = :locationNumber")
+@NamedQuery(name="LocationNote.findByLocId", query="SELECT l FROM LocationNote l where l.location.locationNumber = :locationNumber")
 })
 public class LocationNote implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +24,10 @@ public class LocationNote implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int locNoteId;
 
-	private int locationNumber;
+	//bi-directional many-to-one association to Location
+	@ManyToOne
+	@JoinColumn(name="locationNumber")
+	private Location location;	
 
 	private String notes;
 
@@ -32,6 +35,11 @@ public class LocationNote implements Serializable {
 	private Date time_Stamp;
 
 	private String user;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date followUp;
+		
+	private String projectId;	
 
 	public LocationNote() {
 	}
@@ -42,14 +50,6 @@ public class LocationNote implements Serializable {
 
 	public void setNoteId(int noteId) {
 		this.locNoteId = noteId;
-	}
-
-	public int getLocationNumber() {
-		return this.locationNumber;
-	}
-
-	public void setLocationNumber(int locationNumber) {
-		this.locationNumber = locationNumber;
 	}
 
 	public String getNotes() {
@@ -75,5 +75,27 @@ public class LocationNote implements Serializable {
 	public void setUser(String user) {
 		this.user = user;
 	}
+	public Date getFollowUp() {
+		return followUp;
+	}
 
+	public void setFollowUp(Date followUp) {
+		this.followUp = followUp;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 }

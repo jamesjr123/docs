@@ -21,7 +21,26 @@
 				    <h:outputText id="display" />
 			</p:column>
             </p:panelGrid>
-                
+     <p:panelGrid columns="4" >
+
+			<p:column>
+                <p:outputLabel for="project" value="Follow up Project:" />
+			</p:column>
+			<p:column>			       
+		        <p:selectOneMenu id="project" value="#{docsController.newLocNote.projectId}" >
+		             <f:selectItem itemValue="#{null}" itemLabel="Select" />
+		            <f:selectItems value="#{referenceData.getUserRefList('TodoistProject',docsController.userEmail)}"/>		    							
+		        </p:selectOneMenu>	  			         
+			</p:column>
+			<p:column>
+                <p:outputLabel for="dateDue" value="Follow up Project:" />
+			</p:column>
+			<p:column>			       
+			    <p:outputLabel for="dateDue" value="Due Date:" />
+			        <p:calendar id="dateDue" value="#{docsController.newLocNote.followUp}" pattern="dd/MM/yyyy HH:mm:ss" />      
+			</p:column>			
+            </p:panelGrid>
+                                
                 <p:panelGrid columns="4">
                     <h:commandButton id="save"
                            action="#{docsController.saveLocNote()}"
