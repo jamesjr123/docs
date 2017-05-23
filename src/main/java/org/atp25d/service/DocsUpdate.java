@@ -59,6 +59,15 @@ public class DocsUpdate {
 		List<Doctor> docs = query.getResultList();
 		return !docs.isEmpty();
     }
+    public boolean locExists(Location loc){
+		TypedQuery<Location> query = em.createNamedQuery("Location.findMatchLoc", Location.class);
+		query.setParameter("location", loc.getLocation());
+		query.setParameter("mailAddress1", loc.getMailAddress1());
+		query.setParameter("mailSuburb", loc.getMailSuburb());
+		query.setParameter("mailPostcode", loc.getMailPostcode());
+		List<Location> locs = query.getResultList();
+		return !locs.isEmpty();
+    }     
     public void saveDoc(Doctor doc){
     	if (doc.getDoctorId() == 0) {
     		doc.setDoctorId(getNextDoctorId());

@@ -45,7 +45,7 @@
                 <p:outputLabel for="mailPostcode" value="Post Code:" />
 			</p:column>			
 			<p:column>			                
-                <p:inputText id="mailPostcode" value="#{docsController.newLoc.mailPostcode}" maxlength="4" required="true"/> 					                       
+                <p:inputNumber id="mailPostcode" value="#{docsController.newLoc.mailPostcodeI}" maxlength="4" required="true" emptyValue="empty" thousandSeparator="" decimalPlaces="0"/> 					                       
                 <p:message for="mailPostcode"/>                
 			</p:column>	
 			<p:column>

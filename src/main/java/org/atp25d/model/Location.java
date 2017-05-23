@@ -16,7 +16,8 @@ import java.util.List;
 @Table(name="locations")
 @NamedQueries({
 @NamedQuery(name="Location.findAll", query="SELECT l FROM Location l"),
-@NamedQuery(name="Location.findById", query="SELECT l FROM Location l where l.locationNumber = :locationNumber")
+@NamedQuery(name="Location.findById", query="SELECT l FROM Location l where l.locationNumber = :locationNumber"),
+@NamedQuery(name="Location.findMatchLoc", query="SELECT l FROM Location l where l.location = :location and l.mailAddress1 = :mailAddress1 and l.mailSuburb = :mailSuburb and l.mailPostcode = :mailPostcode")
 })
 public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +30,7 @@ public class Location implements Serializable {
 
 	private String mailAddress1;
 
-	private int mailPostcode;
+	private int  mailPostcode;
 
 	private String mailState;
 
@@ -45,6 +46,9 @@ public class Location implements Serializable {
 
 	@Transient
 	private String displayName;	
+
+	@Transient
+	private Integer mailPostcodeI;		
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time_Stamp;	
@@ -116,14 +120,30 @@ public class Location implements Serializable {
 		this.mailAddress1 = mailAddress1;
 	}
 
-	public int getMailPostcode() {
+	public Integer getMailPostcode() {
+		//if (this.mailPostcode==null) return null;
 		return this.mailPostcode;
 	}
 
 	public void setMailPostcode(int mailPostcode) {
 		this.mailPostcode = mailPostcode;
 	}
+	public Integer getMailPostcodeI() {
+		if (this.mailPostcode==0) return null;
+		return this.mailPostcode;
+	}
 
+	public void setMailPostcodeI(Integer mailPostcodeI) {
+		this.mailPostcodeI = mailPostcodeI;
+		if (this.mailPostcodeI==null) 
+		{
+			setMailPostcode(0);
+		}
+		else
+		{
+			setMailPostcode(mailPostcodeI);
+		}
+	}
 	public String getMailState() {
 		return this.mailState;
 	}

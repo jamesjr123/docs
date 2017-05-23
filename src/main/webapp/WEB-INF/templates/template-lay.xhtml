@@ -159,7 +159,9 @@
       initApp();
       
     };
-  </script>		
+  </script>
+  <h:panelGroup rendered="#{!docsController.loggedIn}">
+  		
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <!-- Header section containing title -->
   
@@ -175,15 +177,11 @@
         
           <!-- [START google_button] -->
           <div id="googleLog" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-          <!-- [END google_button] -->         
-          
-
-        
+          <!-- [END google_button] -->                          
       </div>
-
-    </div>
-  
-</div>    	
+    </div>  
+</div> 
+</h:panelGroup>  	
 	</f:facet>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><ui:insert name="pagetitle">Doctors </ui:insert></title>

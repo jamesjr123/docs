@@ -262,6 +262,7 @@ public class DocsController implements Serializable {
 				return getDocsList();
 			  }
 		public String updateLoc (Location loc){
+			fromDoc=false;
 			newLoc = docsUpdate.getLocForUpdate(loc);
 			return "locationUpdate";			
 		}
@@ -373,7 +374,13 @@ public class DocsController implements Serializable {
 		}					
 		   public String saveLoc()  {
 			   	newLoc.setUser(userEmail);	
-			   	newLoc.setTime_Stamp(new Date());			   	
+			   	newLoc.setTime_Stamp(new Date());
+			   	newLoc.setLocation(newLoc.getLocation().trim());
+		    	if (newLoc.getLocationNumber() == 0 && docsUpdate.locExists(newLoc)) {
+				 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Record already exists", "error");
+			          facesContext.addMessage(null, m);
+					   return "locationUpdate";
+		    	}			   	
 			    docsUpdate.saveLoc(newLoc);  
 			    if (fromDoc)
 			    {

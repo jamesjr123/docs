@@ -198,7 +198,15 @@
 <h:inputHidden id="hlogged" value="#{docsController.loggedIn}"/>
 <p:remoteCommand name="setLoggedin" process="@this,hname,hemail,hlogged" update="@this" /> 
 
+<p:panelGrid columns="2" >
+     	           
+<br/>                               	            
+	<p:column>                                                                
+        <h:commandButton id="home" action="index" value="Go to main page" />
+    </p:column>
 
+                 
+</p:panelGrid>  
 	        </h:form>	
  
 </html>
