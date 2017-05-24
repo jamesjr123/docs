@@ -75,6 +75,12 @@ public class DocsRepository {
 		  query.setParameter("userId", user);		
 		return query.getResultList();
 	}
+	public List<LocationNote> findMyLocNotes(String user) {
+		TypedQuery<LocationNote> query = em.createNamedQuery("LocationNote.findByUserId",
+				LocationNote.class);
+		  query.setParameter("userId", user);		
+		return query.getResultList();
+	}	
 	public UserProfile findUserProfile(String user) {
 		TypedQuery<UserProfile> query = em.createNamedQuery("UserProfile.findById",
 				UserProfile.class);
@@ -93,6 +99,17 @@ public class DocsRepository {
 		  query.setParameter("toDate", cal.getTime());
 		return query.getResultList();
 	}	
+	public List<LocationNote> findMyLocNotesByDate(String user, Date from, Date to) {
+		TypedQuery<LocationNote> query = em.createNamedQuery("LocationNote.findByByUserDate",
+				LocationNote.class);
+		  query.setParameter("userId", user);		
+		  query.setParameter("fromDate", from);
+	      Calendar cal = Calendar.getInstance();
+	      cal.setTime(to);
+	      cal.add(Calendar.DATE, 1); //add 1 day for query 	        
+		  query.setParameter("toDate", cal.getTime());
+		return query.getResultList();
+	}		
 	public List<DoctorNote> findDocNotes(int doctorId) {
 		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByDocId",
 				DoctorNote.class);

@@ -25,50 +25,68 @@
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
       <!-- h1>Welcome to the Doctors list</h1-->
-
+    <p:panel id="search"   >
+     <p:panelGrid columns="8" >
+		 <p:column>		             
+         	<p:outputLabel for="dateFrom" value="From / To Date:"/>
+		</p:column>  		
+		<p:column>         	
+        		<p:calendar id="dateFrom" value="#{docsController.notesLocDateFrom}" navigator="true" pattern="dd/MM/yyyy" mindate="01/01/2016" 
+        		size="10" showOn="button" />                 					
+                <p:message for="dateFrom"/>                                       
+  		</p:column> 	
+		<p:column>         	
+        		<p:calendar id="dateTo" value="#{docsController.notesLocDateTo}" navigator="true" pattern="dd/MM/yyyy" mindate="01/01/2016" 
+        		size="10" showOn="button" />                 					
+                <p:message for="dateTo"/>                                       
+  		</p:column>             
+               <p:column>                
+                    <h:commandButton id="Filter"
+                           action="#{docsController.filterMyLocNotes()}"
+                        value="Filter" />
+               	</p:column>
+     </p:panelGrid>
+    </p:panel>
                 
- <p:dataTable var="_docNote" value="#{doctorNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true"
+ <p:dataTable var="_locNote" value="#{myLocNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
  	<f:facet name="header">
-            Notes listing for <h:outputText id="DocName" value="#{docsController.newDoc.fullName}"/>
+           My Location Notes listing
      </f:facet>         
   	<f:facet name="{Exporters}">
  		<h:outputText value="Export data"/>
     	<h:commandLink>
               <p:graphicImage value="/images/excel.png" alt="Excel"/>
-              <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
+              <p:dataExporter type="xls" target="docTable" fileName="myLocNoteslisting" />
           </h:commandLink>
 	</f:facet>
-
-    <p:column headerText="Notes" sortBy="#{_docNote.notes}">
-        <h:outputText value="#{_docNote.notes}" />
+    <p:column headerText="Location" >
+        <h:outputText value="#{_locNote.location.displayName}" />
+    </p:column>
+    <p:column headerText="Email" width="120">        
+		<h:outputLink value="mailto:#{_locNote.location.emailAddress}">				
+		</h:outputLink>
+    </p:column>    
+    <p:column headerText="Notes" sortBy="#{_locNote.notes}">
+        <h:outputText value="#{_locNote.notes}" />
     </p:column>
     <p:column headerText="Status" sortBy="#{_locNote.status}" width="140">
-        <h:outputText value="#{_docNote.status}" />
-    </p:column>    
-    <p:column headerText="Date created" sortBy="#{_docNote.time_Stamp}" width="200">
-        <h:outputText value="#{_docNote.time_Stamp}">
+        <h:outputText value="#{_locNote.status}" />
+    </p:column>        
+    <p:column headerText="Date created" sortBy="#{_locNote.time_Stamp}" width="200">
+        <h:outputText value="#{_locNote.time_Stamp}">
         						<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" type="date"
 												timeZone="#{referenceData.timeZone}" /> 
         </h:outputText>
     </p:column>
-     <p:column width="95" exportable="false">
-           <f:facet name="header">Action</f:facet>
-           <h:commandLink value="Display" action="#{docsController.displayDocNote(_docNote)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateDocNote(_docNote)}"   rendered='#{docsController.docsUpdateAccess}'/>
-     </p:column>  
 
 </p:dataTable>       
 <p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
 	<p:column>                
         <p:messages globalOnly="true" />
 	</p:column>   
-    <p:column> 
-         <h:commandButton id="newNote"
-                     action="#{docsController.createNote()}"   rendered='#{docsController.docsUpdateAccess}'
-             value="Add New Note"/>                          
-    </p:column>                                                 
+                                 
 	<p:column>                                                                
         <h:commandButton id="docs" action="index" value="Go to Doctors list" />
     </p:column>	                                     

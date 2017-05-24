@@ -86,7 +86,7 @@
            <h:commandLink value="Notes" action="#{docsController.listDocNotes(_doc)}"   rendered='#{docsController.docsReadAccess}'/>
      </p:column>                                          
 </p:dataTable>       
-<p:panelGrid columns="6" rendered='#{docsController.docsReadAccess}'>         
+<p:panelGrid columns="7" rendered='#{docsController.docsReadAccess}'>         
 	<p:column>                
         <p:messages globalOnly="true" />
 	</p:column>                               	            
@@ -96,6 +96,9 @@
 	<p:column>                                                                
         <h:commandButton id="myNotes" action="#{docsController.listMyDocNotes(docsController.userEmail)}" value="My Doctor Notes" />
     </p:column>
+    <p:column>                                                                
+        <h:commandButton id="myLocNotes" action="#{docsController.listMyLocNotes(docsController.userEmail)}" value="My Location Notes" />
+    </p:column>      
     <p:column> 
          <h:commandButton id="newDoc"
                      action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'

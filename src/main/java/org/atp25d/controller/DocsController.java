@@ -63,6 +63,7 @@ public class DocsController implements Serializable {
 	private boolean fromDoc;
     private List<DoctorNote> doctorNotes;
     private List<DoctorNote> myDocNotes;
+    private List<LocationNote> myLocNotes;
     private List<DoctorTarget> targetDoctors;
 
     private List<Reference_Data> reference_Data;    
@@ -78,6 +79,8 @@ public class DocsController implements Serializable {
 	private int docsTarPageNo;	
     private Date notesDateTo;
     private Date notesDateFrom;
+    private Date notesLocDateTo;
+    private Date notesLocDateFrom;     
     private String noteSubject;
     private String noteBody;
     private List<String> selectedTargets;
@@ -321,6 +324,10 @@ public class DocsController implements Serializable {
 		    myDocNotes = docsRepository.findMyDocNotes(user);		    			    			
 			return "myDocNotes";			
 		}		
+		public String listMyLocNotes (String user){
+		    myLocNotes = docsRepository.findMyLocNotes(user);		    			    			
+			return "myLocNotes";			
+		}						
 		public String selectLoc (Location loc){
 			newDoc.setLocation(loc);  		
 			return null;				
@@ -459,6 +466,10 @@ public class DocsController implements Serializable {
 		   myDocNotes = docsRepository.findMyDocNotesByDate(userEmail, notesDateFrom, notesDateTo);
 				return "myDocNotes";
 			  }
+	   public String filterMyLocNotes()  {
+		   myLocNotes = docsRepository.findMyLocNotesByDate(userEmail, notesDateFrom, notesDateTo);
+				return "myLocNotes";
+			  }	   
 	   public String filterTargets()  {
 		   if (selectedTargets.isEmpty()){
 			   targetDoctors=docsRepository.getAllTargetDocs();
@@ -534,6 +545,8 @@ public class DocsController implements Serializable {
 	@PostConstruct
 	public void init() {
 		notesDateFrom = new Date();
+		notesLocDateTo = new Date();
+		notesLocDateFrom = new Date();		
 		notesDateTo = new Date();
 		loadRefData();
 		//campaigns = referenceData.getRefList("DoctorCampaign");
@@ -695,4 +708,24 @@ public class DocsController implements Serializable {
 	public void setFilteredTargetDoctors(List<DoctorTarget> filteredTargetDoctors) {
 		this.filteredTargetDoctors = filteredTargetDoctors;
 	}
+   @Produces
+    @Named		
+	public List<LocationNote> getMyLocNotes() {
+		return myLocNotes;
+	}
+	public void setMyLocNotes(List<LocationNote> myLocNotes) {
+		this.myLocNotes = myLocNotes;
+	}
+	public Date getNotesLocDateTo() {
+		return notesLocDateTo;
+	}
+	public void setNotesLocDateTo(Date notesLocDateTo) {
+		this.notesLocDateTo = notesLocDateTo;
+	}
+	public Date getNotesLocDateFrom() {
+		return notesLocDateFrom;
+	}
+	public void setNotesLocDateFrom(Date notesLocDateFrom) {
+		this.notesLocDateFrom = notesLocDateFrom;
+	}	
 }

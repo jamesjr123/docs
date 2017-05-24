@@ -15,7 +15,10 @@ import java.util.Date;
 @Table(name="location_notes")
 @NamedQueries({
 @NamedQuery(name="LocationNote.findAll", query="SELECT l FROM LocationNote l"),
-@NamedQuery(name="LocationNote.findByLocId", query="SELECT l FROM LocationNote l where l.location.locationNumber = :locationNumber")
+@NamedQuery(name="LocationNote.findByLocId", query="SELECT l FROM LocationNote l where l.location.locationNumber = :locationNumber"),
+@NamedQuery(name="LocationNote.findByByUserDate", query="SELECT l FROM LocationNote l where l.user = :userId and l.time_Stamp >= :fromDate and  l.time_Stamp < :toDate"),
+@NamedQuery(name="LocationNote.findByUserId", query="SELECT l FROM LocationNote l where l.user = :userId")
+
 })
 public class LocationNote implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -40,6 +43,9 @@ public class LocationNote implements Serializable {
 	private Date followUp;
 		
 	private String projectId;	
+	
+	private String status;
+
 
 	public LocationNote() {
 	}
@@ -98,4 +104,11 @@ public class LocationNote implements Serializable {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}	
 }

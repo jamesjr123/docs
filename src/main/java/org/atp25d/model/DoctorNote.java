@@ -45,6 +45,7 @@ public class DoctorNote implements Serializable {
 	@JoinColumn(name="doctorNumber")
 	private Doctor doctor;	
 	
+	private String status;
 	
 	public DoctorNote() {
 	}
@@ -111,6 +112,14 @@ public class DoctorNote implements Serializable {
 
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

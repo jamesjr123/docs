@@ -44,6 +44,9 @@
     <p:column headerText="Notes" sortBy="#{_locNote.notes}">
         <h:outputText value="#{_locNote.notes}" />
     </p:column>
+    <p:column headerText="Status" sortBy="#{_locNote.status}" width="140">
+        <h:outputText value="#{_locNote.status}" />
+    </p:column>    
     <p:column headerText="Date created" sortBy="#{_locNote.time_Stamp}" width="200">
         <h:outputText value="#{_locNote.time_Stamp}" />
     </p:column>
