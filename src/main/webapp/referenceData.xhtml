@@ -31,7 +31,14 @@
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="refTable">
  	<f:facet name="header">
            Reference Data listing
-     </f:facet>         
+     </f:facet>  
+  	<f:facet name="{Exporters}">
+ 		<h:outputText value="Export data"/>
+    	<h:commandLink>
+              <p:graphicImage value="/images/excel.png" alt="Excel"/>
+              <p:dataExporter type="xls" target="refTable" fileName="reflisting" />
+          </h:commandLink>
+	</f:facet>            
      <p:ajax event="rowEdit" listener="#{docsController.onRefRowEdit}" update="refTable" />
        <p:ajax event="rowEditCancel" listener="#{docsController.onRefRowCancel}" update="refTable" />
     <p:column headerText="Doctor" visible="false">
@@ -49,7 +56,7 @@
              <f:facet name="input"><p:inputText id="userId" value="#{_refData.userId}" style="width:100%"/></f:facet>
          </p:cellEditor>
     </p:column>         
-    <p:column headerText="Ref Type" >        
+    <p:column headerText="Ref Type" filterBy="#{_refData.refType}" filterMatchMode="contains" filterStyle="width: 130px;">        
          <p:cellEditor>
              <f:facet name="output"><h:outputText value="#{_refData.refType}" /></f:facet>
              <f:facet name="input"><p:inputText id="refType" value="#{_refData.refType}" style="width:100%"/></f:facet>
