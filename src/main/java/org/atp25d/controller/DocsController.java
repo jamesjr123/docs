@@ -467,7 +467,7 @@ public class DocsController implements Serializable {
 				return "myDocNotes";
 			  }
 	   public String filterMyLocNotes()  {
-		   myLocNotes = docsRepository.findMyLocNotesByDate(userEmail, notesDateFrom, notesDateTo);
+		   myLocNotes = docsRepository.findMyLocNotesByDate(userEmail, notesLocDateFrom, notesLocDateTo);
 				return "myLocNotes";
 			  }	   
 	   public String filterTargets()  {
