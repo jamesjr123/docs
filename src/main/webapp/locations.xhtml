@@ -37,9 +37,8 @@ function filterLocs() {
  	<f:facet name="header">
             Locations Listing
      </f:facet>           
-  	<f:facet name="{Exporters}">
- 		<h:outputText value="Export data"/>
-    	<h:commandLink>
+  	<f:facet name="{Exporters}"> 		
+    	<h:commandLink rendered='#{docsController.docsUpdateAccess}'>
            <p:graphicImage value="/images/excel.png" alt="Excel"/>
               <p:dataExporter type="xls" target="locTable" fileName="loclisting" />
           </h:commandLink>
@@ -71,7 +70,7 @@ function filterLocs() {
      <p:column  width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateLoc(_loc)}"   rendered='#{docsController.docsUpdateAccess}'/><br/>
+           <h:commandLink value="Update" action="#{docsController.updateLoc(_loc)}"   rendered='#{docsController.docUpdateAccess(_loc.user_Created)}'/><br/>
      </p:column>  
      <p:column width="95" exportable="false">           
            <h:commandLink value="Notes" action="#{docsController.listLocNotes(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>
@@ -86,7 +85,7 @@ function filterLocs() {
                                 action="#{docsController.listDoctors()}"
                         value="Go to Doctor list" />                     
                     <h:commandButton id="newLoc"
-                                action="#{docsController.createLoc()}"   rendered='#{docsController.docsUpdateAccess}'
+                                action="#{docsController.createLoc()}"   rendered='#{docsController.docUpdateAccess()}'
                         value="Add New location" />
                         <p:remoteCommand  oncomplete="filterLocs()" autoRun="true"/>
 					<p:column>                                                                

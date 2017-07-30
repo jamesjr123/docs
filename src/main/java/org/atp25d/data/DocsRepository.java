@@ -32,17 +32,19 @@ public class DocsRepository {
     @Inject
     private EntityManager em;
     
-	public List<Doctor> findAllDocs() {
+	public List<Doctor> findAllDocs(String specialist) {
 
 		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findAll",
 				Doctor.class);
+		query.setParameter("specialist", specialist);		
 		return query.getResultList();
 	}
-	public List<Doctor> findAllDocsLoc(Location loc) {
+	public List<Doctor> findAllDocsLoc(Location loc,String specialist) {
 
 		TypedQuery<Doctor> query = em.createNamedQuery("Doctor.findByLoc",
 				Doctor.class);
-		  query.setParameter("locationNumber", loc.getLocationNumber());		
+		  query.setParameter("locationNumber", loc.getLocationNumber());
+			query.setParameter("specialist", specialist);
 		return query.getResultList();
 	}
 	public List<Location> findAllLocations() {

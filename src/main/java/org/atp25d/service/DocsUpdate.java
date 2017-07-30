@@ -91,18 +91,30 @@ public class DocsUpdate {
 		{
 			doctorEventSrc.fire(doc1);
 		}
-   		if (!referencedata.getRefCodeList("DocCategories").contains(doc.getCategory())) {
+   		if (doc.getCategory()!= null && !referencedata.getRefCodeList("DocCategories").contains(doc.getCategory())) {
    			Reference_Data ref = new Reference_Data();
    			ref.setRefType("DocCategories");
    			ref.setCode(doc.getCategory());
    			saveRefData(ref);
    		}
-   		if (!referencedata.getRefCodeList("DocInterests").contains(doc.getQuals())) {
+   		if (doc.getQuals() !=null && !referencedata.getRefCodeList("DocInterests").contains(doc.getQuals())) {
    			Reference_Data ref = new Reference_Data();
    			ref.setRefType("DocInterests");
    			ref.setCode(doc.getQuals());
    			saveRefData(ref);
+   		}
+   		if (doc.getQuals2() !=null && !referencedata.getRefCodeList("DocInterests").contains(doc.getQuals2())) {
+   			Reference_Data ref = new Reference_Data();
+   			ref.setRefType("DocInterests");
+   			ref.setCode(doc.getQuals2());
+   			saveRefData(ref);
    		}   		
+   		if (doc.getQuals3() !=null && !referencedata.getRefCodeList("DocInterests").contains(doc.getQuals3())) {
+   			Reference_Data ref = new Reference_Data();
+   			ref.setRefType("DocInterests");
+   			ref.setCode(doc.getQuals3());
+   			saveRefData(ref);
+   		}   		   		
     }
     public Location getLocForUpdate(Location loc){
 		return em.find(Location.class, loc.getLocationNumber());    	

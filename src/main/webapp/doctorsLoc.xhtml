@@ -18,7 +18,7 @@
  	<f:facet name="header">
             Doctors at <h:outputText id="locName" value="#{selectedLoc.displayName}"/>
      </f:facet>         
-  	<f:facet name="{Exporters}">
+  	<f:facet name="{Exporters}" rendered='#{docsController.docsUpdateAccess}'>
  		<h:outputText value="Export data"/>
     	<h:commandLink>
               <p:graphicImage value="/images/excel.png" alt="Excel"/>
@@ -42,7 +42,7 @@
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docsUpdateAccess}'/>           
+           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docUpdateAccess(_doc.user_Created)}'/>           
      </p:column>  
      <p:column width="95" exportable="false">           
            <h:commandLink value="Notes" action="#{docsController.listDocNotes(_doc)}"   rendered='#{docsController.docsReadAccess}'/>
@@ -57,7 +57,7 @@
     </p:column>                         
     <p:column> 
          <h:commandButton id="newDoc"
-                     action="#{docsController.createDoc(selectedLoc)}"   rendered='#{docsController.docsUpdateAccess}'
+                     action="#{docsController.createDoc(selectedLoc)}"   rendered='#{docsController.docUpdateAccess}'
              value="Add New Doctor"/>                          
     </p:column>             
 </p:panelGrid>  

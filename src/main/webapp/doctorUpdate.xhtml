@@ -9,7 +9,7 @@
     template="/WEB-INF/templates/template-lay.xhtml">    
     <ui:define name="content">
 
-     <p:panelGrid columns="6" >
+     <p:panelGrid columns="4" >
       		<f:facet name="header">
             	Update Doctor details
      		</f:facet> 
@@ -51,8 +51,10 @@
 		        </p:selectOneMenu>							                 					                       
                 <p:message for="category"/>                
 			</p:column>
+			</p:panelGrid>
+			<p:panelGrid columns="2" >
 			<p:column>
-                <p:outputLabel for="quals" value="Special interests" />
+                <p:outputLabel for="quals" value="Special interests:" />
 			</p:column>			
 			<p:column >			                                
 		        <p:selectOneMenu id="quals" value="#{docsController.newDoc.quals}"  effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
@@ -61,6 +63,27 @@
 		        </p:selectOneMenu>                 			                		                      
                 <p:message for="quals"/>                
 			</p:column>
+			<p:column>
+			</p:column>
+			<p:column>			                                
+		        <p:selectOneMenu id="quals2" value="#{docsController.newDoc.quals2}"  effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
+		             <f:selectItem itemValue="#{null}" itemLabel="Select" />
+		            <f:selectItems value="#{referenceData.getRefCodeList('DocInterests')}"/>
+		        </p:selectOneMenu>                 			                		                      
+                <p:message for="quals2"/>                
+			</p:column>
+			<p:column>
+			</p:column> 
+			<p:column >			                                
+		        <p:selectOneMenu id="quals3" value="#{docsController.newDoc.quals3}"  effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
+		             <f:selectItem itemValue="#{null}" itemLabel="Select" />
+		            <f:selectItems value="#{referenceData.getRefCodeList('DocInterests')}"/>
+		        </p:selectOneMenu>                 			                		                      
+                <p:message for="quals3"/>                
+			</p:column>			
+			</p:panelGrid>			
+			<p:panelGrid>
+			<p:row>
 			<p:column>
                 <p:outputLabel for="email" value="Email:" />
 			</p:column>			
@@ -75,20 +98,24 @@
                 <p:inputText id="phone" value="#{docsController.newDoc.phoneNumber}" maxlength="20" /> 					                       
                 <p:message for="phone"/>                
 			</p:column>
+			</p:row>
+			<p:row>
 			<p:column>
-                <p:outputLabel for="mobilephone" value="Mobile Number:" />
+                <p:outputLabel for="mobilephone" value="Mobile:" />
 			</p:column>			
-			<p:column >			                
+			<p:column colspan="3">			                
                 <p:inputText id="mobilephone" value="#{docsController.newDoc.mobileNumber}" maxlength="20" /> 					                       
                 <p:message for="mobilephone"/>                
-			</p:column>									
-			<p:column>		
+			</p:column>
+			</p:row>
+			<p:row>									
+			<p:column >		
 				<p:outputLabel for="Address" value="Address:" />			
 			</p:column>
-			<p:column>
-			<h:outputText id="Address" label="Address" value="#{docsController.newDoc.location.location.concat(' ').concat(docsController.newDoc.location.mailAddress1).concat(' ').concat(docsController.newDoc.location.mailSuburb)}"/>
-                       
+			<p:column colspan="3">
+			<h:outputText id="Address" label="Address" value="#{docsController.newDoc.location.location.concat(' ').concat(docsController.newDoc.location.mailAddress1).concat(' ').concat(docsController.newDoc.location.mailSuburb)}"/>                       
 			</p:column>
+			</p:row>
             </p:panelGrid>
                 
             <p:panelGrid columns="5">

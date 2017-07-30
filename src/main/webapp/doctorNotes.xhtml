@@ -33,9 +33,8 @@
  	<f:facet name="header">
             Notes listing for <h:outputText id="DocName" value="#{docsController.newDoc.fullName}"/>
      </f:facet>         
-  	<f:facet name="{Exporters}">
- 		<h:outputText value="Export data"/>
-    	<h:commandLink>
+  	<f:facet name="{Exporters}"> 		
+    	<h:commandLink rendered='#{docsController.docsUpdateAccess}'>
               <p:graphicImage value="/images/excel.png" alt="Excel"/>
               <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
           </h:commandLink>
@@ -56,7 +55,7 @@
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayDocNote(_docNote)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateDocNote(_docNote)}"   rendered='#{docsController.docsUpdateAccess}'/>
+           <h:commandLink value="Update" action="#{docsController.updateDocNote(_docNote)}"   rendered='#{docsController.docUpdateAccess(_docNote.user_Created)}'/>
      </p:column>  
 
 </p:dataTable>       
@@ -66,7 +65,7 @@
 	</p:column>   
     <p:column> 
          <h:commandButton id="newNote"
-                     action="#{docsController.createNote()}"   rendered='#{docsController.docsUpdateAccess}'
+                     action="#{docsController.createNote()}"   rendered='#{docsController.docUpdateAccess()}'
              value="Add New Note"/>                          
     </p:column>                                                 
 	<p:column>                                                                

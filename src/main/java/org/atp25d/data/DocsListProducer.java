@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 
 @SessionScoped
+@Named
 public class DocsListProducer implements Serializable {
 	/**
 	 * 
@@ -37,6 +38,23 @@ public class DocsListProducer implements Serializable {
 
 	private List<Location> locations;
     private Location selectedLoc;
+    private String specialist;
+    
+    @Produces
+    @Named    
+	public String getSpecialist() {
+		return specialist;
+	}
+	public void setSpecialist(String specialist) {
+		if (this.specialist!=null && !specialist.equals(this.specialist)) {
+			this.specialist = specialist;
+    		doctors = docsRepository.findAllDocs(specialist);
+		}
+		else
+		{
+			this.specialist = specialist;
+		}
+	}
 		
     @Produces
     @Named
@@ -56,17 +74,18 @@ public class DocsListProducer implements Serializable {
     }	    
     @PostConstruct
     public void init() {
-    	retrieveAllDocs(); 
-    	retrieveAllLocs();
+    	setSpecialist("Y");
+    	retrieveAllDocs();
+    	retrieveAllLocs();    
     }
     public void retrieveAllDocs() {
     	if (doctors==null) {
-    		doctors = docsRepository.findAllDocs();
+    		doctors = docsRepository.findAllDocs(specialist);
     	}
     }
     public void retrieveAllDocsLoc(Location loc) {
     	if (doctorsLoc==null) {
-    		doctors = docsRepository.findAllDocsLoc(loc);
+    		doctors = docsRepository.findAllDocsLoc(loc,specialist);
     	}
     }   
     public void retrieveAllLocs() {
@@ -76,13 +95,13 @@ public class DocsListProducer implements Serializable {
     }      
     public void onLocationListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Location location) {
     	locations = docsRepository.findAllLocations();
-    	doctors = docsRepository.findAllDocs();
+    	doctors = docsRepository.findAllDocs(specialist);
     }
     
     public void onDoctorListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Doctor doctor) {
-    	doctors = docsRepository.findAllDocs();
+    	doctors = docsRepository.findAllDocs(specialist);
     	if (selectedLoc!=null && doctor.getLocation().getLocationNumber()==selectedLoc.getLocationNumber()) {
-    		doctorsLoc = docsRepository.findAllDocsLoc(doctor.getLocation());
+    		doctorsLoc = docsRepository.findAllDocsLoc(doctor.getLocation(),specialist);
     	}
     }
     @Produces
@@ -91,10 +110,19 @@ public class DocsListProducer implements Serializable {
 		return selectedLoc;
 	}
 
+    public void setDocsByLoc(Location loc){
+    	setSelectedLoc(loc);
+		setDoctorsLoc(docsRepository.findAllDocsLoc(loc,specialist));    	
+    }
+    
 	public void setSelectedLoc(Location selectedLoc) {
 		this.selectedLoc = selectedLoc;
 	}
     public void setDoctorsLoc(List<Doctor> doctorsLoc) {
 		this.doctorsLoc = doctorsLoc;
-	}	
+	}
+    public void specialistKeyEvent()
+    {
+    	doctors = docsRepository.findAllDocs(specialist);    	
+    }
 }

@@ -39,9 +39,8 @@
  	<f:facet name="header">
             Doctors Listing                    
      </f:facet>         
-  	<f:facet name="{Exporters}">
- 		<h:outputText value="Export data"/>
-    	<h:commandLink>
+  	<f:facet name="{Exporters}" >
+    	<h:commandLink rendered='#{docsController.docsUpdateAccess}'>
               <p:graphicImage value="/images/excel.png" alt="Excel"/>
               <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
           </h:commandLink>
@@ -80,7 +79,7 @@
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docsUpdateAccess}'/>           
+           <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docUpdateAccess(_doc.user_Created)}'/>           
      </p:column>  
      <p:column width="95" exportable="false">           
            <h:commandLink value="Notes" action="#{docsController.listDocNotes(_doc)}"   rendered='#{docsController.docsReadAccess}'/>
@@ -101,13 +100,18 @@
     </p:column>      
     <p:column> 
          <h:commandButton id="newDoc"
-                     action="#{docsController.createDoc()}"   rendered='#{docsController.docsUpdateAccess}'
+                     action="#{docsController.createDoc()}"   rendered='#{docsController.docUpdateAccess()}'
              value="Add New Doctor"/> 
 	<p:remoteCommand  oncomplete="filterDocs()" autoRun="true"/>                                                          
     </p:column>
           
-	<p:column rendered='#{docsController.docsUpdateAccess}'  colspan="2">                                                                
+	<p:column rendered='#{docsController.docsUpdateAccess}'  >                                                                
         <h:commandLink id="referenceData" action="referenceData" value="Reference Data" />
+    </p:column>                 
+    <p:column rendered='#{docsController.docsUpdateAccess}'  >
+    <p:inputText id="title" value="#{docsListProducer.specialist}"  size="1" maxlength="1">
+                    		<p:ajax event="change" update="docTable" />						
+    </p:inputText>
     </p:column>                 
 </p:panelGrid>    
     </ui:define>

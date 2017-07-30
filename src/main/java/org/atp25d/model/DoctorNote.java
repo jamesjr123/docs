@@ -47,6 +47,8 @@ public class DoctorNote implements Serializable {
 	
 	private String status;
 	
+	private String user_Created;
+	
 	public DoctorNote() {
 	}
 
@@ -120,6 +122,14 @@ public class DoctorNote implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getUser_Created() {
+		return user_Created;
+	}
+
+	public void setUser_Created(String user_Created) {
+		this.user_Created = user_Created;
 	}
 
 }

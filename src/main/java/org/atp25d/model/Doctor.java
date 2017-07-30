@@ -13,9 +13,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="doctors")
 @NamedQueries({
-@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d order by d.surname"),
+@NamedQuery(name="Doctor.findAll", query="SELECT d FROM Doctor d where d.specialist = :specialist order by d.surname"),
 @NamedQuery(name="Doctor.findLastDocId", query="select max(d.doctorId) FROM Doctor d") ,
-@NamedQuery(name="Doctor.findByLoc", query="SELECT d FROM Doctor d where d.location.locationNumber = :locationNumber order by d.surname"),
+@NamedQuery(name="Doctor.findByLoc", query="SELECT d FROM Doctor d where d.location.locationNumber = :locationNumber and d.specialist = :specialist order by d.surname "),
 @NamedQuery(name="Doctor.findByNumber", query="SELECT d FROM Doctor d where d.doctorNumber = :doctorNumber"),
 @NamedQuery(name="Doctor.findById", query="SELECT d FROM Doctor d where d.doctorId = :doctorId"),
 @NamedQuery(name="Doctor.findMatchDoc", query="SELECT d FROM Doctor d where d.surname = :surname and d.firstName = :firstName and d.middleName = :middleName and d.title = :title and d.emailAddress = :emailAddress and d.location = :location")
@@ -44,11 +44,19 @@ public class Doctor implements Serializable {
 
 	private String quals;
 	
+	private String quals2;
+	
+	private String quals3;
+	
 	private String emailAddress;
 	
 	private String phoneNumber;
 
 	private String mobileNumber;
+	
+	private String user_Created;
+	
+	private String specialist;
 	
 	@Transient
 	private String fullName;	
@@ -193,6 +201,30 @@ public class Doctor implements Serializable {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+	public String getUser_Created() {
+		return user_Created;
+	}
+	public void setUser_Created(String user_Created) {
+		this.user_Created = user_Created;
+	}
+	public String getSpecialist() {
+		return specialist;
+	}
+	public void setSpecialist(String specialist) {
+		this.specialist = specialist;
+	}
+	public String getQuals2() {
+		return quals2;
+	}
+	public void setQuals2(String quals2) {
+		this.quals2 = quals2;
+	}
+	public String getQuals3() {
+		return quals3;
+	}
+	public void setQuals3(String quals3) {
+		this.quals3 = quals3;
 	}
 
 }

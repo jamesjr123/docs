@@ -43,10 +43,15 @@ public class Location implements Serializable {
 	private String faxNumber;
 	
 	private String user;
+	
+	private String user_Created;
 
 	@Transient
 	private String displayName;	
 
+	@Transient
+	private String displayNameShort;
+	
 	@Transient
 	private Integer mailPostcodeI;		
 	
@@ -72,7 +77,10 @@ public class Location implements Serializable {
 		return location+ " "+mailAddress1+" "+mailSuburb+" "+mailPostcode+" "+mailState;
 		
 	}
-
+	public String getDisplayNameShort() {
+		return location+" "+mailSuburb;
+		
+	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
@@ -196,6 +204,14 @@ public class Location implements Serializable {
 		doctor.setLocation(null);
 
 		return doctor;
+	}
+
+	public String getUser_Created() {
+		return user_Created;
+	}
+
+	public void setUser_Created(String user_Created) {
+		this.user_Created = user_Created;
 	}
 
 }

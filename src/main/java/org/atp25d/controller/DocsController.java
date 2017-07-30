@@ -60,6 +60,7 @@ public class DocsController implements Serializable {
 	private boolean loggedIn;
 	private boolean docsReadAccess;
 	private boolean docsUpdateAccess;
+	private boolean docsUpdateOwnAccess;
 	private boolean fromDoc;
     private List<DoctorNote> doctorNotes;
     private List<DoctorNote> myDocNotes;
@@ -201,6 +202,7 @@ public class DocsController implements Serializable {
 		if ( this.loggedIn != loggedIn) {
 			setDocsReadAccess(docsRepository.hasReadAccess(getUserEmail()));
 			setDocsUpdateAccess(docsRepository.hasTaskAccess(getUserEmail(), "Update"));
+			setDocsUpdateOwnAccess(docsRepository.hasTaskAccess(getUserEmail(), "OwnUpdate"));
 		}
 		this.loggedIn = loggedIn;
 	}
@@ -216,7 +218,18 @@ public class DocsController implements Serializable {
 	public boolean isDocsUpdateAccess() {
 		return docsUpdateAccess;
 	}
-
+	public boolean docUpdateAccess(String userCreated) {
+		if (isDocsUpdateAccess() || (isDocsUpdateOwnAccess() && getUserEmail().equals(userCreated))){
+			return true;
+		}
+		return false;
+	}
+	public boolean docUpdateAccess() {
+		if (isDocsUpdateAccess() || isDocsUpdateOwnAccess()){
+			return true;
+		}
+		return false;
+	}	
 	public void setDocsUpdateAccess(boolean docsUpdateAccess) {
 		this.docsUpdateAccess = docsUpdateAccess;
 	}	
@@ -250,7 +263,11 @@ public class DocsController implements Serializable {
 		          facesContext.addMessage(null, m);			   		   
 			   return "doctorUpdate";
 		   }
+	    	if (newDoc.getDoctorId() == 0) {
+	    		newDoc.setUser_Created(userEmail);
+	    	}		   
 		   	newDoc.setUser(userEmail);
+		   	newDoc.setSpecialist(docsListProducer.getSpecialist());		   	
 		   	newDoc.setTime_Stamp(new Date());
 		   	newDoc.setFirstName(newDoc.getFirstName().trim());
 	    	if (newDoc.getDoctorNumber() == 0 && docsUpdate.docExists(newDoc)) {
@@ -270,8 +287,7 @@ public class DocsController implements Serializable {
 			return "locationUpdate";			
 		}
 		public String listDocsByLoc(Location loc){
-			docsListProducer.setSelectedLoc(loc);
-			docsListProducer.setDoctorsLoc(docsRepository.findAllDocsLoc(loc));
+			docsListProducer.setDocsByLoc(loc);			
 			setDocsList("doctorsLoc");
 			return "doctorsLoc";			
 		}				
@@ -388,6 +404,9 @@ public class DocsController implements Serializable {
 			          facesContext.addMessage(null, m);
 					   return "locationUpdate";
 		    	}			   	
+		    	if (newLoc.getLocationNumber() == 0) {
+		    		newLoc.setUser_Created(userEmail);
+		    	}		   		    	
 			    docsUpdate.saveLoc(newLoc);  
 			    if (fromDoc)
 			    {
@@ -406,6 +425,9 @@ public class DocsController implements Serializable {
 			   	newDocNote.setDoctorId(newDoc.getDoctorId());
 			//   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());
 			   	newDocNote.setDoctor(newDoc);
+		    	if (newDocNote.getNoteId() == 0) {
+		    		newDocNote.setUser_Created(userEmail);
+		    	}		   			   	
 			    docsUpdate.saveDocNote(newDocNote);  
 			   	if (!getUserProfile().getTodoistToken().equals("") && newDocNote.getFollowUp() !=null)
 			   	{
@@ -418,7 +440,10 @@ public class DocsController implements Serializable {
 				  }
 		   public String saveLocNote()  {
 			   	newLocNote.setUser(userEmail);	
-			   	newLocNote.setTime_Stamp(new Date());	
+			   	newLocNote.setTime_Stamp(new Date());
+		    	if (newLocNote.getNoteId() == 0) {
+		    		newLocNote.setUser_Created(userEmail);
+		    	}		   					   	
 			   	newLocNote.setNoteId(newLocNote.getNoteId());
 			   	newLocNote.setLocation(newLoc);
 			    docsUpdate.saveLocNote(newLocNote);
@@ -727,5 +752,11 @@ public class DocsController implements Serializable {
 	}
 	public void setNotesLocDateFrom(Date notesLocDateFrom) {
 		this.notesLocDateFrom = notesLocDateFrom;
+	}
+	public boolean isDocsUpdateOwnAccess() {
+		return docsUpdateOwnAccess;
+	}
+	public void setDocsUpdateOwnAccess(boolean docsUpdateOwnAccess) {
+		this.docsUpdateOwnAccess = docsUpdateOwnAccess;
 	}	
 }

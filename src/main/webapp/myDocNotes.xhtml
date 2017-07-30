@@ -45,27 +45,7 @@
                            action="#{docsController.filterMyDocNotes()}"
                         value="Filter" />
                	</p:column>
-	<p:column>
-      <p:outputLabel for="subject" value="Subject: " />
-     </p:column>
-      	<p:column>
-        <p:selectOneMenu id="subject" value="#{docsController.noteSubject}" >
-             <f:selectItem itemValue="#{null}" itemLabel="Select" />
-            <f:selectItems value="#{referenceData.getRefList('MyNotesEmailSubject')}"/>
-    		<p:ajax event="change" update="docTable" />						
-        </p:selectOneMenu>	    
-	</p:column>               	   
-	         
-	<p:column>
-      <p:outputLabel for="body" value="Body: " />
-	</p:column>
-	<p:column>	      
-        <p:selectOneMenu id="body" value="#{docsController.noteBody}" >
-            <f:selectItem itemValue="#{null}" itemLabel="Select" />
-            <f:selectItems value="#{referenceData.getRefList('MyNotesEmailBody')}"/>
-			<p:ajax event="change" update="docTable" />	
-        </p:selectOneMenu>	
-	</p:column>	
+	
         </p:panelGrid>
     </p:panel>
                 
@@ -94,7 +74,7 @@
         <h:outputText value="#{_docNote.doctor.category}" />
     </p:column>    
     <p:column headerText="Location" >
-        <h:outputText value="#{_docNote.doctor.location.displayName}" />
+        <h:outputText value="#{_docNote.doctor.location.displayNameShort}" />
     </p:column>    
     <p:column headerText="Notes" sortBy="#{_docNote.notes}">
         <h:outputText value="#{_docNote.notes}" />
