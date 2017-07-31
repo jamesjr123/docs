@@ -40,6 +40,15 @@
         		size="10" showOn="button" />                 					
                 <p:message for="dateTo"/>                                       
   		</p:column>             
+			<p:column>			       
+				<p:outputLabel for="status" value="Status:" />
+			</p:column>				
+			<p:column>			    				
+		        <p:selectOneMenu id="status" value="#{docsController.noteDocStatus}" >
+		             <f:selectItem itemValue="#{null}" itemLabel="Select" />
+		            <f:selectItems value="#{referenceData.getRefCodeList('NoteStatus')}"/>		    							
+		        </p:selectOneMenu>	  			         
+			</p:column>	  		
                <p:column>                
                     <h:commandButton id="Filter"
                            action="#{docsController.filterMyDocNotes()}"
@@ -79,7 +88,7 @@
     <p:column headerText="Notes" sortBy="#{_docNote.notes}">
         <h:outputText value="#{_docNote.notes}" />
     </p:column>
-    <p:column headerText="Status" sortBy="#{_locNote.status}" width="140">
+    <p:column headerText="Status" sortBy="#{_locNote.status}" width="140"  rendered="#{!docsController.docNoteStatusFilter}">
         <h:outputText value="#{_docNote.status}" />
     </p:column>            
     <p:column headerText="Date created" sortBy="#{_docNote.time_Stamp}" width="200">

@@ -17,6 +17,7 @@ import java.util.Date;
 @NamedQuery(name="LocationNote.findAll", query="SELECT l FROM LocationNote l"),
 @NamedQuery(name="LocationNote.findByLocId", query="SELECT l FROM LocationNote l where l.location.locationNumber = :locationNumber"),
 @NamedQuery(name="LocationNote.findByByUserDate", query="SELECT l FROM LocationNote l where l.user = :userId and l.time_Stamp >= :fromDate and  l.time_Stamp < :toDate"),
+@NamedQuery(name="LocationNote.findByByUserDateStatus", query="SELECT l FROM LocationNote l where l.user = :userId and l.time_Stamp >= :fromDate and  l.time_Stamp < :toDate and l.status = :status"),
 @NamedQuery(name="LocationNote.findByUserId", query="SELECT l FROM LocationNote l where l.user = :userId")
 
 })

@@ -61,6 +61,8 @@ public class DocsController implements Serializable {
 	private boolean docsReadAccess;
 	private boolean docsUpdateAccess;
 	private boolean docsUpdateOwnAccess;
+	private boolean docNoteStatusFilter;
+	private boolean locNoteStatusFilter;
 	private boolean fromDoc;
     private List<DoctorNote> doctorNotes;
     private List<DoctorNote> myDocNotes;
@@ -84,6 +86,8 @@ public class DocsController implements Serializable {
     private Date notesLocDateFrom;     
     private String noteSubject;
     private String noteBody;
+    private String noteDocStatus;
+    private String noteLocStatus;
     private List<String> selectedTargets;
 	
 	@Inject
@@ -488,13 +492,27 @@ public class DocsController implements Serializable {
 				return "locationNotes";
 			  }
 	   public String filterMyDocNotes()  {
-		   myDocNotes = docsRepository.findMyDocNotesByDate(userEmail, notesDateFrom, notesDateTo);
-				return "myDocNotes";
-			  }
+		   if (noteDocStatus==null || noteDocStatus.equals("")) {
+			   docNoteStatusFilter=false;
+			   myDocNotes = docsRepository.findMyDocNotesByDate(userEmail, notesDateFrom, notesDateTo);
+		   }
+		   else {
+			   docNoteStatusFilter=true;
+			   myDocNotes = docsRepository.findMyDocNotesByDateStatus(userEmail, notesDateFrom, notesDateTo,noteDocStatus);
+		   }		   
+		   return "myDocNotes";
+	   }
 	   public String filterMyLocNotes()  {
-		   myLocNotes = docsRepository.findMyLocNotesByDate(userEmail, notesLocDateFrom, notesLocDateTo);
-				return "myLocNotes";
-			  }	   
+		   if (noteLocStatus==null || noteLocStatus.equals("")) {
+			   locNoteStatusFilter=false;			   
+			   myLocNotes = docsRepository.findMyLocNotesByDate(userEmail, notesLocDateFrom, notesLocDateTo);
+		   }
+		   else {
+			   locNoteStatusFilter=true;
+			   myLocNotes = docsRepository.findMyLocNotesByDateStatus(userEmail, notesLocDateFrom, notesLocDateTo,noteLocStatus);
+		   }			   
+		   return "myLocNotes";
+	   }	   
 	   public String filterTargets()  {
 		   if (selectedTargets.isEmpty()){
 			   targetDoctors=docsRepository.getAllTargetDocs();
@@ -573,6 +591,8 @@ public class DocsController implements Serializable {
 		notesLocDateTo = new Date();
 		notesLocDateFrom = new Date();		
 		notesDateTo = new Date();
+		docNoteStatusFilter=false;
+		locNoteStatusFilter=false;
 		loadRefData();
 		//campaigns = referenceData.getRefList("DoctorCampaign");
 	}	
@@ -758,5 +778,29 @@ public class DocsController implements Serializable {
 	}
 	public void setDocsUpdateOwnAccess(boolean docsUpdateOwnAccess) {
 		this.docsUpdateOwnAccess = docsUpdateOwnAccess;
+	}
+	public String getNoteDocStatus() {
+		return noteDocStatus;
+	}
+	public void setNoteDocStatus(String noteDocStatus) {
+		this.noteDocStatus = noteDocStatus;
+	}
+	public String getNoteLocStatus() {
+		return noteLocStatus;
+	}
+	public void setNoteLocStatus(String noteLocStatus) {
+		this.noteLocStatus = noteLocStatus;
+	}
+	public boolean isDocNoteStatusFilter() {
+		return docNoteStatusFilter;
+	}
+	public void setDocNoteStatusFilter(boolean docNoteStatusFilter) {
+		this.docNoteStatusFilter = docNoteStatusFilter;
+	}
+	public boolean isLocNoteStatusFilter() {
+		return locNoteStatusFilter;
+	}
+	public void setLocNoteStatusFilter(boolean locNoteStatusFilter) {
+		this.locNoteStatusFilter = locNoteStatusFilter;
 	}	
 }

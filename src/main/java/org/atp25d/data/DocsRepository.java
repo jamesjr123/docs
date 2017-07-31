@@ -111,6 +111,30 @@ public class DocsRepository {
 	      cal.add(Calendar.DATE, 1); //add 1 day for query 	        
 		  query.setParameter("toDate", cal.getTime());
 		return query.getResultList();
+	}
+	public List<DoctorNote> findMyDocNotesByDateStatus(String user, Date from, Date to, String status) {
+		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByByUserDateStatus",
+				DoctorNote.class);
+		  query.setParameter("userId", user);		
+		  query.setParameter("fromDate", from);
+		  query.setParameter("status", status);
+	      Calendar cal = Calendar.getInstance();
+	      cal.setTime(to);
+	      cal.add(Calendar.DATE, 1); //add 1 day for query 	        
+		  query.setParameter("toDate", cal.getTime());
+		return query.getResultList();
+	}	
+	public List<LocationNote> findMyLocNotesByDateStatus(String user, Date from, Date to, String status) {
+		TypedQuery<LocationNote> query = em.createNamedQuery("LocationNote.findByByUserDateStatus",
+				LocationNote.class);
+		  query.setParameter("userId", user);		
+		  query.setParameter("fromDate", from);
+		  query.setParameter("status", status);
+	      Calendar cal = Calendar.getInstance();
+	      cal.setTime(to);
+	      cal.add(Calendar.DATE, 1); //add 1 day for query 	        
+		  query.setParameter("toDate", cal.getTime());
+		return query.getResultList();
 	}		
 	public List<DoctorNote> findDocNotes(int doctorId) {
 		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByDocId",

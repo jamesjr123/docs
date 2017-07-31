@@ -17,7 +17,8 @@ import java.util.Date;
 @NamedQuery(name="DoctorNote.findAll", query="SELECT d FROM DoctorNote d"),
 @NamedQuery(name="DoctorNote.findByUserId", query="SELECT d FROM DoctorNote d where d.user = :userId"),
 @NamedQuery(name="DoctorNote.findByDocId", query="SELECT d FROM DoctorNote d where d.doctorId = :doctorId"),
-@NamedQuery(name="DoctorNote.findByByUserDate", query="SELECT d FROM DoctorNote d where d.user = :userId and d.time_Stamp >= :fromDate and  d.time_Stamp < :toDate")
+@NamedQuery(name="DoctorNote.findByByUserDate", query="SELECT d FROM DoctorNote d where d.user = :userId and d.time_Stamp >= :fromDate and  d.time_Stamp < :toDate"),
+@NamedQuery(name="DoctorNote.findByByUserDateStatus", query="SELECT d FROM DoctorNote d where d.user = :userId and d.time_Stamp >= :fromDate and  d.time_Stamp < :toDate and d.status = :status")
 })
 public class DoctorNote implements Serializable {
 	private static final long serialVersionUID = 1L;

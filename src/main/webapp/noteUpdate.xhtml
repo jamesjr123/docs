@@ -32,14 +32,14 @@
 		            <f:selectItems value="#{referenceData.getUserRefList('TodoistProject',docsController.userEmail)}"/>		    							
 		        </p:selectOneMenu>	  			         
 			</p:column>
-			<p:column>
-                <p:outputLabel for="dateDue" value="Follow up Project:" />
-			</p:column>
 			<p:column>			        
 			    <p:outputLabel for="dateDue" value="Due Date:" />
 			        <p:calendar id="dateDue" value="#{docsController.newDocNote.followUp}" pattern="dd/MM/yyyy HH:mm:ss" />      
 			</p:column>		
 			<p:column>			       
+				<p:outputLabel for="status" value="Status:" />
+			</p:column>				
+			<p:column>			    				
 		        <p:selectOneMenu id="status" value="#{docsController.newDocNote.status}" >
 		             <f:selectItem itemValue="#{null}" itemLabel="Select" />
 		            <f:selectItems value="#{referenceData.getRefCodeList('NoteStatus')}"/>		    							
