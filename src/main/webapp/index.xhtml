@@ -37,7 +37,7 @@
 <p:ajax event="page" listener="#{docsController.pageListenerDocs}" />        
               
  	<f:facet name="header">
-            Doctors Listing                    
+            Doctors Listing                                    
      </f:facet>         
   	<f:facet name="{Exporters}" >
     	<h:commandLink rendered='#{docsController.docsUpdateAccess}'>
@@ -45,7 +45,9 @@
               <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
           </h:commandLink>
 	</f:facet>
-
+    <p:column id="docId" headerText="Id" style="width:50px;" rendered='#{docsController.docsUpdateAccess}'>
+        <h:outputText value="#{_doc.doctorId}" />
+    </p:column>
     <p:column id="displayName" headerText="Doctor" sortBy="#{_doc.surname}"
      	filterBy="#{_doc.displayName}" filterMatchMode="contains" filterStyle="width: 200px;">
         <h:outputText value="#{_doc.fullName}" />
@@ -81,7 +83,12 @@
            <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"/><br/>                                                                          
            <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docUpdateAccess(_doc.user_Created)}'/>           
      </p:column>  
-     <p:column width="95" exportable="false">           
+     <p:column width="95" exportable="false">   
+     <f:facet name="header"> 
+         <p:commandButton id="toggler" type="button" value="."
+		icon="ui-icon-calculator" />
+		<p:columnToggler datasource="docTable" trigger="toggler" />
+      </f:facet>
            <h:commandLink value="Notes" action="#{docsController.listDocNotes(_doc)}"   rendered='#{docsController.docsReadAccess}'/>
      </p:column>                                          
 </p:dataTable>       

@@ -67,6 +67,8 @@ public class DocsController implements Serializable {
     private List<DoctorNote> doctorNotes;
     private List<DoctorNote> myDocNotes;
     private List<LocationNote> myLocNotes;
+    private List<DoctorNote> filteredMyDocNotes;
+    private List<LocationNote> filteredMyLocNotes;    
     private List<DoctorTarget> targetDoctors;
 
     private List<Reference_Data> reference_Data;    
@@ -802,5 +804,17 @@ public class DocsController implements Serializable {
 	}
 	public void setLocNoteStatusFilter(boolean locNoteStatusFilter) {
 		this.locNoteStatusFilter = locNoteStatusFilter;
+	}
+	public List<DoctorNote> getFilteredMyDocNotes() {
+		return filteredMyDocNotes;
+	}
+	public void setFilteredMyDocNotes(List<DoctorNote> filteredMyDocNotes) {
+		this.filteredMyDocNotes = filteredMyDocNotes;
+	}
+	public List<LocationNote> getFilteredMyLocNotes() {
+		return filteredMyLocNotes;
+	}
+	public void setFilteredMyLocNotes(List<LocationNote> filteredMyLocNotes) {
+		this.filteredMyLocNotes = filteredMyLocNotes;
 	}	
 }
