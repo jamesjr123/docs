@@ -80,7 +80,6 @@ public class DocsUpdate {
 		q.setParameter(4,doc.getSurname());
 		q.setParameter(5,doc.getQuals());
 		q.setParameter(6,doc.getEmailAddress());
-		q.setParameter(7,doc.getPhoneNumber());
 		q.setParameter(8,doc.getMobileNumber());
 		q.setParameter(9,doc.getCategory());
 		q.setParameter(10,doc.getQuals2());
