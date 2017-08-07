@@ -16,6 +16,7 @@ import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
 import org.atp25d.model.Reference_Data;
 import org.atp25d.model.UserAccess;
+import org.atp25d.model.UserProfile;
 import org.atp25d.util.ReferenceData;
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
@@ -42,6 +43,16 @@ public class DocsUpdate {
     public Doctor getDocForUpdate(Doctor doc){
 		return em.find(Doctor.class, doc.getDoctorNumber());    	
     }
+    public UserProfile getUserForUpdate(String userId){        
+    		TypedQuery<UserProfile> query = em.createNamedQuery("UserProfile.findById", UserProfile.class);
+    		query.setParameter("userId", userId);    	
+    		List<UserProfile> u = query.getResultList();
+    		if (!u.isEmpty()) {
+    			return  u.listIterator().next();
+    		}
+        	return new UserProfile();	
+    }    
+    
     public DoctorNote getDocNoteForUpdate(DoctorNote docNote){
 		return em.find(DoctorNote.class, docNote.getNoteId());    	
     }
@@ -140,5 +151,8 @@ public class DocsUpdate {
 		 Query q = em.createNamedQuery("Doctor.findLastDocId");				
 		 int id = (Integer) (q.getSingleResult());
 		 return ++id;
-	}	     
+	}	   
+    public void saveUserProfile(UserProfile userProfile){
+		em.merge(userProfile);    			
+    }	
 }

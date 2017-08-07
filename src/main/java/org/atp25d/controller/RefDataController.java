@@ -32,6 +32,7 @@ import org.primefaces.event.data.PageEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -64,6 +65,7 @@ public class RefDataController implements Serializable {
 	private String todoCode;
 	private String todoToken;
 	private String todoistClientId;
+	private String todoResponse;
     private List<Reference_Data> reference_Data;    
     
     private List<Reference_Data> project_Data;
@@ -127,27 +129,35 @@ public class RefDataController implements Serializable {
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row deleted", "");
 	          facesContext.addMessage(null, m);				
 			loadRefData();
+			loadProjectData();
 			return "settings";				
 		}					
 		public String addTodoist(){
 			Reference_Data cpy=new Reference_Data();			
-			//cpy.setCode(row.getCode());
-			//cpy.setValue(row.getValue());
-			//cpy.setCompId(row.getCompId());
-			//cpy.setUserId(row.getUserId());
-			//cpy.setRefType(row.getRefType());
+			cpy.setCode(getTodoProject());
+			cpy.setValue(getTodoCode());
+			cpy.setUserId(docsController.getUserEmail());
+			cpy.setRefType("TodoistProject");
 			docsUpdate.saveRefData(cpy);
 		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Project added", "");
 	          facesContext.addMessage(null, m);				
-			loadRefData();
+	  		loadProjectData();
 			return "settings";				
 		}
-
+		public String saveToken(){
+			UserProfile usr = docsUpdate.getUserForUpdate(docsController.getUserEmail());
+			usr.setTodoistToken(todoToken);
+			docsUpdate.saveUserProfile(usr);
+		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "token saved", "");
+	          facesContext.addMessage(null, m);				
+			return "settings";				
+		}		
 	@PostConstruct
 	public void init() {
 		loadRefData();
 		loadProjectData();
 		setTodoistClientId("fda1fa78f62d4245a46e7eb9451e06e5");
+		setTodoToken(docsUpdate.getUserForUpdate(docsController.getUserEmail()).getTodoistToken());
 	}	
 
 	private void loadRefData(){  
@@ -183,46 +193,38 @@ public class RefDataController implements Serializable {
 	public void setTodoistClientId(String todoistClientId) {
 		this.todoistClientId = todoistClientId;
 	}	
-	public void todoAuth(String code) throws IOException {
-	    // ...
-		String urlx ="https://todoist.com/oauth/access_token?client_id=fda1fa78f62d4245a46e7eb9451e06e5%26client_secret=2c8682895878406a9bf74c4dafa846e1%26code="+code+"%26redirect_uri=https://docs-jr11.rhcloud.com"; 
-	    	String urlString = "https://todoist.com/API/v7/sync";
+	public String todoAuth(String code) throws IOException {
+
+	    	String urlString = "https://todoist.com/oauth/access_token";
+		     String query="client_id=fda1fa78f62d4245a46e7eb9451e06e5&client_secret=2c8682895878406a9bf74c4dafa846e1&code="+code;
 			URL url;
 			try {
-				url = new URL(urlString);
+				url = new URL(urlString+"?"+query);
 			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");    	    	            		   
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");			            
 			connection.setDoOutput(true);
-			DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-			 UUID uuid = UUID.randomUUID();
-		     String uuid1 = uuid.toString();		
-			 uuid = UUID.randomUUID();
-		     String uuid2 = uuid.toString();
-		     SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		     dateFmt.setTimeZone(TimeZone.getTimeZone(referenceData.getRefTZ()));
-		     String ddat="x";
-		     String cdat="x";
-		     String projectId="x";
-		     String task="x";
-		     String query;
+
 		    
-		    query="token="+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+projectId+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+cdat+"\"}}]";
-			output.writeBytes(query);		
-			output.close();	
-			DataInputStream input = new DataInputStream( connection.getInputStream() ); 
+				connection.setRequestMethod("POST");    	    	            		   			            
+				connection.setDoOutput(true);
 
-
-			StringBuffer returnCode = new StringBuffer();
-			for( int c = input.read(); c != -1; c = input.read() ) {
-				returnCode.append((char)c); 
-			}
-			System.out.println("Message:"+returnCode.toString()); 
-
-			input.close();
+				  OutputStreamWriter out = new OutputStreamWriter(
+				      connection.getOutputStream());
+				
+				System.out.println("Resp Code:"+connection .getResponseCode());
+				setTodoResponse(connection.getResponseMessage());
+				System.out.println("Resp Message:"+ getTodoResponse());
+				out.close();
+				DataInputStream input = new DataInputStream( connection.getInputStream() ); 
+				StringBuffer returnCode = new StringBuffer();
+				for( int c = input.read(); c != -1; c = input.read() ) {
+					returnCode.append((char)c); 
+				}				
 			System.out.println(query);
-			System.out.println("Resp Code:"+connection .getResponseCode()); 
-			System.out.println("Resp Message:"+ connection.getResponseMessage());
+			System.out.println("Resp Code:"+connection .getResponseCode());
+			setTodoResponse(returnCode.toString());
+			System.out.println("Resp Message:"+ getTodoResponse());
 			
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -233,7 +235,15 @@ public class RefDataController implements Serializable {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}		
+			}	
+			return "settings";				
+
 		}
+	public String getTodoResponse() {
+		return todoResponse;
+	}
+	public void setTodoResponse(String todoResponse) {
+		this.todoResponse = todoResponse;
+	}
 	
 }
