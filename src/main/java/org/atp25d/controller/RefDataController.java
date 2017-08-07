@@ -67,7 +67,7 @@ public class RefDataController implements Serializable {
 	private String todoistClientId;
 	private String todoResponse;
     private List<Reference_Data> reference_Data;    
-    
+    private String genCode; 
     private List<Reference_Data> project_Data;
     
 	@Inject
@@ -193,10 +193,10 @@ public class RefDataController implements Serializable {
 	public void setTodoistClientId(String todoistClientId) {
 		this.todoistClientId = todoistClientId;
 	}	
-	public String todoAuth(String code) throws IOException {
+	public String todoAuth() throws IOException {
 
 	    	String urlString = "https://todoist.com/oauth/access_token";
-		     String query="client_id=fda1fa78f62d4245a46e7eb9451e06e5&client_secret=2c8682895878406a9bf74c4dafa846e1&code="+code;
+		     String query="client_id=fda1fa78f62d4245a46e7eb9451e06e5&client_secret=2c8682895878406a9bf74c4dafa846e1&code="+getGenCode();
 			URL url;
 			try {
 				url = new URL(urlString+"?"+query);
@@ -244,6 +244,12 @@ public class RefDataController implements Serializable {
 	}
 	public void setTodoResponse(String todoResponse) {
 		this.todoResponse = todoResponse;
+	}
+	public String getGenCode() {
+		return genCode;
+	}
+	public void setGenCode(String genCode) {
+		this.genCode = genCode;
 	}
 	
 }
