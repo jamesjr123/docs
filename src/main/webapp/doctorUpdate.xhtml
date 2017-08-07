@@ -11,9 +11,13 @@
 
      <p:panelGrid columns="4" >
       		<f:facet name="header">
-            	Update Doctor details
-     		</f:facet> 
-			<p:column>
+            	Update Doctor details            	                        					                 
+     		</f:facet>     		
+			<p:column colspan="4">
+			     <p:commandButton id="doctorBtn" value="Search for existing Doctor" type="button" rendered="#{docsController.docSearch}"/>                
+			</p:column>
+			<p:column></p:column><p:column></p:column><p:column></p:column>			   		
+			<p:column>			     
                 <p:outputLabel for="title" value="Title" />
 			</p:column>
 			<p:column>			                
@@ -24,7 +28,7 @@
                 <p:outputLabel for="firstName" value="First Name:" />
 			</p:column>
 			<p:column>			                
-                <p:inputText id="firstName" value="#{docsController.newDoc.firstName}" maxlength="60" required="true"/> 					                       
+                <p:inputText id="firstName" value="#{docsController.newDoc.firstName}" maxlength="60"/> 					                       
                 <p:message for="firstName"/>                
 			</p:column>			
 			<p:column>
@@ -38,7 +42,7 @@
                 <p:outputLabel for="surname" value="Last Name:" />
 			</p:column>			
 			<p:column >			                
-                <p:inputText id="surname" value="#{docsController.newDoc.surname}" maxlength="60" required="true"/> 					                       
+                <p:inputText id="surname" value="#{docsController.newDoc.surname}" maxlength="60"/> 					                       
                 <p:message for="surname"/>                
 			</p:column>
 			<p:column>
@@ -138,7 +142,45 @@
                         warnClass="warning" globalOnly="true" />
                 </p:column>
                 </p:panelGrid>       
-                
+			<p:overlayPanel id="doctorPanel" for="doctorBtn" hideEffect="fade" dynamic="true" >
+			 <p:dataTable  var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" 
+			         paginator="true" paginatorPosition="bottom"  id="docTable">
+			     <p:column width="100" >
+			           <f:facet name="header">Select</f:facet>
+			           <h:commandLink  value="Select" action="#{docsController.selectDoc(_doc)}" rendered="#{docsController.newDoc.doctorNumber==0}"/>			           
+			     </p:column>			
+			    <p:column id="displayName" headerText="Doctor" sortBy="#{_doc.surname}"
+			     	filterBy="#{_doc.displayName}" filterMatchMode="contains" filterStyle="width: 200px;">
+			        <h:outputText value="#{_doc.fullName}" />
+			    </p:column>
+			 
+			    <p:column id="location_location" headerText="Location" sortBy="#{_doc.location.location}"
+			         	filterBy="#{_doc.location.location}" filterMatchMode="contains" filterStyle="width: 150px;">
+			        <h:outputText value="#{_doc.location.location}" />
+			    </p:column>
+			    <p:column headerText="Address" id="location_mailAddress1"
+			         	filterBy="#{_doc.location.mailAddress1}" filterMatchMode="contains">
+			        <h:outputText value="#{_doc.location.mailAddress1}" />
+			    </p:column>
+			
+			    <p:column id="location_mailSuburb" headerText="Suburb" sortBy="#{_doc.location.mailSuburb} "
+			         	filterBy="#{_doc.location.mailSuburb}" filterMatchMode="contains" filterStyle="width: 150px;">
+			        <h:outputText value="#{_doc.location.mailSuburb}" />
+			    </p:column>
+			    <p:column  id="location_mailState" width="95" headerText="State" sortBy="#{_doc.location.mailState}"
+			         	filterBy="#{_doc.location.mailState}" filterMatchMode="exact" filterStyle="width: 40px;">
+			        <h:outputText value="#{_doc.location.mailState}" />
+			    </p:column>  
+			    <p:column id="location_mailPostcode" width="105"  headerText="PostCode" sortBy="#{_doc.location.mailPostcode}"
+			         	filterBy="#{_doc.location.mailPostcode}" filterMatchMode="contains" filterStyle="width: 40px;">
+			        <h:outputText value="#{_doc.location.mailPostcode}" />
+			    </p:column>                         
+				   <p:column  id="category" headerText="Category" sortBy="#{_doc.category}"
+				         	filterBy="#{_doc.category}" filterMatchMode="contains" filterStyle="width: 100px;">
+				        <h:outputText value="#{_doc.category}" />
+				    </p:column>			     
+			</p:dataTable>			
+			</p:overlayPanel>			                
 			<p:overlayPanel id="locationPanel" for="locationBtn" hideEffect="fade" dynamic="true" >
 				                        
 					<h:commandButton id="createLocationn" value="Create New Location" action="#{docsController.createLocFromDoc}"/>

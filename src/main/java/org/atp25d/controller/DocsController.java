@@ -64,6 +64,7 @@ public class DocsController implements Serializable {
 	private boolean docNoteStatusFilter;
 	private boolean locNoteStatusFilter;
 	private boolean fromDoc;
+	private boolean docSearch;
     private List<DoctorNote> doctorNotes;
     private List<DoctorNote> myDocNotes;
     private List<LocationNote> myLocNotes;
@@ -241,6 +242,7 @@ public class DocsController implements Serializable {
 	}	
 	public String updateDoc (Doctor doc){
 		newDoc = docsUpdate.getDocForUpdate(doc);
+		setDocSearch(false);
 		return "doctorUpdate";		
 	}
 	public String updateDocNote (DoctorNote docNote){
@@ -269,7 +271,17 @@ public class DocsController implements Serializable {
 		          facesContext.addMessage(null, m);			   		   
 			   return "doctorUpdate";
 		   }
-	    	if (newDoc.getDoctorId() == 0) {
+		   if (newDoc.getFirstName().equals("")){
+		          facesContext.addMessage("docs:firstName",
+        				  (new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error","First Name is required")));			   
+			   return "doctorUpdate";
+		   }
+		   if (newDoc.getSurname().equals("")){
+		          facesContext.addMessage("docs:surname",
+        				  (new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error","Last Name is required")));
+			   return "doctorUpdate";
+		   }		   		   
+	    	if (newDoc.getDoctorNumber() == 0) {
 	    		newDoc.setUser_Created(userEmail);
 	    	}		   
 		   	newDoc.setUser(userEmail);
@@ -313,10 +325,12 @@ public class DocsController implements Serializable {
 		}		
 		public String createDoc (){
 			initNewDoc();
+			setDocSearch(false);
 			return "doctorUpdate";
 		}
 		public String createDoc (Location loc){
 			initNewDoc();
+			setDocSearch(true);
 			newDoc.setLocation(loc);
 			return "doctorUpdate";
 		}		
@@ -354,6 +368,22 @@ public class DocsController implements Serializable {
 			newDoc.setLocation(loc);  		
 			return null;				
 		}
+		public String selectDoc (Doctor doc){
+			
+			newDoc.setCategory(doc.getCategory());
+			newDoc.setDoctorId(doc.getDoctorId());
+			newDoc.setFirstName(doc.getFirstName());						
+			newDoc.setFirstName(doc.getFirstName());
+			newDoc.setMiddleName(doc.getMiddleName());
+			newDoc.setSurname(doc.getSurname());			
+			newDoc.setTitle(doc.getTitle());			
+			newDoc.setQuals(doc.getQuals());
+			newDoc.setQuals2(doc.getQuals2());
+			newDoc.setQuals3(doc.getQuals3());
+			newDoc.setEmailAddress(doc.getEmailAddress());
+			newDoc.setPhoneNumber(doc.getPhoneNumber());			
+			return null;				
+		}		
 		public String addLoc (Location loc){
 			Doctor docCopy=newDoc;
 			initNewDoc();
@@ -365,6 +395,8 @@ public class DocsController implements Serializable {
 			newDoc.setSurname(docCopy.getSurname());			
 			newDoc.setTitle(docCopy.getTitle());			
 			newDoc.setQuals(docCopy.getQuals());
+			newDoc.setQuals2(docCopy.getQuals2());
+			newDoc.setQuals3(docCopy.getQuals3());
 			newDoc.setEmailAddress(docCopy.getEmailAddress());
 			newDoc.setPhoneNumber(docCopy.getPhoneNumber());
 			newDoc.setLocation(loc);  		
@@ -816,5 +848,11 @@ public class DocsController implements Serializable {
 	}
 	public void setFilteredMyLocNotes(List<LocationNote> filteredMyLocNotes) {
 		this.filteredMyLocNotes = filteredMyLocNotes;
+	}
+	public boolean isDocSearch() {
+		return docSearch;
+	}
+	public void setDocSearch(boolean docSearch) {
+		this.docSearch = docSearch;
 	}	
 }
