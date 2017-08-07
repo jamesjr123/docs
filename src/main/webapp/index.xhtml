@@ -92,7 +92,7 @@
            <h:commandLink value="Notes" action="#{docsController.listDocNotes(_doc)}"   rendered='#{docsController.docsReadAccess}'/>
      </p:column>                                          
 </p:dataTable>       
-<p:panelGrid columns="7" rendered='#{docsController.docsReadAccess}'>         
+<p:panelGrid columns="8" rendered='#{docsController.docsReadAccess}'>         
 	<p:column>                
         <p:messages globalOnly="true" />
 	</p:column>                               	            
@@ -111,7 +111,10 @@
              value="Add New Doctor"/> 
 	<p:remoteCommand  oncomplete="filterDocs()" autoRun="true"/>                                                          
     </p:column>
-          
+           
+	<p:column rendered='#{docsController.docsReadAccess}'  >                                                                
+         <p:button outcome="settings"   icon="ui-icon-gear"/>
+    </p:column>                
 	<p:column rendered='#{docsController.docsUpdateAccess}'  >                                                                
         <h:commandLink id="referenceData" action="referenceData" value="Reference Data" />
     </p:column>                 

@@ -167,7 +167,13 @@ public class DocsRepository {
 	public List<Reference_Data> getRefData() {
 		TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findAll", Reference_Data.class);
 		return query.getResultList();
-	}		
+	}
+	public List<Reference_Data> getUserRefData(String user, String type) {
+		TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findByListByUserRefType", Reference_Data.class);
+		query.setParameter("refType", type);
+		query.setParameter("userId", user);		 
+		return query.getResultList();
+	}				
 	public List<DoctorTarget> getAllTargetDocs() {
 		TypedQuery<DoctorTarget> query = em.createNamedQuery("DoctorTarget.findAll", DoctorTarget.class);
 		return query.getResultList();

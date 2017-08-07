@@ -1,10 +1,24 @@
 package org.atp25d.controller;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TimeZone;
+import java.util.UUID;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,34 +31,14 @@ import org.atp25d.model.DoctorNote;
 import org.atp25d.model.DoctorTarget;
 import org.atp25d.model.Location;
 import org.atp25d.model.LocationNote;
-import org.atp25d.model.Reference_Data;
 import org.atp25d.model.UserProfile;
 import org.atp25d.service.DocsUpdate;
 import org.atp25d.util.FacesSession;
 import org.atp25d.util.ReferenceData;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.data.FilterEvent;
 import org.primefaces.event.data.PageEvent;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.UUID;
 
 @SessionScoped
 @Named
@@ -71,9 +65,7 @@ public class DocsController implements Serializable {
     private List<DoctorNote> filteredMyDocNotes;
     private List<LocationNote> filteredMyLocNotes;    
     private List<DoctorTarget> targetDoctors;
-
-    private List<Reference_Data> reference_Data;    
-    
+        
     private List<LocationNote> locationNotes;    
 	private String docNameFilter;
 	private String docsList;
@@ -120,11 +112,6 @@ public class DocsController implements Serializable {
     @Named	
 	public List<LocationNote> getLocationNotes() {
 		return locationNotes;
-	}
-    @Produces
-    @Named	
-	public List<Reference_Data> getReference_Data() {
-		return reference_Data;
 	}
 	private Doctor newDoc;
 	
@@ -402,37 +389,7 @@ public class DocsController implements Serializable {
 			newDoc.setLocation(loc);  		
 			return null;				
 		}
-	    public void onRefRowEdit(RowEditEvent event) {
-	    	Reference_Data row = (Reference_Data) event.getObject();
-	    	docsUpdate.saveRefData(row);
-	        FacesMessage msg = new FacesMessage("Record Updated", "Record Updated");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-	    }
-	     
-	    public void onRefRowCancel(RowEditEvent event) {
-	        FacesMessage msg = new FacesMessage("Edit Cancelled", "Edit Cancelled");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-	    }		
-		public String copyRefRow(Reference_Data row){
-			Reference_Data cpy=new Reference_Data();			
-			cpy.setCode(row.getCode());
-			cpy.setValue(row.getValue());
-			cpy.setCompId(row.getCompId());
-			cpy.setUserId(row.getUserId());
-			cpy.setRefType(row.getRefType());
-			docsUpdate.saveRefData(cpy);
-		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row copied", "");
-	          facesContext.addMessage(null, m);				
-			loadRefData();
-			return "referenceData";				
-		}
-		public String deleteRefRow(Reference_Data row){
-			docsUpdate.deleteRefData(row);
-		 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row deleted", "");
-	          facesContext.addMessage(null, m);				
-			loadRefData();
-			return "referenceData";				
-		}					
+				
 		   public String saveLoc()  {
 			   	newLoc.setUser(userEmail);	
 			   	newLoc.setTime_Stamp(new Date());
@@ -626,8 +583,7 @@ public class DocsController implements Serializable {
 		notesLocDateFrom = new Date();		
 		notesDateTo = new Date();
 		docNoteStatusFilter=false;
-		locNoteStatusFilter=false;
-		loadRefData();
+		locNoteStatusFilter=false;		
 		//campaigns = referenceData.getRefList("DoctorCampaign");
 	}	
 	public void setNewLoc(Location newLoc) {
@@ -689,9 +645,6 @@ public class DocsController implements Serializable {
 	public String formatNoteSubject(String subject, Doctor doc){  
 	    return "Dear "+ doc.getTitle()+" "+doc.getDisplayName()+" "+subject;
 	}
-	private void loadRefData(){  
-	    reference_Data=docsRepository.getRefData();
-	}	
 	private void writeTodoTask(String token, String fupType){
     	String urlString = "https://todoist.com/API/v7/sync";
 		URL url;

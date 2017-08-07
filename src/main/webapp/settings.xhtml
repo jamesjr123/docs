@@ -26,43 +26,35 @@
     <ui:define name="content">
       <!-- h1>Welcome to the Doctors list</h1-->
                 
- <p:dataTable var="_refData" value="#{reference_Data}" rows="10" rendered="#{docsController.docsUpdateAccess}"   editable="true"
-         paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-         paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="refTable">
+ <p:dataTable var="_refData" value="#{project_Data}" rows="10" rendered="#{docsController.docsReadAccess}"   editable="true"  id="refTable">
  	<f:facet name="header">
-           Reference Data listing
+           Project settings
      </f:facet>  
-  	<f:facet name="{Exporters}">
- 		<h:outputText value="Export data"/>
-    	<h:commandLink>
-              <p:graphicImage value="/images/excel.png" alt="Excel"/>
-              <p:dataExporter type="xls" target="refTable" fileName="reflisting" />
-          </h:commandLink>
-	</f:facet>            
+
      <p:ajax event="rowEdit" listener="#{refDataController.onRefRowEdit}" update="refTable" />
        <p:ajax event="rowEditCancel" listener="#{refDataController.onRefRowCancel}" update="refTable" />
     <p:column headerText="Doctor" visible="false">
         <h:outputText value="#{_refData.codeNumber}" />
      </p:column>        
-    <p:column headerText="Company" width="70">        
+    <p:column headerText="Company" width="70" visible="false">        
          <p:cellEditor>
              <f:facet name="output"><h:outputText value="#{_refData.compId}" /></f:facet>
              <f:facet name="input"><p:inputText id="company" value="#{_refData.compId}" style="width:100%"/></f:facet>
          </p:cellEditor>
     </p:column>         
-    <p:column headerText="User Id" >        
+    <p:column headerText="User Id"  visible="false">        
          <p:cellEditor>
              <f:facet name="output"><h:outputText value="#{_refData.userId}" /></f:facet>
              <f:facet name="input"><p:inputText id="userId" value="#{_refData.userId}" style="width:100%"/></f:facet>
          </p:cellEditor>
     </p:column>         
-    <p:column headerText="Ref Type" filterBy="#{_refData.refType}" filterMatchMode="contains" filterStyle="width: 130px;">        
+    <p:column headerText="Ref Type" filterBy="#{_refData.refType}" filterMatchMode="contains" filterStyle="width: 130px;"  visible="false">        
          <p:cellEditor>
              <f:facet name="output"><h:outputText value="#{_refData.refType}" /></f:facet>
              <f:facet name="input"><p:inputText id="refType" value="#{_refData.refType}" style="width:100%"/></f:facet>
          </p:cellEditor>
     </p:column>
-    <p:column headerText="Code" >        
+    <p:column headerText="Todoist Project" >        
          <p:cellEditor>
              <f:facet name="output"><h:outputText value="#{_refData.code}" /></f:facet>
              <f:facet name="input"><p:inputText id="code" value="#{_refData.code}" style="width:100%"/></f:facet>
@@ -77,20 +69,65 @@
    <p:column style="width:32px">
            <p:rowEditor />
     </p:column>    
-     <p:column width="40" exportable="false">           
-           <h:commandLink value="Copy" action="#{refDataController.copyRefRow(_refData)}"/>
-     </p:column>    
      <p:column width="90" exportable="false">           
               <p:commandButton value="Delete" actionListener="#{refDataController.deleteRefRow(_refData)}" update="refTable">
         <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
     </p:commandButton>
      </p:column>    
 </p:dataTable>      
+
+     <p:panelGrid > 		
+			<p:column>
+			     <p:commandButton id="addBtn" value="Add todoist project" type="button"/>                
+			</p:column>			
+     </p:panelGrid>
+     <div><br/><br/>
+     <p:panelGrid columns="4" >   
+      		 	<f:facet name="header">
+           Todoist setup
+     </f:facet> 
+			<p:column>			
+				<h:outputLink value="https://todoist.com/oauth/authorize?client_id=fda1fa78f62d4245a46e7eb9451e06e5%26scope=data:read_write%26state=secretstring%26response_type=code">step 1 todoist</h:outputLink>                     
+			</p:column>
+			<p:column>			
+			<br/>
+			    <h:outputText value="#{param['code']}" /> 
+			<br/>
+				    <h:commandLink value="step 2" action="#{refDataController.todoAuth(param['code'])}" />
+			</p:column>			
+     </p:panelGrid>
+     </div>    		         		
+	<p:overlayPanel id="addTod" for="addBtn" hideEffect="fade" dynamic="true" >
+     <p:panelGrid columns="5" >
+			<p:column>
+                <p:outputLabel for="project" value="Project:" />
+			</p:column>			
+			<p:column>			                
+                <p:inputText id="project" value="#{refDataController.todoProject}"  required="true"/> 					                       
+                <p:message for="project"/>                
+			</p:column>
+			<p:column>
+                <p:outputLabel for="urlvalue" value="Value (end of url):" />
+			</p:column>			
+			<p:column>			                
+                <p:inputText id="urlvalue" value="#{refDataController.todoCode}"  required="true"/> 					                       
+                <p:message for="urlvalue"/>                
+			</p:column>			 		
+			<p:column>
+			   <h:commandButton id="save"
+                           action="#{refDataController.addTodoist()}"
+                        value="Save" />                
+			</p:column>
+	</p:panelGrid>    				
+	</p:overlayPanel>
+			
    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
         <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-    </p:confirmDialog> 
+    </p:confirmDialog>
+    <br/><br/> 
 <p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
+
 	<p:column>                
         <p:messages globalOnly="true" />
 	</p:column>                                    
