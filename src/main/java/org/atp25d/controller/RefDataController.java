@@ -198,7 +198,7 @@ public class RefDataController implements Serializable {
 				facesContext.getExternalContext().redirect("settings.jsf");
 				return "settings";
 			}
-			
+			setTodoResponse("");
 	    	String urlString = "https://todoist.com/oauth/access_token";
 		     String query="client_id=fda1fa78f62d4245a46e7eb9451e06e5&client_secret=2c8682895878406a9bf74c4dafa846e1&code="+getGenCode();
 			URL url;
