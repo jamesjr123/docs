@@ -683,7 +683,13 @@ public class DocsController implements Serializable {
 		    task = newLocNote.getLocation().getDisplayName()+" - "+newLocNote.getLocation().getPhoneNumber()+"  "+" - "+newLocNote.getNotes();
 		    projectId = newLocNote.getProjectId();				    	
 	    }
-	    query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+projectId+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+cdat+"\"}}]";
+	    if (projectId==null || projectId.equals("")){
+		    query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+cdat+"\"}}]";
+	    }
+	    else
+	    {
+	    	query="token="+token+"&commands=[{\"type\": \"item_add\", \"temp_id\": \""+uuid1+"\", \"uuid\": \""+uuid2+"\", \"args\": {\"content\": \""+task+"\", \"project_id\": \""+projectId+"\",\"due_date_utc\":\""+ddat+"\",\"date_string\":\""+cdat+"\"}}]";
+	    }
 		output.writeBytes(query);		
 		output.close();	
 		DataInputStream input = new DataInputStream( connection.getInputStream() ); 

@@ -194,7 +194,11 @@ public class RefDataController implements Serializable {
 		this.todoistClientId = todoistClientId;
 	}	
 	public String todoAuth() throws IOException {
-
+			if (getGenCode().equals("")) {
+				facesContext.getExternalContext().redirect("settings.jsf");
+				return "settings";
+			}
+			
 	    	String urlString = "https://todoist.com/oauth/access_token";
 		     String query="client_id=fda1fa78f62d4245a46e7eb9451e06e5&client_secret=2c8682895878406a9bf74c4dafa846e1&code="+getGenCode();
 			URL url;
@@ -236,8 +240,8 @@ public class RefDataController implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
-			return "settings";				
-
+			facesContext.getExternalContext().redirect("settings.jsf");
+			return "settings";
 		}
 	public String getTodoResponse() {
 		return todoResponse;
@@ -246,6 +250,7 @@ public class RefDataController implements Serializable {
 		this.todoResponse = todoResponse;
 	}
 	public String getGenCode() {
+		if (genCode==null) return ""; 
 		return genCode;
 	}
 	public void setGenCode(String genCode) {
