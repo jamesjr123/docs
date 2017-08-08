@@ -89,20 +89,15 @@
      <f:metadata>
      <f:viewParam name="code" value="#{refDataController.genCode}"/>
      </f:metadata>
-			<p:column>			
+			<p:column rendered="#{refDataController.todoToken.equals('')}">			
 				<h:outputLink value="https://todoist.com/oauth/authorize?client_id=fda1fa78f62d4245a46e7eb9451e06e5&amp;scope=data:read_write&amp;state=secretstring&amp;response_type=code">request authorisation</h:outputLink>									                     
 			</p:column>
 
-			<p:column>
+			<p:column rendered="#{!refDataController.todoToken.equals('')}">
                 <p:outputLabel for="token" value="Todoist token:" />
 			</p:column>											
 			<p:column>			                
-                <p:inputText id="token" value="#{refDataController.todoToken}"  size="50"/> 					                       
-                <p:message for="token"/>                
-			</p:column>
-			<p:column>			                
-                <h:commandButton id="save"  action="#{refDataController.saveToken()}"
-                        value="Save" /> 					                                                  
+                <h:outputText id="token" value="#{refDataController.todoToken}" /> 					                       
 			</p:column>
 			<p:column>	
 			<h:outputText value="#{refDataController.getTodoResponse()}" />

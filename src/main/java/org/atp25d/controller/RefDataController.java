@@ -29,6 +29,11 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.data.FilterEvent;
 import org.primefaces.event.data.PageEvent;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -182,7 +187,7 @@ public class RefDataController implements Serializable {
 		this.todoCode = todoCode;
 	}
 	public String getTodoToken() {
-		return todoToken;
+		return docsUpdate.getUserForUpdate(docsController.getUserEmail()).getTodoistToken();
 	}
 	public void setTodoToken(String todoToken) {
 		this.todoToken = todoToken;
@@ -194,7 +199,7 @@ public class RefDataController implements Serializable {
 		this.todoistClientId = todoistClientId;
 	}	
 	public String todoAuth() throws IOException {
-			if (getGenCode().equals("")) {
+		if (getGenCode().equals("")) {
 				facesContext.getExternalContext().redirect("settings.jsf");
 				return "settings";
 			}
@@ -228,8 +233,16 @@ public class RefDataController implements Serializable {
 			System.out.println(query);
 			System.out.println("Resp Code:"+connection .getResponseCode());
 			setTodoResponse(returnCode.toString());
-			System.out.println("Resp Message:"+ getTodoResponse());
-			
+			System.out.println("Resp Message:"+ getTodoResponse());			
+			JsonParser jsonParser = new JsonParser();
+			JsonElement element = jsonParser.parse(getTodoResponse());
+			JsonObject q = element.getAsJsonObject();
+			if (q.size() > 0) {
+				String tok = q.getAsJsonPrimitive("access_token").getAsString();
+				UserProfile usr = docsUpdate.getUserForUpdate(docsController.getUserEmail());
+				usr.setTodoistToken(tok);
+				docsUpdate.saveUserProfile(usr);					
+			}			
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
