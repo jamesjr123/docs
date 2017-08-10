@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="locations")
 @NamedQueries({
-@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l where l.specialist = :specialist order by l.location"),
+@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l where l.specialist = :specialist"),
 @NamedQuery(name="Location.findById", query="SELECT l FROM Location l where l.locationNumber = :locationNumber"),
 @NamedQuery(name="Location.findMatchLoc", query="SELECT l FROM Location l where l.location = :location and l.mailAddress1 = :mailAddress1 and l.mailSuburb = :mailSuburb and l.mailPostcode = :mailPostcode")
 })
