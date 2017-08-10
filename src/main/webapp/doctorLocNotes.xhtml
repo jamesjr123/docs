@@ -27,11 +27,12 @@
       <!-- h1>Welcome to the Doctors list</h1-->
 
                 
- <p:dataTable var="_locNote" value="#{locationNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true"
+ <p:dataTable var="_docNote" value="#{doctorLocNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
  	<f:facet name="header">
-            Notes listing for <h:outputText id="LocName" value="#{docsController.newLoc.location}"/>
+            Doctor Notes listing at <h:outputText id="LocName" value="#{docsController.newLoc.location}"/>
+
      </f:facet>         
   	<f:facet name="{Exporters}"> 		
     	<h:commandLink rendered='#{docsController.docsUpdateAccess}'>
@@ -39,40 +40,38 @@
               <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
           </h:commandLink>
 	</f:facet>
-
-    <p:column headerText="Notes" sortBy="#{_locNote.notes}">
-        <h:outputText value="#{_locNote.notes}" />
+    <p:column headerText="Doctor"  sortBy="#{_docNote.doctor.displayName}">
+        <h:outputText value="#{_docNote.doctor.fullName}" />
+    </p:column>
+    <p:column headerText="Notes" sortBy="#{_docNote.notes}">
+        <h:outputText value="#{_docNote.notes}" />
     </p:column>
     <p:column headerText="Status" sortBy="#{_locNote.status}" width="140">
-        <h:outputText value="#{_locNote.status}" />
+        <h:outputText value="#{_docNote.status}" />
     </p:column>    
-    <p:column headerText="Date created" sortBy="#{_locNote.time_Stamp}" width="200">
-        <h:outputText value="#{_locNote.time_Stamp}" />
+    <p:column headerText="Date created" sortBy="#{_docNote.time_Stamp}" width="200">
+        <h:outputText value="#{_docNote.time_Stamp}">
+        						<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" type="date"
+												timeZone="#{referenceData.timeZone}" /> 
+        </h:outputText>
     </p:column>
-     <p:column width="95" exportable="false">
-           <f:facet name="header">Action</f:facet>
-           <h:commandLink value="Display" action="#{docsController.displayLocNote(_locNote)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
-           <h:commandLink value="Update" action="#{docsController.updateLocNote(_locNote)}"   rendered='#{docsController.docUpdateAccess(_locNote.user_Created)}'/>
-     </p:column>    
+
 </p:dataTable>       
-<p:panelGrid columns="5" rendered='#{docsController.docsReadAccess}'>
+<p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
 	<p:column>                
         <p:messages globalOnly="true" />
-	</p:column>   
-    <p:column> 
-         <h:commandButton id="newNote"
-                     action="#{docsController.createLocNote()}"   rendered='#{docsController.docUpdateAccess()}'
-             value="Add New Note"/>                          
-    </p:column>        
-<p:column>                                                                
-        <h:commandButton id="docnotes" action="#{docsController.listLocDocNotes(docsController.newLoc)}" value="Doctors notes at this location" />
-    </p:column>                                             
-	<p:column>                                                                
-        <h:commandButton id="docs" action="index" value="Go to Doctors list" />
+    </p:column>	          
+	<p:column>                                       
+        <h:commandButton id="locNote" action="#{docsController.listLocNotes(docsController.newLoc)}"  value="Go to location notes" />
     </p:column>	                                     
 	<p:column>                                                                
         <h:commandButton id="locs" action="locations" value="Go to location list" />
     </p:column>
+    <p:column> 
+          <h:commandButton id="doctors"
+                      action="#{docsController.listDoctors()}"
+              value="Go to Doctor list" />                         
+	</p:column>                                
  </p:panelGrid>  
 
     </ui:define>

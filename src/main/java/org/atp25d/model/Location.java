@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="locations")
 @NamedQueries({
-@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l"),
+@NamedQuery(name="Location.findAll", query="SELECT l FROM Location l where l.specialist = :specialist order by l.location"),
 @NamedQuery(name="Location.findById", query="SELECT l FROM Location l where l.locationNumber = :locationNumber"),
 @NamedQuery(name="Location.findMatchLoc", query="SELECT l FROM Location l where l.location = :location and l.mailAddress1 = :mailAddress1 and l.mailSuburb = :mailSuburb and l.mailPostcode = :mailPostcode")
 })
@@ -45,6 +45,8 @@ public class Location implements Serializable {
 	private String user;
 	
 	private String user_Created;
+	
+	private String specialist;
 
 	@Transient
 	private String displayName;	
@@ -212,6 +214,14 @@ public class Location implements Serializable {
 
 	public void setUser_Created(String user_Created) {
 		this.user_Created = user_Created;
+	}
+
+	public String getSpecialist() {
+		return specialist;
+	}
+
+	public void setSpecialist(String specialist) {
+		this.specialist = specialist;
 	}
 
 }

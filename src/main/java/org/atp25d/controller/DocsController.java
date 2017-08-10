@@ -60,6 +60,7 @@ public class DocsController implements Serializable {
 	private boolean fromDoc;
 	private boolean docSearch;
     private List<DoctorNote> doctorNotes;
+    private List<DoctorNote> doctorLocNotes;
     private List<DoctorNote> myDocNotes;
     private List<LocationNote> myLocNotes;
     private List<DoctorNote> filteredMyDocNotes;
@@ -338,6 +339,12 @@ public class DocsController implements Serializable {
 		    doctorNotes = docsRepository.findDocNotes(doc.getDoctorId());		    			    			
 			return "doctorNotes";			
 		}
+        public String listLocDocNotes (Location loc){
+            newLoc = loc;             
+            doctorLocNotes = docsRepository.findDoctorLocNotes(loc.getLocationNumber());                                        
+            return "doctorLocNotes";            
+        }        
+		
 		public String listLocNotes (Location loc){
 			newLoc = loc; 		    
 		    locationNotes = docsRepository.findLocNotes(loc.getLocationNumber());		    			    			
@@ -394,6 +401,7 @@ public class DocsController implements Serializable {
 			   	newLoc.setUser(userEmail);	
 			   	newLoc.setTime_Stamp(new Date());
 			   	newLoc.setLocation(newLoc.getLocation().trim());
+			   	newLoc.setSpecialist(docsListProducer.getSpecialist());		   	
 		    	if (newLoc.getLocationNumber() == 0 && docsUpdate.locExists(newLoc)) {
 				 	  FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Record already exists", "error");
 			          facesContext.addMessage(null, m);
@@ -418,6 +426,8 @@ public class DocsController implements Serializable {
 			   	newDocNote.setUser(userEmail);	
 			   	newDocNote.setTime_Stamp(new Date());	
 			   	newDocNote.setDoctorId(newDoc.getDoctorId());
+			   	newDocNote.setSpecialist(docsListProducer.getSpecialist());		   	
+
 			//   	newDocNote.setDoctorNumber(newDoc.getDoctorNumber());
 			   	newDocNote.setDoctor(newDoc);
 		    	if (newDocNote.getNoteId() == 0) {
@@ -436,6 +446,7 @@ public class DocsController implements Serializable {
 		   public String saveLocNote()  {
 			   	newLocNote.setUser(userEmail);	
 			   	newLocNote.setTime_Stamp(new Date());
+			   	newLocNote.setSpecialist(docsListProducer.getSpecialist());
 		    	if (newLocNote.getNoteId() == 0) {
 		    		newLocNote.setUser_Created(userEmail);
 		    	}		   					   	
@@ -813,5 +824,13 @@ public class DocsController implements Serializable {
 	}
 	public void setDocSearch(boolean docSearch) {
 		this.docSearch = docSearch;
+	}
+    @Produces
+    @Named	
+	public List<DoctorNote> getDoctorLocNotes() {
+		return doctorLocNotes;
+	}
+	public void setDoctorLocNotes(List<DoctorNote> doctorLocNotes) {
+		this.doctorLocNotes = doctorLocNotes;
 	}	
 }

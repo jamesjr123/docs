@@ -47,9 +47,10 @@ public class DocsRepository {
 			query.setParameter("specialist", specialist);
 		return query.getResultList();
 	}
-	public List<Location> findAllLocations() {
+	public List<Location> findAllLocations(String specialist) {
 		TypedQuery<Location> query = em.createNamedQuery("Location.findAll",
 				Location.class);
+		query.setParameter("specialist", specialist);
 		return query.getResultList();
 	} 
     public boolean hasReadAccess(String loginId) {
@@ -140,6 +141,12 @@ public class DocsRepository {
 		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByDocId",
 				DoctorNote.class);
 		  query.setParameter("doctorId", doctorId);		
+		return query.getResultList();
+	}	
+	public List<DoctorNote> findDoctorLocNotes(int locationNumber) {
+		TypedQuery<DoctorNote> query = em.createNamedQuery("DoctorNote.findByLocNumber",
+				DoctorNote.class);
+		  query.setParameter("locationNumber", locationNumber);		
 		return query.getResultList();
 	}	
 	public List<LocationNote> findLocNotes(int locationNumber) {

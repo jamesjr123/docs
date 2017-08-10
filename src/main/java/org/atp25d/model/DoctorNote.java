@@ -18,6 +18,7 @@ import java.util.Date;
 @NamedQuery(name="DoctorNote.findByUserId", query="SELECT d FROM DoctorNote d where d.user = :userId"),
 @NamedQuery(name="DoctorNote.findByDocId", query="SELECT d FROM DoctorNote d where d.doctorId = :doctorId"),
 @NamedQuery(name="DoctorNote.findByByUserDate", query="SELECT d FROM DoctorNote d where d.user = :userId and d.time_Stamp >= :fromDate and  d.time_Stamp < :toDate"),
+@NamedQuery(name="DoctorNote.findByLocNumber", query="SELECT d FROM DoctorNote d where d.doctor.location.locationNumber = :locationNumber"),
 @NamedQuery(name="DoctorNote.findByByUserDateStatus", query="SELECT d FROM DoctorNote d where d.user = :userId and d.time_Stamp >= :fromDate and  d.time_Stamp < :toDate and d.status = :status")
 })
 public class DoctorNote implements Serializable {
@@ -49,6 +50,8 @@ public class DoctorNote implements Serializable {
 	private String status;
 	
 	private String user_Created;
+	
+	private String specialist;
 	
 	public DoctorNote() {
 	}
@@ -131,6 +134,14 @@ public class DoctorNote implements Serializable {
 
 	public void setUser_Created(String user_Created) {
 		this.user_Created = user_Created;
+	}
+
+	public String getSpecialist() {
+		return specialist;
+	}
+
+	public void setSpecialist(String specialist) {
+		this.specialist = specialist;
 	}
 
 }

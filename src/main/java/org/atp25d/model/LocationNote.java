@@ -48,6 +48,8 @@ public class LocationNote implements Serializable {
 	private String status;
 	
 	private String user_Created;
+	
+	private String specialist;
 
 	public LocationNote() {
 	}
@@ -120,5 +122,13 @@ public class LocationNote implements Serializable {
 
 	public void setUser_Created(String user_Created) {
 		this.user_Created = user_Created;
+	}
+
+	public String getSpecialist() {
+		return specialist;
+	}
+
+	public void setSpecialist(String specialist) {
+		this.specialist = specialist;
 	}	
 }

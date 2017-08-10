@@ -49,6 +49,7 @@ public class DocsListProducer implements Serializable {
 		if (this.specialist!=null && !specialist.equals(this.specialist)) {
 			this.specialist = specialist;
     		doctors = docsRepository.findAllDocs(specialist);
+    		locations = docsRepository.findAllLocations(specialist);
 		}
 		else
 		{
@@ -90,11 +91,11 @@ public class DocsListProducer implements Serializable {
     }   
     public void retrieveAllLocs() {
     	if (locations==null) {
-    		locations = docsRepository.findAllLocations();
+    		locations = docsRepository.findAllLocations(specialist);
     	}
     }      
     public void onLocationListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Location location) {
-    	locations = docsRepository.findAllLocations();
+    	locations = docsRepository.findAllLocations(specialist);
     	doctors = docsRepository.findAllDocs(specialist);
     }
     
