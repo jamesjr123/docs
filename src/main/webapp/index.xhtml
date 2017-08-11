@@ -30,7 +30,7 @@
     PF('docsTable').filter();                  
   };
 </script>                  
- <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple"  filteredValue="#{docsController.filteredDoctors}" resizableColumns="true"
+ <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple"  filteredValue="#{docsController.filteredDoctors}" 
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable" widgetVar="docsTable" >
 <p:ajax event="filter" listener="#{docsController.filterListenerDocs}"/>

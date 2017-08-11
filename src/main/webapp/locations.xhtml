@@ -31,7 +31,7 @@ function filterLocs() {
     PF('locsTable').filter();                  
   };
 </script>                
- <p:dataTable var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" filteredValue="#{docsController.filteredLocations}" resizableColumns="true"
+ <p:dataTable var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" filteredValue="#{docsController.filteredLocations}" 
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="locTable" widgetVar="locsTable">
  	<f:facet name="header">

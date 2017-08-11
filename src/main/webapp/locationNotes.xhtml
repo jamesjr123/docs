@@ -27,7 +27,7 @@
       <!-- h1>Welcome to the Doctors list</h1-->
 
                 
- <p:dataTable var="_locNote" value="#{locationNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true" resizableColumns="true"
+ <p:dataTable var="_locNote" value="#{locationNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true" 
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
  	<f:facet name="header">
