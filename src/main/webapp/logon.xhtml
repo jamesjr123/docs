@@ -197,14 +197,16 @@
 <h:inputHidden id="hname" value="#{docsController.userName}"/>
 <h:inputHidden id="hlogged" value="#{docsController.loggedIn}"/>
 <p:remoteCommand name="setLoggedin" process="@this,hname,hemail,hlogged" update="@this" /> 
-
-<p:panelGrid columns="2" >
+<br/>  
+<p:panelGrid columns="2">
      	           
-<br/>                               	            
+                             	            
 	<p:column>                                                                
         <h:commandButton id="home" action="index" value="Go to main page" />
     </p:column>
-
+	<p:column rendered='#{docsController.docsReadAccess}'  >                                                                
+         <p:button outcome="settings"   icon="ui-icon-gear"/>
+    </p:column>                   
                  
 </p:panelGrid>  
 	        </h:form>	

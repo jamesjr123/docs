@@ -91,7 +91,12 @@
     <p:column headerText="Status" sortBy="#{_locNote.status}" width="140"  rendered="#{!docsController.docNoteStatusFilter}">
         <h:outputText value="#{_docNote.status}" />
     </p:column>            
-    <p:column headerText="Date created" sortBy="#{_docNote.time_Stamp}" width="200">
+    <p:column  sortBy="#{_docNote.time_Stamp}" width="200">
+	     <f:facet name="header"> 
+	         <p:commandButton id="toggler" type="button" value="Date created"
+			icon="ui-icon-calculator" />
+			<p:columnToggler datasource="docTable" trigger="toggler" />
+	      </f:facet>                   
         <h:outputText value="#{_docNote.time_Stamp}">
         						<f:convertDateTime pattern="dd-MMM-yyyy HH:mm" type="date"
 												timeZone="#{referenceData.timeZone}" /> 

@@ -133,7 +133,7 @@
         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
     </p:confirmDialog>
     <br/><br/> 
-<p:panelGrid columns="4" rendered='#{docsController.docsReadAccess}'>
+<p:panelGrid rendered='#{docsController.docsReadAccess}' columns="4">
 
 	<p:column>                
         <p:messages globalOnly="true" />
@@ -144,6 +144,9 @@
 	<p:column>                                                                
         <h:commandButton id="locs" action="locations" value="Go to location list" />
     </p:column>
+	<p:column>                                                                
+        <h:commandButton id="logon" action="logon" value="logoff / logon page" />
+    </p:column>    
  </p:panelGrid>  
 
     </ui:define>

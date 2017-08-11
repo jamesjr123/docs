@@ -27,7 +27,7 @@
       <!-- h1>Welcome to the Doctors list</h1-->
 
                 
- <p:dataTable var="_locNote" value="#{locationNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true"
+ <p:dataTable var="_locNote" value="#{locationNotes}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" multiViewState="true" resizableColumns="true"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable">
  	<f:facet name="header">
@@ -49,6 +49,9 @@
     <p:column headerText="Date created" sortBy="#{_locNote.time_Stamp}" width="200">
         <h:outputText value="#{_locNote.time_Stamp}" />
     </p:column>
+    <p:column headerText="User" sortBy="#{_locNote.user_Created}" width="140">
+        <h:outputText value="#{_locNote.user_Created}" />
+    </p:column>       
      <p:column width="95" exportable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayLocNote(_locNote)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          

@@ -30,7 +30,7 @@
     PF('docsTable').filter();                  
   };
 </script>                  
- <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple"  filteredValue="#{docsController.filteredDoctors}"
+ <p:dataTable var="_doc" value="#{doctors}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple"  filteredValue="#{docsController.filteredDoctors}" resizableColumns="true"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="docTable" widgetVar="docsTable" >
 <p:ajax event="filter" listener="#{docsController.filterListenerDocs}"/>
@@ -78,14 +78,14 @@
 	         	filterBy="#{_doc.category}" filterMatchMode="contains" filterStyle="width: 100px;">
 	        <h:outputText value="#{_doc.category}" />
 	    </p:column>        
-     <p:column width="95" exportable="false">
+     <p:column width="95" exportable="false"  toggleable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayDoc(_doc)}"/><br/>                                                                          
            <h:commandLink value="Update" action="#{docsController.updateDoc(_doc)}"   rendered='#{docsController.docUpdateAccess(_doc.user_Created)}'/>           
      </p:column>  
-     <p:column width="95" exportable="false">   
+     <p:column width="95" exportable="false" toggleable="false">   
      <f:facet name="header"> 
-         <p:commandButton id="toggler" type="button" value="."
+         <p:commandButton id="toggler" type="button" value="-"
 		icon="ui-icon-calculator" />
 		<p:columnToggler datasource="docTable" trigger="toggler" />
       </f:facet>

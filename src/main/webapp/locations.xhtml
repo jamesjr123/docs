@@ -31,7 +31,7 @@ function filterLocs() {
     PF('locsTable').filter();                  
   };
 </script>                
- <p:dataTable var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" filteredValue="#{docsController.filteredLocations}" 
+ <p:dataTable var="_loc" value="#{locations}" rows="10" rendered="#{docsController.docsReadAccess}" sortMode="multiple" filteredValue="#{docsController.filteredLocations}" resizableColumns="true"
          paginator="true" paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
          paginatorPosition="bottom" rowsPerPageTemplate="10,20,30" id="locTable" widgetVar="locsTable">
  	<f:facet name="header">
@@ -67,12 +67,17 @@ function filterLocs() {
          	filterBy="#{_loc.mailPostcode}" filterMatchMode="contains" filterStyle="width: 40px;">
         <h:outputText value="#{_loc.mailPostcode}" />
     </p:column>                          
-     <p:column  width="95" exportable="false">
+     <p:column  width="95" exportable="false"  toggleable="false">
            <f:facet name="header">Action</f:facet>
            <h:commandLink value="Display" action="#{docsController.displayLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>                                                                          
            <h:commandLink value="Update" action="#{docsController.updateLoc(_loc)}"   rendered='#{docsController.docUpdateAccess(_loc.user_Created)}'/><br/>
      </p:column>  
-     <p:column width="95" exportable="false">           
+     <p:column width="95" exportable="false"  toggleable="false"> 
+	     <f:facet name="header"> 
+	         <p:commandButton id="toggler" type="button" value="-"
+			icon="ui-icon-calculator" />
+			<p:columnToggler datasource="locTable" trigger="toggler" />
+	      </f:facet>               
            <h:commandLink value="Notes" action="#{docsController.listLocNotes(_loc)}"   rendered='#{docsController.docsReadAccess}'/><br/>
            <h:commandLink value="Doctors" action="#{docsController.listDocsByLoc(_loc)}"   rendered='#{docsController.docsReadAccess}'/>
      </p:column>
