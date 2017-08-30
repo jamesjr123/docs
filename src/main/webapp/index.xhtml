@@ -45,7 +45,7 @@
               <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
           </h:commandLink>
 	</f:facet>
-    <p:column id="docId" headerText="Id" style="width:50px;" rendered='#{docsController.docsUpdateAccess}'>
+    <p:column id="docId" headerText="Id" style="width:50px;" rendered='#{docsController.docsUpdateAccess}' visible='false'>
         <h:outputText value="#{_doc.doctorId}" />
     </p:column>
     <p:column id="displayName" headerText="Doctor" sortBy="#{_doc.surname}"
@@ -66,7 +66,7 @@
          	filterBy="#{_doc.location.mailSuburb}" filterMatchMode="contains" filterStyle="width: 150px;">
         <h:outputText value="#{_doc.location.mailSuburb}" />
     </p:column>
-    <p:column  id="location_mailState" width="95" headerText="State" sortBy="#{_doc.location.mailState}"
+    <p:column  id="location_mailState" width="95" headerText="State" sortBy="#{_doc.location.mailState}" visible='false'
          	filterBy="#{_doc.location.mailState}" filterMatchMode="exact" filterStyle="width: 40px;">
         <h:outputText value="#{_doc.location.mailState}" />
     </p:column>  
