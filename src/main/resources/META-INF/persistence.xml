@@ -25,7 +25,7 @@
          data source, this example data source is just for development and testing! -->
       <!-- The datasource is deployed as WEB-INF/kitchensink-quickstart-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/kitchensink-quickstart-ds.xml -->
-      <jta-data-source>java:jboss/datasources/${env.OPENSHIFT_MYSQL_DATASOURCE}</jta-data-source>
+      <jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
       <class>org.atp25d.model.Doctor</class>
       <class>org.atp25d.model.Location</class>
       <class>org.jboss.as.quickstarts.kitchensink.model.Member</class>
