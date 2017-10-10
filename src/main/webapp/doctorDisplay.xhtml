@@ -84,7 +84,15 @@
 			<p:column>
 			<h:outputText id="Fax" label="Fax" value="#{docsController.newDoc.location.faxNumber}"/>                       
 			</p:column>
-			</p:row>																		            
+			</p:row>
+			<p:row>			
+			<p:column rendered='#{docsController.docsUpdateAccess}'>		
+				<p:outputLabel for="Id" value="Id:" />			
+			</p:column>
+			<p:column rendered='#{docsController.docsUpdateAccess}'>
+			<h:outputText id="Id" label="Id" value="#{docsController.newDoc.doctorId}"/>                       
+			</p:column>
+			</p:row>																						            
             </p:panelGrid>
                 
                 <p:panelGrid columns="4">                    

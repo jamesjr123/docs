@@ -45,9 +45,6 @@ function filterLocs() {
 	</f:facet>
 <p:ajax event="filter" listener="#{docsController.filterListenerLocs}"/>                  
 <p:ajax event="page" listener="#{docsController.pageListenerLocs}" />        
-     <p:column id="locId" headerText="Id" style="width:50px;" rendered='#{docsController.docsUpdateAccess}' visible='false'>
-        <h:outputText value="#{_loc.locationNumber}" />
-    </p:column>
     <p:column id="location" headerText="Location" sortBy="#{_loc.location}"
          	filterBy="#{_loc.location}" filterMatchMode="contains" filterStyle="width: 150px;">
         <h:outputText value="#{_loc.location}" />

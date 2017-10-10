@@ -24,7 +24,7 @@ import org.atp25d.model.Reference_Data;
 		    private EntityManager em;		
 		
 		public TimeZone getTimeZone() {
-		    return TimeZone.getTimeZone("GMT+10:00");
+		    return TimeZone.getTimeZone(getRefTZ("EST"));
 		}	
 		
 		public Map<String,String>  getRefList(String refType) {
@@ -56,10 +56,13 @@ import org.atp25d.model.Reference_Data;
 				list.add(ref.getCode() );
 			}			
 			return list;			
-		}			
-		public String  getRefTZ() {
+		}		
+		public String  getRefTZ() {							
+			return getRefTZ("");			
+		}				
+		public String  getRefTZ(String tp) {
 			TypedQuery<Reference_Data> query = em.createNamedQuery("Reference_Data.findByListByRefType", Reference_Data.class);
-			query.setParameter("refType", "TimeZone");
+			query.setParameter("refType", "TimeZone"+tp);
 			List<Reference_Data> refs = query.getResultList();					
 			return refs.iterator().next().getValue();			
 		}		

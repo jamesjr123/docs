@@ -45,9 +45,6 @@
               <p:dataExporter type="xls" target="docTable" fileName="doclisting" />
           </h:commandLink>
 	</f:facet>
-    <p:column id="docId" headerText="Id" style="width:50px;" rendered='#{docsController.docsUpdateAccess}' visible='false'>
-        <h:outputText value="#{_doc.doctorId}" />
-    </p:column>
     <p:column id="displayName" headerText="Doctor" sortBy="#{_doc.surname}"
      	filterBy="#{_doc.displayName}" filterMatchMode="contains" filterStyle="width: 200px;">
         <h:outputText value="#{_doc.fullName}" />

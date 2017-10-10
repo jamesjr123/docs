@@ -37,6 +37,13 @@
 			<p:column >			                
                 <h:outputText id="fax" value="#{docsController.newLoc.faxNumber}" maxlength="20" /> 					                                       
 			</p:column>					
+			<p:column rendered='#{docsController.docsUpdateAccess}'>		
+				<p:outputLabel for="Id" value="Id:" />			
+			</p:column>
+			<p:column rendered='#{docsController.docsUpdateAccess}'>
+			<h:outputText id="Id" label="Id" value="#{docsController.newLoc.locationNumber}"/>                       
+			</p:column>
+											
       </p:panelGrid>
                 
                 <p:panelGrid columns="4">                    
