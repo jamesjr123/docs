@@ -74,11 +74,14 @@
     <p:column headerText="Doctor" filterBy="#{_docNote.doctor.displayName}" filterMatchMode="contains" filterStyle="width: 200px;">
         <h:outputText value="#{_docNote.doctor.fullName}" />
     </p:column>
-    <p:column headerText="Email" width="120">        
+    <p:column headerText="Email" width="120" rendered='#{docsController.docsUpdateAccess}'>        
 		<h:outputLink value="mailto:#{_docNote.doctor.emailAddress}?subject=#{docsController.noteSubject}&amp;body=#{docsController.formatNoteSubject(docsController.noteBody, _docNote.doctor)}">		
 		<h:outputText value="#{_docNote.doctor.emailAddress}" />
 		</h:outputLink>
-    </p:column>    
+    </p:column>
+    <p:column headerText="Address">
+        <h:outputText value="#{_docNote.doctor.location.displayName}" />
+    </p:column>            
     <p:column headerText="Category" sortBy="#{_docNote.doctor.category}">
         <h:outputText value="#{_docNote.doctor.category}" />
     </p:column>    

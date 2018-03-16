@@ -73,10 +73,13 @@
     <p:column headerText="Location" filterBy="#{_locNote.location.displayNameShort}" filterMatchMode="contains" filterStyle="width: 200px;">
         <h:outputText value="#{_locNote.location.displayNameShort}" />
     </p:column>
-    <p:column headerText="Email" width="120">        
+    <p:column headerText="Email" width="120" rendered='#{docsController.docsUpdateAccess}'>        
 		<h:outputLink value="mailto:#{_locNote.location.emailAddress}">				
 		</h:outputLink>
     </p:column>    
+    <p:column headerText="Address">
+        <h:outputText value="#{_locNote.location.displayName}" />
+    </p:column>          
     <p:column headerText="Notes" sortBy="#{_locNote.notes}">
         <h:outputText value="#{_locNote.notes}" />
     </p:column>
